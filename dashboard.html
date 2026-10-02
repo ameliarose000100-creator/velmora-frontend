@@ -376,6 +376,571 @@ footer {
     }
 }
 </style>
+
+<style id="velmora-dashboard-professional">
+
+/* =========================================================
+   VELMORA GENESIS — DASHBOARD
+   ========================================================= */
+
+:root {
+    --dash-ink: #0b1510;
+    --dash-ink-soft: #15231b;
+    --dash-green: #16834f;
+    --dash-green-dark: #0c6039;
+    --dash-green-light: #35a66f;
+    --dash-green-pale: #eaf4ee;
+    --dash-cream: #f6f8f5;
+    --dash-white: #ffffff;
+    --dash-muted: #66736c;
+    --dash-soft: #98a39d;
+    --dash-line: #dce4df;
+    --dash-shadow: 0 18px 55px rgba(11, 21, 16, .055);
+    --dash-shadow-hover: 0 24px 70px rgba(11, 21, 16, .09);
+}
+
+body {
+    background:
+        radial-gradient(
+            circle at 88% 0%,
+            rgba(53,166,111,.10),
+            transparent 25rem
+        ),
+        linear-gradient(
+            180deg,
+            #f9faf8 0%,
+            var(--dash-cream) 48%,
+            #ffffff 100%
+        );
+    color: var(--dash-ink);
+    font-family: Inter, Arial, Helvetica, sans-serif;
+}
+
+/* HEADER */
+
+.header {
+    height: 82px;
+    padding: 0 clamp(20px, 5vw, 72px);
+    background: rgba(249,250,248,.88);
+    border-bottom: 1px solid rgba(220,228,223,.82);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.logo {
+    color: var(--dash-ink);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.08rem;
+    letter-spacing: .18em;
+    font-weight: 700;
+}
+
+.header-right {
+    gap: 14px;
+}
+
+#headerName {
+    color: var(--dash-muted);
+    font-size: .78rem;
+    font-weight: 600;
+}
+
+.avatar {
+    width: 42px;
+    height: 42px;
+    background:
+        linear-gradient(
+            135deg,
+            var(--dash-green-pale),
+            #d5ecdf
+        );
+    color: var(--dash-green-dark);
+    border: 1px solid rgba(22,131,79,.16);
+}
+
+.logout-button {
+    border: 1px solid var(--dash-line);
+    background: rgba(255,255,255,.72);
+    color: var(--dash-ink-soft);
+    padding: 10px 15px;
+    border-radius: 999px;
+}
+
+.logout-button:hover {
+    background: var(--dash-ink);
+    color: #fff;
+    border-color: var(--dash-ink);
+}
+
+/* MAIN */
+
+.container {
+    width: min(1280px, calc(100% - 40px));
+    padding: 76px 0 120px;
+}
+
+.hero {
+    max-width: 850px;
+    position: relative;
+}
+
+.eyebrow,
+.card-label {
+    color: var(--dash-green);
+    letter-spacing: .16em;
+    font-size: .68rem;
+    font-weight: 800;
+}
+
+.hero h1 {
+    margin: 16px 0 18px;
+    color: var(--dash-ink);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(3rem, 7vw, 5.9rem);
+    line-height: .98;
+    letter-spacing: -.045em;
+    font-weight: 500;
+}
+
+.hero p {
+    max-width: 690px;
+    margin: 0;
+    color: var(--dash-muted);
+    font-size: 1rem;
+    line-height: 1.85;
+}
+
+/* PRIMARY GRID */
+
+.grid {
+    grid-template-columns: minmax(0, 1.55fr) minmax(300px, .72fr);
+    gap: 24px;
+    margin-top: 54px;
+    align-items: start;
+}
+
+.grid > div,
+.side {
+    min-width: 0;
+}
+
+.card {
+    position: relative;
+    overflow: hidden;
+    background: rgba(255,255,255,.86);
+    border: 1px solid var(--dash-line);
+    border-radius: 4px;
+    padding: clamp(24px, 3vw, 36px);
+    box-shadow: var(--dash-shadow);
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        border-color 180ms ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--dash-shadow-hover);
+    border-color: #cbd8d0;
+}
+
+.card h2 {
+    color: var(--dash-ink);
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 500;
+    letter-spacing: -.025em;
+}
+
+.description,
+.profile-line,
+.opportunity span {
+    color: var(--dash-muted);
+}
+
+/* CURRENT DIRECTION */
+
+.grid > div > .card:first-child {
+    min-height: 390px;
+    background:
+        radial-gradient(
+            circle at 92% 12%,
+            rgba(53,166,111,.12),
+            transparent 18rem
+        ),
+        #fff;
+}
+
+.grid > div > .card:first-child::after {
+    content: "VELMORA";
+    position: absolute;
+    right: -15px;
+    bottom: -35px;
+    font-family: Georgia, serif;
+    font-size: 7rem;
+    font-weight: 700;
+    letter-spacing: -.08em;
+    color: rgba(22,131,79,.035);
+    pointer-events: none;
+}
+
+.badge {
+    background: var(--dash-green-pale);
+    color: var(--dash-green-dark);
+    border: 1px solid rgba(22,131,79,.10);
+    padding: 8px 13px;
+}
+
+.journey {
+    position: relative;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    margin-top: 42px;
+    padding-top: 30px;
+}
+
+.journey::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 37px;
+    height: 1px;
+    background: var(--dash-line);
+}
+
+.step {
+    position: relative;
+    z-index: 1;
+}
+
+.dot {
+    width: 15px;
+    height: 15px;
+    background: #fff;
+    border: 3px solid #d7e1db;
+    margin-bottom: 12px;
+}
+
+.step.active .dot {
+    background: var(--dash-green);
+    border-color: var(--dash-green);
+    box-shadow: 0 0 0 6px var(--dash-green-pale);
+}
+
+.step strong {
+    font-size: .78rem;
+    color: var(--dash-ink-soft);
+}
+
+.step span {
+    color: var(--dash-soft);
+}
+
+/* MISSION */
+
+.mission {
+    margin-top: 24px;
+    background: var(--dash-ink);
+    border-color: var(--dash-ink);
+    color: #fff;
+}
+
+.mission .card-label {
+    color: #70c99b;
+}
+
+.mission h2 {
+    color: #fff;
+    font-size: clamp(1.7rem, 3vw, 2.5rem);
+}
+
+.mission .description {
+    color: rgba(255,255,255,.68);
+}
+
+.button {
+    border-radius: 999px;
+    padding: 13px 19px;
+    background: var(--dash-green);
+    color: #fff;
+    border: 1px solid var(--dash-green);
+    transition: all 180ms ease;
+}
+
+.button:hover {
+    background: var(--dash-green-dark);
+    border-color: var(--dash-green-dark);
+    transform: translateY(-1px);
+}
+
+.mission .button {
+    background: #fff;
+    color: var(--dash-ink);
+    border-color: #fff;
+}
+
+.mission .button:hover {
+    background: var(--dash-green-pale);
+    border-color: var(--dash-green-pale);
+}
+
+/* SIDE CARDS */
+
+.side {
+    gap: 18px;
+}
+
+.side .card {
+    padding: 26px;
+}
+
+.side .card h2 {
+    font-size: 1.65rem;
+    line-height: 1.15;
+}
+
+.profile-completion {
+    margin-top: 22px;
+}
+
+.profile-progress {
+    height: 6px;
+    background: #e8eeea;
+}
+
+.profile-progress-bar {
+    background:
+        linear-gradient(
+            90deg,
+            var(--dash-green-dark),
+            var(--dash-green-light)
+        );
+}
+
+.profile-completion-message {
+    color: var(--dash-soft);
+}
+
+.profile-button {
+    margin-right: 5px;
+    margin-top: 14px;
+    font-size: .74rem;
+}
+
+/* OPPORTUNITY ITEMS */
+
+.opportunity {
+    background: #fafcfb;
+    border: 1px solid var(--dash-line);
+    border-radius: 3px;
+    padding: 15px;
+    margin-top: 12px;
+    transition: background 160ms ease, border-color 160ms ease;
+}
+
+.opportunity:hover {
+    background: var(--dash-green-pale);
+    border-color: #c9ddd1;
+}
+
+.opportunity strong {
+    color: var(--dash-ink-soft);
+    font-size: .8rem;
+}
+
+/* DARK HELP CARD */
+
+.help {
+    background:
+        radial-gradient(
+            circle at 90% 10%,
+            rgba(53,166,111,.22),
+            transparent 15rem
+        ),
+        var(--dash-ink);
+    border-color: var(--dash-ink);
+}
+
+.help h2 {
+    color: #fff;
+}
+
+.help .card-label {
+    color: #70c99b;
+}
+
+.help p {
+    color: rgba(255,255,255,.66);
+}
+
+/* FOUR DIRECTIONS */
+
+.section {
+    margin-top: 100px;
+}
+
+.section h2 {
+    color: var(--dash-ink);
+    font-size: clamp(2rem, 4vw, 3.1rem);
+    letter-spacing: -.035em;
+    margin: 12px 0 28px;
+}
+
+.four {
+    gap: 12px;
+}
+
+.direction {
+    position: relative;
+    min-height: 210px;
+    padding: 27px;
+    border-radius: 3px;
+    background: #fff;
+    border: 1px solid var(--dash-line);
+    transition: all 180ms ease;
+}
+
+.direction:hover {
+    transform: translateY(-3px);
+    border-color: #cbd8d0;
+    box-shadow: var(--dash-shadow);
+}
+
+.direction-number {
+    color: var(--dash-green);
+    font-size: .66rem;
+    letter-spacing: .12em;
+}
+
+.direction h3 {
+    color: var(--dash-ink);
+    font-family: Georgia, serif;
+    font-size: 1.55rem;
+    margin-top: 55px;
+}
+
+.direction p {
+    color: var(--dash-muted);
+    line-height: 1.7;
+}
+
+/* FOOTER */
+
+footer {
+    background: #fff;
+    border-top: 1px solid var(--dash-line);
+    padding: 30px clamp(20px, 5vw, 72px);
+    color: var(--dash-soft);
+}
+
+/* MOBILE */
+
+@media (max-width: 900px) {
+
+    .container {
+        padding-top: 55px;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .side {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .side .help {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 650px) {
+
+    .header {
+        height: 70px;
+        padding: 0 18px;
+    }
+
+    #headerName {
+        display: none;
+    }
+
+    .container {
+        width: min(100% - 28px, 1280px);
+        padding: 44px 0 105px;
+    }
+
+    .hero h1 {
+        font-size: clamp(2.7rem, 14vw, 4.2rem);
+    }
+
+    .hero p {
+        font-size: .92rem;
+    }
+
+    .grid {
+        margin-top: 38px;
+    }
+
+    .card {
+        padding: 22px;
+    }
+
+    .journey {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding-top: 22px;
+    }
+
+    .journey::before {
+        display: none;
+    }
+
+    .step {
+        display: grid;
+        grid-template-columns: 24px 1fr;
+        column-gap: 8px;
+        align-items: center;
+    }
+
+    .step .dot {
+        grid-row: span 2;
+        margin: 0;
+    }
+
+    .step span {
+        margin-top: 2px;
+    }
+
+    .side {
+        grid-template-columns: 1fr;
+    }
+
+    .side .help {
+        grid-column: auto;
+    }
+
+    .four {
+        grid-template-columns: 1fr;
+    }
+
+    .direction {
+        min-height: 170px;
+    }
+
+    .direction h3 {
+        margin-top: 35px;
+    }
+
+    footer {
+        padding-bottom: 95px;
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+</style>
+
 </head>
 
 <body>
@@ -528,7 +1093,7 @@ footer {
         Complete one small practical task related to your chosen direction.
     </p>
 
-    <a href="#" class="button">
+    <a href="opportunities.html" class="button">
         Begin Mission
     </a>
 
