@@ -418,6 +418,433 @@
 
 </style>
     <link rel="stylesheet" href="style.css">
+
+<style id="velmora-learn-professional">
+
+/* =========================================================
+   VELMORA GENESIS — LEARN
+   ========================================================= */
+
+:root {
+    --learn-ink: #0b1510;
+    --learn-ink-soft: #15231b;
+    --learn-green: #16834f;
+    --learn-green-dark: #0c6039;
+    --learn-green-light: #35a66f;
+    --learn-pale: #eaf4ee;
+    --learn-cream: #f6f8f5;
+    --learn-white: #fff;
+    --learn-muted: #66736c;
+    --learn-soft: #98a39d;
+    --learn-line: #dce4df;
+    --learn-shadow: 0 18px 55px rgba(11,21,16,.055);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background:
+        radial-gradient(
+            circle at 88% 0%,
+            rgba(53,166,111,.10),
+            transparent 25rem
+        ),
+        linear-gradient(
+            180deg,
+            #f9faf8 0%,
+            var(--learn-cream) 55%,
+            #fff 100%
+        );
+    color: var(--learn-ink);
+    font-family: Inter, Arial, Helvetica, sans-serif;
+}
+
+/* HEADER */
+
+.header {
+    min-height: 76px;
+    padding: 0 clamp(20px, 5vw, 72px);
+    background: rgba(249,250,248,.90);
+    border-bottom: 1px solid rgba(220,228,223,.85);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.logo {
+    color: var(--learn-ink);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: .18em;
+}
+
+.header-right {
+    gap: 20px;
+}
+
+.back {
+    color: var(--learn-muted);
+    font-size: .72rem;
+    font-weight: 700;
+    transition: color 160ms ease;
+}
+
+.back:hover {
+    color: var(--learn-green);
+}
+
+.logout {
+    padding: 9px 14px;
+    border: 1px solid var(--learn-line);
+    border-radius: 999px;
+    background: rgba(255,255,255,.7);
+    color: var(--learn-muted);
+    transition: all 160ms ease;
+}
+
+.logout:hover {
+    background: var(--learn-ink);
+    color: #fff;
+    border-color: var(--learn-ink);
+}
+
+/* MAIN */
+
+main {
+    width: min(1280px, calc(100% - 40px));
+    padding: 76px 0 120px;
+}
+
+/* HERO */
+
+.hero {
+    position: relative;
+    max-width: 900px;
+}
+
+.eyebrow {
+    color: var(--learn-green);
+    font-size: .66rem;
+    font-weight: 800;
+    letter-spacing: .18em;
+}
+
+h1 {
+    max-width: 850px;
+    margin: 17px 0;
+    color: var(--learn-ink);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(3.2rem, 8vw, 6.3rem);
+    line-height: .94;
+    letter-spacing: -.055em;
+    font-weight: 500;
+}
+
+.hero p {
+    max-width: 720px;
+    color: var(--learn-muted);
+    font-size: 1rem;
+    line-height: 1.85;
+}
+
+/* JOURNEY */
+
+.journey {
+    gap: 7px;
+    margin-top: 32px;
+}
+
+.journey span {
+    padding: 9px 14px;
+    background: rgba(255,255,255,.65);
+    border: 1px solid var(--learn-line);
+    border-radius: 999px;
+    color: var(--learn-muted);
+    font-size: .68rem;
+    font-weight: 650;
+}
+
+.journey span.active {
+    background: var(--learn-green);
+    border-color: var(--learn-green);
+    color: #fff;
+    box-shadow: 0 7px 20px rgba(22,131,79,.16);
+}
+
+/* SECTIONS */
+
+.section {
+    margin-top: 105px;
+}
+
+.section-heading {
+    align-items: end;
+    margin-bottom: 30px;
+}
+
+.section-heading h2 {
+    color: var(--learn-ink);
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -.04em;
+}
+
+.section-heading p {
+    color: var(--learn-muted);
+    line-height: 1.75;
+}
+
+/* CATEGORIES */
+
+.category-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.category {
+    position: relative;
+    min-height: 185px;
+    padding: 26px;
+    overflow: hidden;
+    background: rgba(255,255,255,.88);
+    border: 1px solid var(--learn-line);
+    border-radius: 4px;
+    box-shadow: 0 10px 35px rgba(11,21,16,.025);
+    transition:
+        transform 180ms ease,
+        border-color 180ms ease,
+        box-shadow 180ms ease;
+}
+
+.category::after {
+    content: "";
+    position: absolute;
+    right: -28px;
+    bottom: -40px;
+    width: 110px;
+    height: 110px;
+    border: 1px solid rgba(22,131,79,.08);
+    border-radius: 50%;
+}
+
+.category:hover {
+    transform: translateY(-4px);
+    border-color: #c7d7cd;
+    box-shadow: var(--learn-shadow);
+}
+
+.category-number {
+    color: var(--learn-green);
+    font-size: .62rem;
+    font-weight: 800;
+    letter-spacing: .15em;
+}
+
+.category h3 {
+    margin: 42px 0 9px;
+    color: var(--learn-ink);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.35rem;
+    font-weight: 500;
+}
+
+.category p {
+    color: var(--learn-muted);
+    line-height: 1.65;
+}
+
+/* LEARNING PATHS */
+
+.path-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.path-card {
+    position: relative;
+    padding: 29px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid var(--learn-line);
+    border-radius: 4px;
+    box-shadow: 0 10px 35px rgba(11,21,16,.025);
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        border-color 180ms ease;
+}
+
+.path-card:hover {
+    transform: translateY(-4px);
+    border-color: #c7d7cd;
+    box-shadow: var(--learn-shadow);
+}
+
+.path-label {
+    padding: 7px 11px;
+    background: var(--learn-pale);
+    color: var(--learn-green-dark);
+    font-size: .62rem;
+    letter-spacing: .06em;
+}
+
+.path-card h3 {
+    margin: 26px 0 10px;
+    color: var(--learn-ink);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.7rem;
+    line-height: 1.08;
+}
+
+.path-card p {
+    color: var(--learn-muted);
+    line-height: 1.75;
+}
+
+.path-meta {
+    margin-top: 25px;
+    padding-top: 17px;
+    border-top: 1px solid var(--learn-line);
+    color: var(--learn-soft);
+}
+
+.start-button {
+    margin-top: 18px;
+    padding: 13px 17px;
+    background: var(--learn-green);
+    border: 1px solid var(--learn-green);
+    border-radius: 999px;
+    font-size: .72rem;
+    transition: all 160ms ease;
+}
+
+.start-button:hover {
+    background: var(--learn-green-dark);
+    border-color: var(--learn-green-dark);
+    transform: translateY(-1px);
+}
+
+/* MISSION */
+
+.mission {
+    position: relative;
+    grid-template-columns: 1.1fr .9fr;
+    gap: 35px;
+    padding: clamp(30px, 5vw, 55px);
+    overflow: hidden;
+    background:
+        radial-gradient(
+            circle at 90% 10%,
+            rgba(53,166,111,.22),
+            transparent 22rem
+        ),
+        var(--learn-ink);
+    border-radius: 4px;
+    box-shadow: 0 24px 70px rgba(11,21,16,.12);
+}
+
+.mission::after {
+    content: "LEARN";
+    position: absolute;
+    right: -20px;
+    bottom: -50px;
+    color: rgba(255,255,255,.035);
+    font-family: Georgia, serif;
+    font-size: 8rem;
+    font-weight: 700;
+    letter-spacing: -.08em;
+    pointer-events: none;
+}
+
+.mission-label {
+    color: #70c99b;
+    letter-spacing: .17em;
+}
+
+.mission h2 {
+    color: #fff;
+    font-size: clamp(2rem, 4vw, 3.3rem);
+    letter-spacing: -.04em;
+}
+
+.mission p {
+    color: rgba(255,255,255,.66);
+    line-height: 1.8;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 950px) {
+
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .path-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .mission {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 650px) {
+
+    .header {
+        min-height: 68px;
+        padding: 0 18px;
+    }
+
+    .back {
+        display: none;
+    }
+
+    main {
+        width: min(100% - 28px, 1280px);
+        padding: 50px 0 105px;
+    }
+
+    h1 {
+        font-size: clamp(2.9rem, 14vw, 4.3rem);
+    }
+
+    .hero p {
+        font-size: .9rem;
+    }
+
+    .section {
+        margin-top: 75px;
+    }
+
+    .section-heading {
+        display: block;
+    }
+
+    .section-heading p {
+        margin-top: 14px;
+    }
+
+    .category-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .category {
+        min-height: 155px;
+    }
+
+    .path-card {
+        padding: 24px;
+    }
+
+    .mission {
+        padding: 28px 23px;
+    }
+}
+
+</style>
+
 </head>
 
 <body>
