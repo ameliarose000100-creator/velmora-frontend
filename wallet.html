@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet — VELMORA</title>
+    <link rel="stylesheet" href="style.css">
+
+<style>
+.wallet-page {
+    min-height: 100vh;
+    background: var(--cream);
+    color: var(--ink);
+    padding: 0 0 120px;
+}
+
+.wallet-hero {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 92px 28px 72px;
+}
+
+.wallet-eyebrow,
+.wallet-label {
+    display: inline-block;
+    color: var(--green);
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+}
+
+.wallet-hero h1 {
+    max-width: 760px;
+    margin: 18px 0 22px;
+    font-family: var(--serif);
+    font-size: clamp(3rem, 7vw, 6.8rem);
+    line-height: .92;
+    font-weight: 500;
+    letter-spacing: -.055em;
+}
+
+.wallet-hero p {
+    max-width: 620px;
+    margin: 0;
+    color: var(--muted);
+    font-size: 1.02rem;
+    line-height: 1.8;
+}
+
+.wallet-section {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 28px 80px;
+}
+
+.wallet-section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+}
+
+.wallet-section-heading h2 {
+    margin: 7px 0 0;
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: -.035em;
+}
+
+#walletLoading {
+    padding: 28px 0;
+    color: var(--muted);
+    font-size: .88rem;
+}
+
+#walletError {
+    padding: 18px 20px;
+    margin-bottom: 20px;
+    border: 1px solid #e2b8b8;
+    border-radius: 14px;
+    background: #fff7f7;
+    color: #8b3030;
+    font-size: .85rem;
+}
+
+#walletList {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.wallet-card {
+    position: relative;
+    overflow: hidden;
+    padding: 30px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background:
+        linear-gradient(145deg, #ffffff 0%, #f1f6f2 100%);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    box-shadow: 0 18px 45px rgba(13,21,17,.07);
+}
+
+.wallet-card::after {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    right: -70px;
+    top: -70px;
+    border-radius: 50%;
+    background: rgba(22,131,79,.08);
+    pointer-events: none;
+}
+
+.wallet-card-top {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.wallet-currency {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 58px;
+    height: 34px;
+    padding: 0 12px;
+    border-radius: 999px;
+    background: var(--green-pale);
+    color: var(--green-dark);
+    font-size: .72rem;
+    font-weight: 850;
+    letter-spacing: .12em;
+}
+
+.wallet-status {
+    color: var(--muted);
+    font-size: .68rem;
+    font-weight: 750;
+    text-transform: capitalize;
+}
+
+.wallet-balance {
+    position: relative;
+    z-index: 1;
+    margin: 42px 0 28px;
+    font-family: var(--serif);
+    font-size: clamp(2.7rem, 6vw, 4.6rem);
+    line-height: .95;
+    letter-spacing: -.045em;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+}
+
+.wallet-meta {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 13px 0;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: .76rem;
+}
+
+.wallet-meta strong {
+    color: var(--ink);
+    font-size: .8rem;
+}
+
+.wallet-view-button {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    margin-top: 22px;
+    padding: 12px 18px;
+    border: 1px solid var(--green);
+    border-radius: 999px;
+    background: var(--green);
+    color: #fff;
+    font-size: .72rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition:
+        transform .18s ease,
+        background .18s ease,
+        box-shadow .18s ease;
+}
+
+.wallet-view-button:hover {
+    transform: translateY(-2px);
+    background: var(--green-dark);
+    box-shadow: 0 10px 24px rgba(22,131,79,.18);
+}
+
+#walletEmpty {
+    padding: 54px 30px;
+    text-align: center;
+    background: rgba(255,255,255,.72);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+}
+
+#walletEmpty h3 {
+    margin: 0 0 10px;
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+#walletEmpty p {
+    max-width: 520px;
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: .86rem;
+    line-height: 1.7;
+}
+
+
+.wallet-actions {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 28px 80px;
+}
+
+.wallet-action-card {
+    padding: 34px;
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    box-shadow: 0 18px 45px rgba(13,21,17,.06);
+}
+
+.wallet-action-card h2 {
+    max-width: 650px;
+    margin: 12px 0 10px;
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: -.035em;
+}
+
+.wallet-action-card > p {
+    max-width: 620px;
+    margin: 0 0 30px;
+    color: var(--muted);
+    font-size: .88rem;
+    line-height: 1.7;
+}
+
+#walletDepositForm {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+#walletDepositForm label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: var(--ink);
+    font-size: .72rem;
+    font-weight: 800;
+}
+
+#walletDepositForm input,
+#walletDepositForm select {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 14px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--cream);
+    color: var(--ink);
+    font: inherit;
+    font-size: .84rem;
+    outline: none;
+    box-sizing: border-box;
+}
+
+#walletDepositForm input:focus,
+#walletDepositForm select:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(22,131,79,.08);
+}
+
+#depositButton {
+    grid-column: 1 / -1;
+    width: fit-content;
+    min-height: 48px;
+    padding: 0 24px;
+    border: 1px solid var(--green);
+    border-radius: 999px;
+    background: var(--green);
+    color: #fff;
+    font: inherit;
+    font-size: .74rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+#depositButton:disabled {
+    opacity: .55;
+    cursor: wait;
+}
+
+#depositMessage {
+    grid-column: 1 / -1;
+    min-height: 20px;
+    font-size: .78rem;
+    line-height: 1.5;
+}
+
+#depositMessage.success {
+    color: var(--green-dark);
+}
+
+#depositMessage.error {
+    color: #8b3030;
+}
+
+
+#walletTransferForm {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+
+.transfer-recipient-field {
+    grid-column: 1 / -1;
+    position: relative;
+}
+
+.transfer-recipient-field > label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.transfer-recipient-results {
+    display: none;
+    margin-top: 8px;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: 0 16px 35px rgba(13,21,17,.10);
+}
+
+.transfer-person {
+    width: 100%;
+    padding: 14px;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+}
+
+.transfer-person:last-child {
+    border-bottom: 0;
+}
+
+.transfer-person:hover {
+    background: var(--green-pale);
+}
+
+.transfer-person-name {
+    display: block;
+    color: var(--ink);
+    font-size: .82rem;
+    font-weight: 800;
+}
+
+.transfer-person-meta {
+    display: block;
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: .7rem;
+}
+
+.transfer-recipient-selected {
+    margin-top: 10px;
+    padding: 13px 15px;
+    border: 1px solid var(--green);
+    border-radius: 12px;
+    background: var(--green-pale);
+    color: var(--green-dark);
+    font-size: .78rem;
+    font-weight: 750;
+}
+
+
+.recipient-verification {
+    grid-column: 1 / -1;
+    margin-top: -6px;
+    padding: 13px 15px;
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    background: var(--green-pale);
+    color: var(--green-dark);
+    font-size: .78rem;
+    font-weight: 700;
+}
+
+.recipient-verification.error {
+    background: #fff3f3;
+    border-color: #e2b8b8;
+    color: #9b3030;
+}
+
+#walletTransferForm label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: var(--ink);
+    font-size: .72rem;
+    font-weight: 800;
+}
+
+#walletTransferForm label span {
+    color: var(--soft-muted);
+    font-weight: 600;
+}
+
+#walletTransferForm input,
+#walletTransferForm select {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 14px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--cream);
+    color: var(--ink);
+    font: inherit;
+    font-size: .84rem;
+    outline: none;
+    box-sizing: border-box;
+}
+
+#walletTransferForm input:focus,
+#walletTransferForm select:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(22,131,79,.08);
+}
+
+#transferButton {
+    grid-column: 1 / -1;
+    width: fit-content;
+    min-height: 48px;
+    padding: 0 24px;
+    border: 1px solid var(--green);
+    border-radius: 999px;
+    background: var(--green);
+    color: #fff;
+    font: inherit;
+    font-size: .74rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+#transferButton:disabled {
+    opacity: .55;
+    cursor: wait;
+}
+
+#transferMessage {
+    grid-column: 1 / -1;
+    min-height: 20px;
+    font-size: .78rem;
+    line-height: 1.5;
+}
+
+#transferMessage.success {
+    color: var(--green-dark);
+}
+
+#transferMessage.error {
+    color: #8b3030;
+}
+
+@media (max-width: 700px) {
+    .wallet-actions {
+        padding: 0 20px 50px;
+    }
+
+    .wallet-action-card {
+        padding: 24px;
+        border-radius: 20px;
+    }
+
+    #walletDepositForm,
+    #walletTransferForm {
+        grid-template-columns: 1fr;
+    }
+
+    #depositButton,
+    #transferButton {
+        width: 100%;
+    }
+}
+
+@media (max-width: 700px) {
+    .wallet-page {
+        padding-bottom: 110px;
+    }
+
+    .wallet-hero {
+        padding: 58px 20px 52px;
+    }
+
+    .wallet-hero h1 {
+        font-size: clamp(3.2rem, 15vw, 5rem);
+        line-height: .9;
+    }
+
+    .wallet-hero p {
+        font-size: .92rem;
+        line-height: 1.7;
+    }
+
+    .wallet-section {
+        padding: 0 20px 50px;
+    }
+
+    .wallet-section-heading {
+        margin-bottom: 20px;
+    }
+
+    #walletList {
+        grid-template-columns: 1fr;
+    }
+
+    .wallet-card {
+        min-height: 280px;
+        padding: 24px;
+        border-radius: 20px;
+    }
+
+    .wallet-balance {
+        margin: 34px 0 24px;
+        font-size: clamp(2.7rem, 13vw, 4rem);
+    }
+
+    #walletEmpty {
+        padding: 42px 20px;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<main class="wallet-page">
+
+    <section class="wallet-hero">
+        <div class="wallet-eyebrow">VELMORA WALLET</div>
+
+        <h1>Your money.<br>Under your control.</h1>
+
+        <p>
+            Manage your VELMORA balances, payments and wallet activity
+            across supported currencies.
+        </p>
+    </section>
+
+    <section class="wallet-section">
+
+        <div class="wallet-section-heading">
+            <div>
+                <span class="wallet-label">YOUR WALLETS</span>
+                <h2>Balances</h2>
+            </div>
+        </div>
+
+        <div id="walletLoading">
+            Loading your wallets...
+        </div>
+
+        <div id="walletError" style="display:none;"></div>
+
+        <div id="walletList"></div>
+
+        <div id="walletEmpty" style="display:none;">
+            <h3>No wallets yet</h3>
+            <p>
+                Your VELMORA wallet will appear here when a supported
+                currency account is created.
+            </p>
+        </div>
+
+    </section>
+
+
+    <section class="wallet-actions">
+
+        <div class="wallet-action-card">
+
+            <span class="wallet-label">ADD MONEY</span>
+
+            <h2>Fund your VELMORA wallet.</h2>
+
+            <p>
+                Choose a currency and amount to begin a secure
+                wallet deposit. Your balance is credited only
+                after payment is verified.
+            </p>
+
+            <form id="walletDepositForm">
+
+                <label>
+                    Currency
+                    <select id="depositCurrency" required>
+                        <option value="USD">USD</option>
+                        <option value="NGN">NGN</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                    </select>
+                </label>
+
+                <label>
+                    Amount
+                    <input
+                        type="number"
+                        id="depositAmount"
+                        min="0.01"
+                        step="any"
+                        required
+                        placeholder="0.00"
+                    >
+                </label>
+
+                <button
+                    type="submit"
+                    id="depositButton"
+                >
+                    Continue to deposit
+                </button>
+
+                <div id="depositMessage"></div>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <section class="wallet-actions">
+
+        <div class="wallet-action-card">
+
+            <span class="wallet-label">MOVE MONEY</span>
+
+            <h2>Send to someone on VELMORA.</h2>
+
+            <p>
+                Transfer available funds directly to another VELMORA
+                user in the same currency.
+            </p>
+
+            <form id="walletTransferForm">
+
+                <label>
+                    Recipient VELMORA ID
+                    <input
+                        type="number"
+                        id="transferRecipient"
+                        inputmode="numeric"
+                        pattern="[0-9]{9}"
+                        maxlength="9"
+                        required
+                        placeholder="e.g. 000000034"
+                    >
+                </label>
+
+                <div
+                    id="recipientVerification"
+                    class="recipient-verification"
+                    style="display:none;"
+                ></div>
+
+                <label>
+                    Currency
+                    <select id="transferCurrency" required>
+                        <option value="USD">USD</option>
+                        <option value="NGN">NGN</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                    </select>
+                </label>
+
+                <label>
+                    Amount
+                    <input
+                        type="number"
+                        id="transferAmount"
+                        min="0.00000001"
+                        step="any"
+                        required
+                        placeholder="0.00"
+                    >
+                </label>
+
+                <label>
+                    Note <span>(optional)</span>
+                    <input
+                        type="text"
+                        id="transferNote"
+                        maxlength="500"
+                        placeholder="What is this transfer for?"
+                    >
+                </label>
+
+                <button type="submit" id="transferButton">
+                    Send money
+                </button>
+
+                <div id="transferMessage"></div>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</main>
+
+<script>
+const API_BASE = "http://127.0.0.1:5000";
+
+const token =
+    localStorage.getItem("velmora_token") ||
+    localStorage.getItem("token") ||
+    localStorage.getItem("accessToken");
+
+const walletLoading = document.getElementById("walletLoading");
+const walletError = document.getElementById("walletError");
+const walletList = document.getElementById("walletList");
+const walletEmpty = document.getElementById("walletEmpty");
+
+async function loadWallets() {
+
+    if (!token) {
+        walletLoading.style.display = "none";
+
+        walletError.style.display = "block";
+        walletError.textContent =
+            "Please log in to view your wallet.";
+
+        return;
+    }
+
+    try {
+
+        /*
+         * Make sure the user's default USD wallet exists.
+         * This creates an account only — never money.
+         */
+        const ensureResponse = await fetch(
+            `${API_BASE}/api/wallets/USD/ensure`,
+            {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        const ensureData = await ensureResponse.json();
+
+        if (!ensureResponse.ok || !ensureData.success) {
+            throw new Error(
+                ensureData.message ||
+                "Unable to prepare your wallet."
+            );
+        }
+
+        const response = await fetch(
+            `${API_BASE}/api/wallets`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(
+                data.message || "Unable to load wallets."
+            );
+        }
+
+        walletLoading.style.display = "none";
+
+        if (!data.wallets || data.wallets.length === 0) {
+            walletEmpty.style.display = "block";
+            return;
+        }
+
+        walletList.innerHTML = data.wallets.map(wallet => {
+
+            const available =
+                Number(wallet.available_balance || 0);
+
+            const pending =
+                Number(wallet.pending_balance || 0);
+
+            return `
+                <article class="wallet-card">
+
+                    <div class="wallet-card-top">
+                        <span class="wallet-currency">
+                            ${escapeHtml(wallet.currency)}
+                        </span>
+
+                        <span class="wallet-status">
+                            ${escapeHtml(wallet.status)}
+                        </span>
+                    </div>
+
+                    <div class="wallet-balance">
+                        ${formatMoney(
+                            available,
+                            wallet.currency
+                        )}
+                    </div>
+
+                    <div class="wallet-meta">
+                        <span>Available</span>
+                        <strong>
+                            ${formatMoney(
+                                available,
+                                wallet.currency
+                            )}
+                        </strong>
+                    </div>
+
+                    <div class="wallet-meta">
+                        <span>Pending</span>
+                        <strong>
+                            ${formatMoney(
+                                pending,
+                                wallet.currency
+                            )}
+                        </strong>
+                    </div>
+
+                    <a
+                        href="wallet-detail.html?currency=${encodeURIComponent(wallet.currency)}"
+                        class="wallet-view-button"
+                    >
+                        View activity
+                    </a>
+
+                </article>
+            `;
+
+        }).join("");
+
+    } catch (error) {
+
+        walletLoading.style.display = "none";
+
+        walletError.style.display = "block";
+        walletError.textContent = error.message;
+    }
+}
+
+function formatMoney(amount, currency) {
+
+    try {
+        return new Intl.NumberFormat(
+            undefined,
+            {
+                style: "currency",
+                currency,
+                maximumFractionDigits: 2
+            }
+        ).format(amount);
+
+    } catch {
+        return `${currency} ${amount.toFixed(2)}`;
+    }
+}
+
+function escapeHtml(value) {
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+
+const walletTransferForm =
+    document.getElementById("walletTransferForm");
+
+const transferRecipient =
+    document.getElementById("transferRecipient");
+
+const transferRecipientSearch =
+    document.getElementById("transferRecipientSearch");
+
+const transferRecipientResults =
+    document.getElementById("transferRecipientResults");
+
+const transferRecipientSelected =
+    document.getElementById("transferRecipientSelected");
+
+const transferCurrency =
+    document.getElementById("transferCurrency");
+
+const transferAmount =
+    document.getElementById("transferAmount");
+
+const transferNote =
+    document.getElementById("transferNote");
+
+const transferButton =
+    document.getElementById("transferButton");
+
+const transferMessage =
+    document.getElementById("transferMessage");
+
+const recipientVerification =
+    document.getElementById("recipientVerification");
+
+let recipientVerificationTimer = null;
+
+async function verifyRecipient() {
+
+    const velmoraId =
+        transferRecipient.value.trim();
+
+    recipientVerification.style.display =
+        "none";
+
+    recipientVerification.className =
+        "recipient-verification";
+
+    recipientVerification.textContent =
+        "";
+
+    if (!/^\\d{9}$/.test(velmoraId)) {
+        return;
+    }
+
+    recipientVerification.style.display =
+        "block";
+
+    recipientVerification.textContent =
+        "Verifying recipient...";
+
+    try {
+
+        const response = await fetch(
+            `${API_BASE}/api/wallets/recipient/${encodeURIComponent(velmoraId)}`,
+            {
+                headers: {
+                    Authorization:
+                        `Bearer ${token}`
+                }
+            }
+        );
+
+        const data =
+            await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(
+                data.message ||
+                "Recipient could not be verified."
+            );
+        }
+
+        recipientVerification.className =
+            "recipient-verification";
+
+        recipientVerification.innerHTML =
+            `✓ Recipient: <strong>${escapeHtml(
+                data.recipient.full_name
+            )}</strong>`;
+
+    } catch (error) {
+
+        recipientVerification.className =
+            "recipient-verification error";
+
+        recipientVerification.textContent =
+            error.message ||
+            "Recipient could not be verified.";
+    }
+}
+
+
+transferRecipient.addEventListener(
+    "input",
+    function () {
+
+        clearTimeout(
+            recipientVerificationTimer
+        );
+
+        recipientVerificationTimer =
+            setTimeout(
+                verifyRecipient,
+                250
+            );
+    }
+);
+
+
+function clearRecipientSelection() {
+
+    transferRecipient.value = "";
+
+    transferRecipientSelected.style.display =
+        "none";
+
+    transferRecipientSelected.textContent =
+        "";
+
+}
+
+
+async function searchTransferRecipients(query) {
+
+    if (!token) return;
+
+    const search =
+        String(query || "").trim();
+
+    if (!search) {
+
+        transferRecipientResults.innerHTML =
+            "";
+
+        transferRecipientResults.style.display =
+            "none";
+
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `${API_BASE}/api/people?search=${encodeURIComponent(search)}`,
+            {
+                headers: {
+                    Authorization:
+                        `Bearer ${token}`
+                }
+            }
+        );
+
+        const data =
+            await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(
+                data.message ||
+                "Unable to search people."
+            );
+        }
+
+        const people =
+            Array.isArray(data.people)
+                ? data.people
+                : [];
+
+        if (people.length === 0) {
+
+            transferRecipientResults.innerHTML =
+                `<div class="transfer-person-meta" style="padding:14px;">
+                    No VELMORA person found.
+                </div>`;
+
+            transferRecipientResults.style.display =
+                "block";
+
+            return;
+        }
+
+        transferRecipientResults.innerHTML =
+            people.map(function (person) {
+
+                const name =
+                    escapeHtml(
+                        person.full_name ||
+                        "VELMORA member"
+                    );
+
+                const country =
+                    escapeHtml(
+                        person.country || ""
+                    );
+
+                const path =
+                    escapeHtml(
+                        person.primary_path || ""
+                    );
+
+                const interest =
+                    escapeHtml(
+                        person.primary_interest || ""
+                    );
+
+                const meta =
+                    [country, path, interest]
+                        .filter(Boolean)
+                        .join(" · ");
+
+                return `
+                    <button
+                        type="button"
+                        class="transfer-person"
+                        data-user-id="${person.id}"
+                        data-name="${name}"
+                    >
+                        <span class="transfer-person-name">
+                            ${name}
+                        </span>
+
+                        <span class="transfer-person-meta">
+                            ${meta || "VELMORA member"}
+                        </span>
+                    </button>
+                `;
+
+            }).join("");
+
+        transferRecipientResults.style.display =
+            "block";
+
+        transferRecipientResults
+            .querySelectorAll(".transfer-person")
+            .forEach(function (button) {
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        const userId =
+                            button.dataset.userId;
+
+                        const name =
+                            button.dataset.name;
+
+                        transferRecipient.value =
+                            userId;
+
+                        transferRecipientSearch.value =
+                            name;
+
+                        transferRecipientSelected.textContent =
+                            `Recipient selected: ${name}`;
+
+                        transferRecipientSelected.style.display =
+                            "block";
+
+                        transferRecipientResults.innerHTML =
+                            "";
+
+                        transferRecipientResults.style.display =
+                            "none";
+                    }
+                );
+
+            });
+
+    } catch (error) {
+
+        transferRecipientResults.innerHTML =
+            `<div class="transfer-person-meta" style="padding:14px;">
+                Unable to search people right now.
+            </div>`;
+
+        transferRecipientResults.style.display =
+            "block";
+    }
+
+}
+
+
+if (transferRecipientSearch) {
+
+    transferRecipientSearch.addEventListener(
+        "input",
+        function () {
+
+            clearRecipientSelection();
+
+            clearTimeout(recipientSearchTimer);
+
+            recipientSearchTimer =
+                setTimeout(function () {
+
+                    searchTransferRecipients(
+                        transferRecipientSearch.value
+                    );
+
+                }, 300);
+
+        }
+    );
+
+}
+
+
+
+const walletDepositForm =
+    document.getElementById("walletDepositForm");
+
+const depositCurrency =
+    document.getElementById("depositCurrency");
+
+const depositAmount =
+    document.getElementById("depositAmount");
+
+const depositButton =
+    document.getElementById("depositButton");
+
+const depositMessage =
+    document.getElementById("depositMessage");
+
+if (walletDepositForm) {
+
+    walletDepositForm.addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+            const currency =
+                depositCurrency.value
+                    .trim()
+                    .toUpperCase();
+
+            const amount =
+                depositAmount.value.trim();
+
+            depositMessage.className = "";
+            depositMessage.textContent = "";
+
+            if (!/^[A-Z]{3}$/.test(currency)) {
+                depositMessage.className = "error";
+                depositMessage.textContent =
+                    "Please select a valid currency.";
+                return;
+            }
+
+            if (!amount || Number(amount) <= 0) {
+                depositMessage.className = "error";
+                depositMessage.textContent =
+                    "Please enter a valid deposit amount.";
+                return;
+            }
+
+            if (!token) {
+                depositMessage.className = "error";
+                depositMessage.textContent =
+                    "Please log in before making a deposit.";
+                return;
+            }
+
+            depositButton.disabled = true;
+            depositButton.textContent =
+                "Creating deposit...";
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${API_BASE}/api/wallets/deposit`,
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type":
+                                    "application/json",
+                                "Authorization":
+                                    `Bearer ${token}`
+                            },
+                            body: JSON.stringify({
+                                currency,
+                                amount
+                            })
+                        }
+                    );
+
+                const data =
+                    await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(
+                        data.message ||
+                        "Unable to create deposit."
+                    );
+                }
+
+                const deposit =
+                    data.deposit;
+
+                depositMessage.className =
+                    "success";
+
+                depositMessage.textContent =
+                    `Deposit #${deposit.id} created. ` +
+                    `Status: ${deposit.status}. ` +
+                    `Awaiting payment and verification.`;
+
+                depositAmount.value = "";
+
+            } catch (error) {
+
+                depositMessage.className =
+                    "error";
+
+                depositMessage.textContent =
+                    error.message ||
+                    "Unable to create deposit.";
+
+            } finally {
+
+                depositButton.disabled = false;
+                depositButton.textContent =
+                    "Continue to deposit";
+            }
+        }
+    );
+}
+
+if (walletTransferForm) {
+
+    walletTransferForm.addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+            if (!token) {
+
+                transferMessage.className =
+                    "error";
+
+                transferMessage.textContent =
+                    "Please log in before sending money.";
+
+                return;
+            }
+
+            const recipientVelmoraId =
+                transferRecipient.value.trim();
+
+            const currency =
+                transferCurrency.value;
+
+            const amount =
+                transferAmount.value;
+
+            const note =
+                transferNote.value.trim();
+
+            if (!/^\d{9}$/.test(recipientVelmoraId)) {
+
+                transferMessage.className =
+                    "error";
+
+                transferMessage.textContent =
+                    "Search for a VELMORA person and select the recipient first.";
+
+                return;
+            }
+
+            if (!amount || Number(amount) <= 0) {
+
+                transferMessage.className =
+                    "error";
+
+                transferMessage.textContent =
+                    "Enter a valid transfer amount.";
+
+                return;
+            }
+
+            transferButton.disabled = true;
+            transferButton.textContent =
+                "Sending...";
+
+            transferMessage.className =
+                "";
+
+            transferMessage.textContent =
+                "";
+
+            try {
+
+                const response = await fetch(
+                    `${API_BASE}/api/wallets/transfer`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type":
+                                "application/json",
+
+                            Authorization:
+                                `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            recipientVelmoraId,
+                            currency,
+                            amount,
+                            note: note || null
+                        })
+                    }
+                );
+
+                const data =
+                    await response.json();
+
+                if (!response.ok || !data.success) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to complete transfer."
+                    );
+                }
+
+                transferMessage.className =
+                    "success";
+
+                transferMessage.textContent =
+                    "Transfer completed successfully.";
+
+                walletTransferForm.reset();
+
+                clearRecipientSelection();
+
+
+                await loadWallets();
+
+            } catch (error) {
+
+                transferMessage.className =
+                    "error";
+
+                transferMessage.textContent =
+                    error.message ||
+                    "Unable to complete transfer.";
+
+            } finally {
+
+                transferButton.disabled =
+                    false;
+
+                transferButton.textContent =
+                    "Send money";
+            }
+        }
+    );
+}
+
+</script>
+
+
+
+
+<script src="global-nav.js"></script>
+
+</body>
+</html>

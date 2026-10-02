@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Your VELMORA Account</title>
+    <meta
+        name="description"
+        content="Create your VELMORA account and begin discovering opportunities, learning, building and helping."
+    >
+
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --vm-green: #168c55;
+            --vm-green-dark: #0e6840;
+            --vm-green-soft: #e8f5ee;
+            --vm-ink: #172019;
+            --vm-muted: #69746d;
+            --vm-line: #e1e7e2;
+            --vm-bg: #f7f9f6;
+            --vm-white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+            background: var(--vm-bg);
+            color: var(--vm-ink);
+        }
+
+        .register-page {
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(
+                    circle at 8% 8%,
+                    rgba(22, 140, 85, 0.08),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 94% 88%,
+                    rgba(22, 140, 85, 0.07),
+                    transparent 30%
+                ),
+                var(--vm-bg);
+        }
+
+        /* Decorative atmosphere */
+
+        .register-page::before,
+        .register-page::after {
+            content: "";
+            position: absolute;
+            pointer-events: none;
+            border: 1px solid rgba(22, 140, 85, 0.08);
+            border-radius: 50%;
+        }
+
+        .register-page::before {
+            width: 430px;
+            height: 430px;
+            top: -250px;
+            right: -150px;
+        }
+
+        .register-page::after {
+            width: 300px;
+            height: 300px;
+            bottom: -190px;
+            left: -130px;
+        }
+
+        /* Header */
+
+        .register-header {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            border-bottom: 1px solid rgba(23, 32, 25, 0.07);
+            background: rgba(247, 249, 246, 0.82);
+            backdrop-filter: blur(18px);
+        }
+
+        .register-header-inner {
+            width: min(1180px, calc(100% - 44px));
+            min-height: 78px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .register-brand {
+            text-decoration: none;
+            color: var(--vm-ink);
+            font-size: 1.25rem;
+            font-weight: 850;
+            letter-spacing: 0.18em;
+        }
+
+        .register-brand::after {
+            content: "";
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            margin-left: 7px;
+            margin-bottom: 2px;
+            border-radius: 50%;
+            background: var(--vm-green);
+        }
+
+        .register-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--vm-muted);
+            font-size: 0.82rem;
+            font-weight: 700;
+            transition: color 180ms ease;
+        }
+
+        .register-back:hover {
+            color: var(--vm-green);
+        }
+
+        /* Main */
+
+        .register-main {
+            position: relative;
+            z-index: 2;
+            min-height: calc(100vh - 78px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 58px 22px 70px;
+        }
+
+        .register-layout {
+            width: min(1060px, 100%);
+            display: grid;
+            grid-template-columns: minmax(300px, 0.82fr) minmax(400px, 1.18fr);
+            gap: 80px;
+            align-items: center;
+        }
+
+        /* Left side */
+
+        .register-intro {
+            padding: 15px 0;
+        }
+
+        .register-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            color: var(--vm-green);
+            font-size: 0.68rem;
+            font-weight: 850;
+            letter-spacing: 0.17em;
+            text-transform: uppercase;
+        }
+
+        .register-kicker::before {
+            content: "";
+            width: 34px;
+            height: 1px;
+            background: var(--vm-green);
+        }
+
+        .register-intro h1 {
+            max-width: 480px;
+            margin: 0;
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+            font-size: clamp(3rem, 5vw, 4.7rem);
+            line-height: 0.98;
+            letter-spacing: -0.055em;
+            font-weight: 500;
+        }
+
+        .register-intro h1 span {
+            color: var(--vm-green);
+        }
+
+        .register-intro p {
+            max-width: 470px;
+            margin: 25px 0 0;
+            color: var(--vm-muted);
+            font-size: 0.95rem;
+            line-height: 1.85;
+        }
+
+        .register-points {
+            display: grid;
+            gap: 13px;
+            margin-top: 31px;
+        }
+
+        .register-point {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            color: #465149;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        .register-point-mark {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 1px solid rgba(22, 140, 85, 0.15);
+            border-radius: 50%;
+            background: var(--vm-green-soft);
+            color: var(--vm-green);
+            font-size: 0.68rem;
+            font-weight: 900;
+        }
+
+        /* Form */
+
+        .register-card {
+            width: 100%;
+            padding: 38px;
+            border: 1px solid var(--vm-line);
+            border-radius: 26px;
+            background: rgba(255, 255, 255, 0.94);
+            box-shadow:
+                0 25px 70px rgba(23, 32, 25, 0.07),
+                0 2px 8px rgba(23, 32, 25, 0.025);
+        }
+
+        .register-card-header {
+            margin-bottom: 27px;
+        }
+
+        .register-card-header h2 {
+            margin: 0;
+            color: var(--vm-ink);
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+            font-size: 1.9rem;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            font-weight: 500;
+        }
+
+        .register-card-header p {
+            max-width: 430px;
+            margin: 9px 0 0;
+            color: #818a84;
+            font-size: 0.78rem;
+            line-height: 1.65;
+        }
+
+        .register-form {
+            display: grid;
+            gap: 16px;
+        }
+
+        .register-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .register-field {
+            min-width: 0;
+            display: grid;
+            gap: 7px;
+        }
+
+        .register-field label {
+            color: #354139;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.01em;
+        }
+
+        .register-field input,
+        .register-field select {
+            width: 100%;
+            height: 49px;
+            padding: 0 14px;
+            border: 1px solid #dfe5e0;
+            border-radius: 11px;
+            outline: none;
+            background: #fafcfa;
+            color: var(--vm-ink);
+            font: inherit;
+            font-size: 0.82rem;
+            transition:
+                border-color 180ms ease,
+                box-shadow 180ms ease,
+                background 180ms ease;
+        }
+
+        .register-field input:hover,
+        .register-field select:hover {
+            border-color: #cbd5ce;
+        }
+
+        .register-field input:focus,
+        .register-field select:focus {
+            border-color: #55aa7b;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(22, 140, 85, 0.075);
+        }
+
+        .register-field input::placeholder {
+            color: #a2aaa5;
+        }
+
+        .register-field select {
+            cursor: pointer;
+        }
+
+        .whatsapp-field {
+            position: relative;
+        }
+
+        .whatsapp-note {
+            color: #8a938d;
+            font-size: 0.64rem;
+            line-height: 1.4;
+        }
+
+        /* Password */
+
+        .password-input-wrap {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-input-wrap input {
+            padding-right: 65px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            padding: 6px 5px;
+            border: 0;
+            background: transparent;
+            color: var(--vm-green);
+            font: inherit;
+            font-size: 0.68rem;
+            font-weight: 850;
+            cursor: pointer;
+        }
+
+        .password-toggle:hover {
+            color: var(--vm-green-dark);
+        }
+
+        /* Agreement */
+
+        .register-agreement {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            margin-top: 1px;
+        }
+
+        .register-agreement input {
+            width: 16px;
+            height: 16px;
+            margin: 1px 0 0;
+            accent-color: var(--vm-green);
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .register-agreement label {
+            color: #7b847e;
+            font-size: 0.68rem;
+            line-height: 1.55;
+        }
+
+        .register-agreement a {
+            color: var(--vm-green);
+            text-decoration: none;
+            font-weight: 800;
+        }
+
+        .register-agreement a:hover {
+            text-decoration: underline;
+        }
+
+        /* Button */
+
+        .register-submit {
+            width: 100%;
+            height: 52px;
+            margin-top: 3px;
+            border: 0;
+            border-radius: 12px;
+            background: var(--vm-green);
+            color: #ffffff;
+            font: inherit;
+            font-size: 0.82rem;
+            font-weight: 850;
+            letter-spacing: 0.01em;
+            cursor: pointer;
+            box-shadow: 0 9px 22px rgba(22, 140, 85, 0.17);
+            transition:
+                transform 180ms ease,
+                background 180ms ease,
+                box-shadow 180ms ease;
+        }
+
+        .register-submit:hover {
+            background: var(--vm-green-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 13px 28px rgba(22, 140, 85, 0.2);
+        }
+
+        .register-submit:active {
+            transform: translateY(0);
+        }
+
+        .register-login {
+            margin: 19px 0 0;
+            text-align: center;
+            color: #8a938d;
+            font-size: 0.72rem;
+        }
+
+        .register-login a {
+            color: var(--vm-green);
+            text-decoration: none;
+            font-weight: 850;
+        }
+
+        .register-login a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+
+        .register-footer {
+            position: relative;
+            z-index: 3;
+            padding: 22px 20px 27px;
+            text-align: center;
+            color: #929a95;
+            font-size: 0.64rem;
+        }
+
+        /* Tablet */
+
+        @media (max-width: 900px) {
+
+            .register-layout {
+                grid-template-columns: 1fr;
+                max-width: 620px;
+                gap: 38px;
+            }
+
+            .register-intro {
+                text-align: center;
+            }
+
+            .register-intro h1,
+            .register-intro p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .register-kicker {
+                justify-content: center;
+            }
+
+            .register-points {
+                width: fit-content;
+                margin-left: auto;
+                margin-right: auto;
+                text-align: left;
+            }
+
+            .register-main {
+                padding-top: 45px;
+            }
+        }
+
+        /* Mobile */
+
+        @media (max-width: 560px) {
+
+            .register-header-inner {
+                width: calc(100% - 28px);
+                min-height: 68px;
+            }
+
+            .register-brand {
+                font-size: 1.05rem;
+            }
+
+            .register-back {
+                font-size: 0.72rem;
+            }
+
+            .register-main {
+                padding: 35px 14px 45px;
+            }
+
+            .register-intro h1 {
+                font-size: 2.75rem;
+            }
+
+            .register-intro p {
+                font-size: 0.86rem;
+                line-height: 1.75;
+            }
+
+            .register-card {
+                padding: 25px 17px;
+                border-radius: 20px;
+            }
+
+            .register-card-header h2 {
+                font-size: 1.65rem;
+            }
+
+            .register-row {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .register-field input,
+            .register-field select {
+                height: 50px;
+            }
+
+            .register-submit {
+                height: 53px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="register-page">
+
+    <header class="register-header">
+        <div class="register-header-inner">
+
+            <a href="index.html" class="register-brand">
+                VELMORA
+            </a>
+
+            <a href="index.html" class="register-back">
+                ← Back to VELMORA
+            </a>
+
+        </div>
+    </header>
+
+
+    <main class="register-main">
+
+        <div class="register-layout">
+
+            <!-- INTRO -->
+            <section class="register-intro">
+
+                <div class="register-kicker">
+                    Begin your journey
+                </div>
+
+                <h1>
+                    Create your
+                    <span>VELMORA</span>
+                    identity.
+                </h1>
+
+                <p>
+                    One account gives you a place to discover opportunities,
+                    learn new abilities, build ideas, earn through your work,
+                    and help others grow.
+                </p>
+
+                <div class="register-points">
+
+                    <div class="register-point">
+                        <span class="register-point-mark">✓</span>
+                        One primary VELMORA identity
+                    </div>
+
+                    <div class="register-point">
+                        <span class="register-point-mark">✓</span>
+                        Discover paths that match you
+                    </div>
+
+                    <div class="register-point">
+                        <span class="register-point-mark">✓</span>
+                        Build your skills and opportunity profile
+                    </div>
+
+                    <div class="register-point">
+                        <span class="register-point-mark">✓</span>
+                        Connect with people around the world
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- REGISTER CARD -->
+            <section class="register-card">
+
+                <div class="register-card-header">
+
+                    <h2>Create account</h2>
+
+                    <p>
+                        Start with the basics. You can build your full
+                        opportunity profile after registration.
+                    </p>
+
+                </div>
+
+
+                <form class="register-form" id="registerForm">
+
+                    <div class="register-row">
+
+                        <div class="register-field">
+                            <label for="fullName">
+                                Full name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="fullName"
+                                name="fullName"
+                                placeholder="Your full name"
+                                autocomplete="name"
+                                required
+                            >
+                        </div>
+
+
+                        <div class="register-field">
+                            <label for="country">
+                                Country
+                            </label>
+
+                            <select
+                                id="country"
+                                name="country"
+                                autocomplete="country-name"
+                                required
+                            >
+                                <option value="" selected disabled>
+                                    Select your country
+                                </option>
+
+                                <option>Afghanistan</option>
+                                <option>Albania</option>
+                                <option>Algeria</option>
+                                <option>Andorra</option>
+                                <option>Angola</option>
+                                <option>Antigua and Barbuda</option>
+                                <option>Argentina</option>
+                                <option>Armenia</option>
+                                <option>Australia</option>
+                                <option>Austria</option>
+                                <option>Azerbaijan</option>
+                                <option>Bahamas</option>
+                                <option>Bahrain</option>
+                                <option>Bangladesh</option>
+                                <option>Barbados</option>
+                                <option>Belarus</option>
+                                <option>Belgium</option>
+                                <option>Belize</option>
+                                <option>Benin</option>
+                                <option>Bhutan</option>
+                                <option>Bolivia</option>
+                                <option>Bosnia and Herzegovina</option>
+                                <option>Botswana</option>
+                                <option>Brazil</option>
+                                <option>Brunei</option>
+                                <option>Bulgaria</option>
+                                <option>Burkina Faso</option>
+                                <option>Burundi</option>
+                                <option>Cabo Verde</option>
+                                <option>Cambodia</option>
+                                <option>Cameroon</option>
+                                <option>Canada</option>
+                                <option>Central African Republic</option>
+                                <option>Chad</option>
+                                <option>Chile</option>
+                                <option>China</option>
+                                <option>Colombia</option>
+                                <option>Comoros</option>
+                                <option>Congo</option>
+                                <option>Costa Rica</option>
+                                <option>Côte d'Ivoire</option>
+                                <option>Croatia</option>
+                                <option>Cuba</option>
+                                <option>Cyprus</option>
+                                <option>Czechia</option>
+                                <option>Democratic Republic of the Congo</option>
+                                <option>Denmark</option>
+                                <option>Djibouti</option>
+                                <option>Dominica</option>
+                                <option>Dominican Republic</option>
+                                <option>Ecuador</option>
+                                <option>Egypt</option>
+                                <option>El Salvador</option>
+                                <option>Equatorial Guinea</option>
+                                <option>Eritrea</option>
+                                <option>Estonia</option>
+                                <option>Eswatini</option>
+                                <option>Ethiopia</option>
+                                <option>Fiji</option>
+                                <option>Finland</option>
+                                <option>France</option>
+                                <option>Gabon</option>
+                                <option>Gambia</option>
+                                <option>Georgia</option>
+                                <option>Germany</option>
+                                <option>Ghana</option>
+                                <option>Greece</option>
+                                <option>Grenada</option>
+                                <option>Guatemala</option>
+                                <option>Guinea</option>
+                                <option>Guinea-Bissau</option>
+                                <option>Guyana</option>
+                                <option>Haiti</option>
+                                <option>Honduras</option>
+                                <option>Hungary</option>
+                                <option>Iceland</option>
+                                <option>India</option>
+                                <option>Indonesia</option>
+                                <option>Iran</option>
+                                <option>Iraq</option>
+                                <option>Ireland</option>
+                                <option>Israel</option>
+                                <option>Italy</option>
+                                <option>Jamaica</option>
+                                <option>Japan</option>
+                                <option>Jordan</option>
+                                <option>Kazakhstan</option>
+                                <option>Kenya</option>
+                                <option>Kiribati</option>
+                                <option>Kuwait</option>
+                                <option>Kyrgyzstan</option>
+                                <option>Laos</option>
+                                <option>Latvia</option>
+                                <option>Lebanon</option>
+                                <option>Lesotho</option>
+                                <option>Liberia</option>
+                                <option>Libya</option>
+                                <option>Liechtenstein</option>
+                                <option>Lithuania</option>
+                                <option>Luxembourg</option>
+                                <option>Madagascar</option>
+                                <option>Malawi</option>
+                                <option>Malaysia</option>
+                                <option>Maldives</option>
+                                <option>Mali</option>
+                                <option>Malta</option>
+                                <option>Marshall Islands</option>
+                                <option>Mauritania</option>
+                                <option>Mauritius</option>
+                                <option>Mexico</option>
+                                <option>Micronesia</option>
+                                <option>Moldova</option>
+                                <option>Monaco</option>
+                                <option>Mongolia</option>
+                                <option>Montenegro</option>
+                                <option>Morocco</option>
+                                <option>Mozambique</option>
+                                <option>Myanmar</option>
+                                <option>Namibia</option>
+                                <option>Nauru</option>
+                                <option>Nepal</option>
+                                <option>Netherlands</option>
+                                <option>New Zealand</option>
+                                <option>Nicaragua</option>
+                                <option>Niger</option>
+                                <option>Nigeria</option>
+                                <option>North Korea</option>
+                                <option>North Macedonia</option>
+                                <option>Norway</option>
+                                <option>Oman</option>
+                                <option>Pakistan</option>
+                                <option>Palau</option>
+                                <option>Palestine</option>
+                                <option>Panama</option>
+                                <option>Papua New Guinea</option>
+                                <option>Paraguay</option>
+                                <option>Peru</option>
+                                <option>Philippines</option>
+                                <option>Poland</option>
+                                <option>Portugal</option>
+                                <option>Qatar</option>
+                                <option>Romania</option>
+                                <option>Russia</option>
+                                <option>Rwanda</option>
+                                <option>Saint Kitts and Nevis</option>
+                                <option>Saint Lucia</option>
+                                <option>Saint Vincent and the Grenadines</option>
+                                <option>Samoa</option>
+                                <option>San Marino</option>
+                                <option>Sao Tome and Principe</option>
+                                <option>Saudi Arabia</option>
+                                <option>Senegal</option>
+                                <option>Serbia</option>
+                                <option>Seychelles</option>
+                                <option>Sierra Leone</option>
+                                <option>Singapore</option>
+                                <option>Slovakia</option>
+                                <option>Slovenia</option>
+                                <option>Solomon Islands</option>
+                                <option>Somalia</option>
+                                <option>South Africa</option>
+                                <option>South Korea</option>
+                                <option>South Sudan</option>
+                                <option>Spain</option>
+                                <option>Sri Lanka</option>
+                                <option>Sudan</option>
+                                <option>Suriname</option>
+                                <option>Sweden</option>
+                                <option>Switzerland</option>
+                                <option>Syria</option>
+                                <option>Taiwan</option>
+                                <option>Tajikistan</option>
+                                <option>Tanzania</option>
+                                <option>Thailand</option>
+                                <option>Timor-Leste</option>
+                                <option>Togo</option>
+                                <option>Tonga</option>
+                                <option>Trinidad and Tobago</option>
+                                <option>Tunisia</option>
+                                <option>Türkiye</option>
+                                <option>Turkmenistan</option>
+                                <option>Tuvalu</option>
+                                <option>Uganda</option>
+                                <option>Ukraine</option>
+                                <option>United Arab Emirates</option>
+                                <option>United Kingdom</option>
+                                <option>United States</option>
+                                <option>Uruguay</option>
+                                <option>Uzbekistan</option>
+                                <option>Vanuatu</option>
+                                <option>Vatican City</option>
+                                <option>Venezuela</option>
+                                <option>Vietnam</option>
+                                <option>Yemen</option>
+                                <option>Zambia</option>
+                                <option>Zimbabwe</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+
+                    <div class="register-field">
+
+                        <label for="email">
+                            Email address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="register-row">
+
+                        <div class="register-field">
+
+                            <label for="phone">
+                                Phone number
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                placeholder="+234 800 000 0000"
+                                autocomplete="tel"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="register-field whatsapp-field">
+
+                            <label for="whatsapp">
+                                WhatsApp number
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="whatsapp"
+                                name="whatsapp"
+                                placeholder="+234 800 000 0000"
+                                autocomplete="tel"
+                                required
+                            >
+
+                            <div class="whatsapp-note">
+                                Used for relevant VELMORA communication and
+                                community connection.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="register-row">
+
+                        <div class="register-field">
+
+                            <label for="password">
+                                Password
+                            </label>
+
+                            <div class="password-input-wrap">
+                                <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    placeholder="Create a password"
+                                    autocomplete="new-password"
+                                    minlength="8"
+                                    required
+                                >
+
+                                <button
+                                    type="button"
+                                    class="password-toggle"
+                                    data-target="password"
+                                    aria-label="Show password"
+                                >
+                                    Show
+                                </button>
+                            </div>
+
+                        </div>
+
+
+                        <div class="register-field">
+
+                            <label for="confirmPassword">
+                                Confirm password
+                            </label>
+
+                            <div class="password-input-wrap">
+                                <input
+                                    type="password"
+                                    id="confirmPassword"
+                                    name="confirmPassword"
+                                    placeholder="Repeat your password"
+                                    autocomplete="new-password"
+                                    minlength="8"
+                                    required
+                                >
+
+                                <button
+                                    type="button"
+                                    class="password-toggle"
+                                    data-target="confirmPassword"
+                                    aria-label="Show password"
+                                >
+                                    Show
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="register-agreement">
+
+                        <input
+                            type="checkbox"
+                            id="termsAgreement"
+                            name="termsAgreement"
+                            required
+                        >
+
+                        <label for="termsAgreement">
+                            I agree to the
+                            <a href="terms.html">Terms of Service</a>
+                            and
+                            <a href="privacy.html">Privacy Policy</a>.
+                        </label>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="register-submit"
+                    >
+                        Create VELMORA Account
+                    </button>
+
+                </form>
+
+
+                <p class="register-login">
+                    Already have an account?
+                    <a href="login.html">Log in</a>
+                </p>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <footer class="register-footer">
+        © 2026 VELMORA GROUP. A world connected by possibility.
+    </footer>
+
+</div>
+
+
+<script>
+    const registerForm = document.getElementById("registerForm");
+
+    document.querySelectorAll(".password-toggle").forEach((button) => {
+        button.addEventListener("click", () => {
+            const targetId = button.dataset.target;
+            const input = document.getElementById(targetId);
+
+            if (!input) return;
+
+            if (input.type === "password") {
+                input.type = "text";
+                button.textContent = "Hide";
+                button.setAttribute("aria-label", "Hide password");
+            } else {
+                input.type = "password";
+                button.textContent = "Show";
+                button.setAttribute("aria-label", "Show password");
+            }
+        });
+    });
+
+    registerForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+
+        if (password !== confirmPassword) {
+            alert("Your passwords do not match.");
+            return;
+        }
+
+        alert("Registration form is ready. We will connect this to the VELMORA account system next.");
+    });
+</script>
+
+</body>
+</html>

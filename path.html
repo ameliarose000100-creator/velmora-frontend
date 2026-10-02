@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Your Starting Path | VELMORA</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --ink: #142019;
+            --muted: #68766e;
+            --line: #dce5df;
+            --green: #147a45;
+            --green-dark: #0d6035;
+            --green-light: #e9f6ee;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--ink);
+            font-family: Arial, sans-serif;
+            background:
+                radial-gradient(circle at 8% 5%, rgba(30,150,82,.09), transparent 27%),
+                radial-gradient(circle at 94% 88%, rgba(30,150,82,.07), transparent 30%),
+                #f8faf8;
+        }
+
+        .page {
+            width: min(1180px, 92%);
+            min-height: 100vh;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            padding: 28px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(20,32,25,.07);
+        }
+
+        .brand {
+            color: #123d28;
+            font-size: 1.05rem;
+            font-weight: 800;
+            letter-spacing: .20em;
+        }
+
+        .progress {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .progress-label {
+            color: #68766e;
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: .12em;
+        }
+
+        .progress-line {
+            width: 105px;
+            height: 4px;
+            overflow: hidden;
+            border-radius: 100px;
+            background: #dfe8e2;
+        }
+
+        .progress-line span {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border-radius: inherit;
+            background: var(--green);
+        }
+
+        main {
+            flex: 1;
+            padding: 70px 0 90px;
+        }
+
+        .content {
+            width: min(940px, 100%);
+            margin: auto;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            color: var(--green);
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .17em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 28px;
+            height: 1px;
+            background: var(--green);
+        }
+
+        h1 {
+            margin: 0;
+            max-width: 820px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            line-height: .95;
+            font-weight: 500;
+            letter-spacing: -.055em;
+        }
+
+        .intro {
+            max-width: 650px;
+            margin: 25px 0 45px;
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .path-card {
+            position: relative;
+            overflow: hidden;
+            padding: 38px;
+            border: 1px solid #cdded3;
+            border-radius: 24px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,.96),
+                    rgba(239,248,242,.9)
+                );
+            box-shadow: 0 22px 55px rgba(20,45,30,.07);
+        }
+
+        .path-card::after {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            right: -110px;
+            top: -110px;
+            border-radius: 50%;
+            background: rgba(20,122,69,.055);
+        }
+
+        .path-label {
+            position: relative;
+            z-index: 1;
+            color: var(--green);
+            font-size: .68rem;
+            font-weight: 800;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+        }
+
+        .path-title {
+            position: relative;
+            z-index: 1;
+            margin: 14px 0 12px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(2rem, 5vw, 3.4rem);
+            font-weight: 500;
+            line-height: 1;
+            letter-spacing: -.045em;
+        }
+
+        .path-description {
+            position: relative;
+            z-index: 1;
+            max-width: 650px;
+            margin: 0;
+            color: #66736b;
+            line-height: 1.75;
+            font-size: .94rem;
+        }
+
+        .signals {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 25px;
+        }
+
+        .signal {
+            padding: 8px 12px;
+            border: 1px solid #d4e2d9;
+            border-radius: 100px;
+            color: #42604e;
+            background: rgba(255,255,255,.72);
+            font-size: .72rem;
+            font-weight: 700;
+        }
+
+        .next {
+            margin-top: 15px;
+            padding: 28px;
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            background: rgba(255,255,255,.82);
+        }
+
+        .next-label {
+            color: var(--green);
+            font-size: .67rem;
+            font-weight: 800;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+        }
+
+        .next h2 {
+            margin: 10px 0 8px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 1.55rem;
+            font-weight: 500;
+        }
+
+        .next p {
+            max-width: 700px;
+            margin: 0;
+            color: #6d7972;
+            font-size: .87rem;
+            line-height: 1.7;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 11px;
+            margin-top: 15px;
+        }
+
+        .step {
+            padding: 20px;
+            border: 1px solid var(--line);
+            border-radius: 15px;
+            background: rgba(255,255,255,.75);
+        }
+
+        .step-number {
+            color: var(--green);
+            font-size: .68rem;
+            font-weight: 800;
+        }
+
+        .step h3 {
+            margin: 12px 0 6px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 1.15rem;
+            font-weight: 500;
+        }
+
+        .step p {
+            margin: 0;
+            color: #738078;
+            font-size: .76rem;
+            line-height: 1.6;
+        }
+
+        .action {
+            margin-top: 38px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .continue {
+            width: min(390px, 100%);
+            padding: 17px 25px;
+            border: 0;
+            border-radius: 12px;
+            color: white;
+            background: var(--green);
+            font-size: .88rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 12px 25px rgba(20,122,69,.14);
+            transition: .2s ease;
+        }
+
+        .continue:hover {
+            background: var(--green-dark);
+            transform: translateY(-2px);
+        }
+
+        .note {
+            max-width: 500px;
+            margin-top: 14px;
+            color: #89938d;
+            font-size: .7rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        footer {
+            padding: 25px 0 30px;
+            color: #8a958e;
+            text-align: center;
+            font-size: .72rem;
+            border-top: 1px solid rgba(20,32,25,.06);
+        }
+
+        @media (max-width: 700px) {
+            .page {
+                width: min(92%, 560px);
+            }
+
+            header {
+                padding: 21px 0;
+            }
+
+            .progress-line {
+                width: 65px;
+            }
+
+            main {
+                padding: 48px 0 65px;
+            }
+
+            h1 {
+                font-size: clamp(2.65rem, 13vw, 4.2rem);
+            }
+
+            .intro {
+                font-size: .91rem;
+            }
+
+            .path-card {
+                padding: 27px;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .brand {
+                font-size: .92rem;
+            }
+
+            .progress-line {
+                display: none;
+            }
+
+            .eyebrow {
+                font-size: .65rem;
+            }
+
+            .path-card {
+                padding: 23px;
+            }
+
+            .next {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<script>
+(async function () {
+
+    const token = localStorage.getItem("velmora_token");
+
+    if (!token) {
+        window.location.replace("login.html");
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            "http://127.0.0.1:5000/api/auth/me",
+            {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
+
+        if (!response.ok) {
+            localStorage.removeItem("velmora_token");
+            localStorage.removeItem("velmora_user");
+            window.location.replace("login.html");
+            return;
+        }
+
+        const data = await response.json();
+
+        if (!data.success || !data.user) {
+            localStorage.removeItem("velmora_token");
+            localStorage.removeItem("velmora_user");
+            window.location.replace("login.html");
+            return;
+        }
+
+        localStorage.setItem(
+            "velmora_user",
+            JSON.stringify(data.user)
+        );
+
+    } catch (error) {
+        console.error("VELMORA authentication check failed:", error);
+
+        localStorage.removeItem("velmora_token");
+        localStorage.removeItem("velmora_user");
+
+        window.location.replace("login.html");
+    }
+
+})();
+</script>
+
+
+<div class="page">
+
+    <header>
+        <div class="brand">VELMORA</div>
+
+        <div class="progress">
+            <div class="progress-label">04 / 04</div>
+
+            <div class="progress-line">
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="content">
+
+            <div class="eyebrow">Your starting path</div>
+
+            <h1>Now let's turn possibility into direction.</h1>
+
+            <p class="intro">
+                Based on what you told us, VELMORA has created a starting
+                direction for you. This is a starting point, not a limitation.
+                Your path can evolve as you learn, practice and grow.
+            </p>
+
+            <div class="path-card">
+
+                <div class="path-label">
+                    Your VELMORA direction
+                </div>
+
+                <div class="path-title" id="pathTitle">
+                    Discover your path
+                </div>
+
+                <p class="path-description" id="pathDescription">
+                    We are looking at your choices.
+                </p>
+
+                <div class="signals" id="signals"></div>
+
+            </div>
+
+            <div class="next">
+
+                <div class="next-label">
+                    Your first move
+                </div>
+
+                <h2 id="nextTitle">
+                    Start with a practical mission.
+                </h2>
+
+                <p id="nextDescription">
+                    Your first mission will help turn your interests into
+                    something you can practice and demonstrate.
+                </p>
+
+            </div>
+
+            <div class="steps">
+
+                <div class="step">
+                    <div class="step-number">01</div>
+                    <h3>Learn</h3>
+                    <p>
+                        Understand the foundation of your chosen direction.
+                    </p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">02</div>
+                    <h3>Practice</h3>
+                    <p>
+                        Work on practical tasks that develop real ability.
+                    </p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">03</div>
+                    <h3>Prove</h3>
+                    <p>
+                        Build evidence of what you can actually do.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="action">
+
+                <button class="continue" id="continueButton">
+                    Begin My VELMORA Journey
+                </button>
+
+                <div class="note">
+                    VELMORA does not guarantee income, employment or
+                    business results. Your path is designed to help you
+                    develop useful capability and discover opportunities.
+                </div>
+
+            </div>
+
+        </section>
+    </main>
+
+    <footer>
+        © 2026 VELMORA GROUP · A world connected by possibility.
+    </footer>
+
+</div>
+
+<script>
+    const paths =
+        JSON.parse(localStorage.getItem("velmora_paths") || "[]");
+
+    const profile =
+        JSON.parse(localStorage.getItem("velmora_profile") || "{}");
+
+    const goals =
+        JSON.parse(localStorage.getItem("velmora_goals") || "[]");
+
+    const pathTitle = document.getElementById("pathTitle");
+    const pathDescription = document.getElementById("pathDescription");
+    const signals = document.getElementById("signals");
+    const nextTitle = document.getElementById("nextTitle");
+    const nextDescription = document.getElementById("nextDescription");
+
+    const interestNames = {
+        technology: "Technology",
+        design: "Design",
+        writing: "Writing",
+        marketing: "Marketing",
+        sales: "Sales",
+        education: "Education",
+        business: "Business",
+        finance: "Finance",
+        "beauty-fashion": "Beauty & Fashion",
+        agriculture: "Agriculture",
+        "media-video": "Media & Video",
+        "customer-service": "Customer Service",
+        programming: "Programming",
+        ai: "Artificial Intelligence",
+        languages: "Languages",
+        crafts: "Crafts",
+        "professional-services": "Professional Services"
+    };
+
+    const experienceNames = {
+        beginner: "Beginner",
+        "some-experience": "Some experience",
+        experienced: "Experienced"
+    };
+
+    const pathNames = {
+        earn: "Earn",
+        learn: "Learn",
+        build: "Build",
+        help: "Help"
+    };
+
+    let primaryPath = paths[0] || "learn";
+
+    if (paths.includes("learn")) {
+        primaryPath = "learn";
+    } else if (paths.includes("build")) {
+        primaryPath = "build";
+    } else if (paths.includes("earn")) {
+        primaryPath = "earn";
+    } else if (paths.includes("help")) {
+        primaryPath = "help";
+    }
+
+    const primaryInterest =
+        (profile.interests || [])[0] || "technology";
+
+    const experience =
+        profile.experience || "beginner";
+
+    const descriptions = {
+        learn:
+            "Your starting direction focuses on developing useful ability through learning, practical work and evidence of progress.",
+
+        build:
+            "Your starting direction focuses on turning ideas, knowledge or skills into practical projects, products or services.",
+
+        earn:
+            "Your starting direction focuses on developing useful capability and connecting it with legitimate opportunities.",
+
+        help:
+            "Your starting direction focuses on using what you know to teach, mentor, connect, collaborate or create opportunities for others."
+    };
+
+    const missionMap = {
+        technology:
+            "Explore one practical technology skill and complete your first small project.",
+
+        design:
+            "Create your first practical design project and begin building visual evidence of your ability.",
+
+        writing:
+            "Write and complete your first useful piece of content for a real audience.",
+
+        marketing:
+            "Study one marketing problem and create a simple campaign or strategy around it.",
+
+        sales:
+            "Learn a basic sales process and practice presenting a product or service clearly.",
+
+        education:
+            "Choose something you know and turn it into a simple learning resource for another person.",
+
+        business:
+            "Identify a real problem and develop a simple business idea around solving it.",
+
+        finance:
+            "Build foundational financial knowledge and apply it to a practical personal or business scenario.",
+
+        "beauty-fashion":
+            "Explore a practical beauty or fashion skill and create your first piece of demonstrable work.",
+
+        agriculture:
+            "Explore a practical agricultural problem and identify a useful product, service or process that could address it.",
+
+        "media-video":
+            "Create your first short media or video project and begin developing a portfolio.",
+
+        "customer-service":
+            "Practice handling a realistic customer scenario and develop a clear service approach.",
+
+        programming:
+            "Build a small programming project that demonstrates a useful concept.",
+
+        ai:
+            "Use AI as a practical tool to complete a small project while learning how to verify and improve the result.",
+
+        languages:
+            "Choose a language goal and begin building practical communication ability.",
+
+        crafts:
+            "Create your first practical craft project and document the work as evidence.",
+
+        "professional-services":
+            "Define one service you can develop and create a simple example of what you could offer."
+    };
+
+    const goalNames = {
+        "extra-income": "Extra income",
+        "full-time-income": "Full-time career",
+        "international-customers": "International customers",
+        sell: "Sell products/services",
+        "start-business": "Start a business",
+        "learn-skill": "Learn a skill",
+        hire: "Hire people",
+        "grow-business": "Grow a business"
+    };
+
+    pathTitle.textContent =
+        pathNames[primaryPath] + " through " +
+        interestNames[primaryInterest];
+
+    pathDescription.textContent =
+        descriptions[primaryPath];
+
+    const signalValues = [
+        pathNames[primaryPath],
+        interestNames[primaryInterest],
+        experienceNames[experience]
+    ];
+
+    if (goals.length > 0) {
+        signalValues.push(goalNames[goals[0]] || goals[0]);
+    }
+
+    signalValues.forEach(value => {
+        const element = document.createElement("span");
+        element.className = "signal";
+        element.textContent = value;
+        signals.appendChild(element);
+    });
+
+    nextTitle.textContent =
+        "Your first mission: " +
+        (interestNames[primaryInterest] || "practical skill");
+
+    nextDescription.textContent =
+        missionMap[primaryInterest] ||
+        "Choose a practical skill, learn the foundation and create your first piece of evidence.";
+
+    document.getElementById("continueButton").addEventListener("click", () => {
+
+        const startingPath = {
+            primaryPath,
+            primaryInterest,
+            experience,
+            goals,
+            paths
+        };
+
+        localStorage.setItem(
+            "velmora_starting_path",
+            JSON.stringify(startingPath)
+        );
+
+        window.location.href = "dashboard.html";
+    });
+</script>
+
+</body>
+</html>

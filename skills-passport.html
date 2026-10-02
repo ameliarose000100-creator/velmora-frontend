@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Skills Passport · VELMORA</title>
+
+    <style>
+        :root {
+            --bg: #f7f7f2;
+            --card: #ffffff;
+            --text: #172019;
+            --muted: #68736b;
+            --green: #177245;
+            --border: #dfe5df;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Arial, sans-serif;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .header {
+            min-height: 72px;
+            padding: 18px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            background: rgba(247, 247, 242, .96);
+        }
+
+        .logo {
+            font-family: Georgia, serif;
+            font-size: 1.25rem;
+            letter-spacing: .08em;
+        }
+
+        .back {
+            color: var(--green);
+            font-size: .82rem;
+            font-weight: 700;
+        }
+
+        main {
+            width: min(900px, 90%);
+            margin: 0 auto;
+            padding: 70px 0;
+        }
+
+        .eyebrow {
+            color: var(--green);
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            max-width: 700px;
+            margin: 14px 0;
+            font-family: Georgia, serif;
+            font-size: clamp(2.4rem, 7vw, 4.8rem);
+            line-height: .98;
+            font-weight: 500;
+        }
+
+        .intro {
+            max-width: 680px;
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .passport-card {
+            margin-top: 45px;
+            padding: 30px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+        }
+
+        .passport-card h2 {
+            margin: 0 0 10px;
+            font-family: Georgia, serif;
+            font-size: 1.65rem;
+            font-weight: 500;
+        }
+
+        .passport-card p {
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .passport-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-top: 25px;
+        }
+
+        .passport-item {
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+        }
+
+        .passport-item strong {
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        .passport-item span {
+            color: var(--muted);
+            font-size: .82rem;
+            line-height: 1.5;
+        }
+
+        .status {
+            margin-top: 28px;
+            padding: 16px 18px;
+            border-radius: 14px;
+            background: #f1f6f2;
+            color: var(--muted);
+            font-size: .82rem;
+            line-height: 1.6;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 13px 20px;
+            border-radius: 999px;
+            background: var(--green);
+            color: white;
+            font-size: .82rem;
+            font-weight: 700;
+        }
+
+        footer {
+            padding: 35px 6%;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: .75rem;
+        }
+
+        @media (max-width: 650px) {
+
+            main {
+                padding: 50px 0;
+            }
+
+            .passport-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .passport-card {
+                padding: 22px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+
+    <a href="dashboard.html" class="logo">
+        VELMORA
+    </a>
+
+    <a href="dashboard.html" class="back">
+        ← Dashboard
+    </a>
+
+</header>
+
+<main>
+
+    <div class="eyebrow">
+        Skills Passport
+    </div>
+
+    <h1>
+        Show what you can do.
+    </h1>
+
+    <p class="intro">
+        Your Skills Passport is the growing record of what you learn,
+        practice, prove and accomplish through VELMORA.
+    </p>
+
+    <section class="passport-card">
+
+        <h2 id="passportName">
+            Your VELMORA identity
+        </h2>
+
+        <p>
+            This passport will grow with you. As you develop skills,
+            complete practical work and build evidence, your profile
+            can become a clearer record of your ability.
+        </p>
+
+        <div class="passport-grid">
+
+            <div class="passport-item">
+                <strong>Skills</strong>
+                <span>
+                    Skills you are learning or developing.
+                </span>
+            </div>
+
+            <div class="passport-item">
+                <strong>Practice</strong>
+                <span>
+                    Practical missions and projects you complete.
+                </span>
+            </div>
+
+            <div class="passport-item">
+                <strong>Proof</strong>
+                <span>
+                    Evidence that demonstrates what you can do.
+                </span>
+            </div>
+
+            <div class="passport-item">
+                <strong>Experience</strong>
+                <span>
+                    Work, collaboration and experience you build over time.
+                </span>
+            </div>
+
+        </div>
+
+        <div class="status">
+            Your Skills Passport is at the foundation stage.
+            Keep learning, practicing and building proof. VELMORA
+            will add more capabilities to this passport as the platform grows.
+        </div>
+
+        <section
+            id="skillsEvidenceSection"
+            style="margin-top: 32px;"
+        >
+            <h2>
+                Demonstrated Skills
+            </h2>
+
+            <p>
+                Skills connected to practical work and verified evidence.
+            </p>
+
+            <div id="skillsEvidenceList"></div>
+
+            <div
+                id="skillsEvidenceEmpty"
+                class="status"
+                style="display:none;"
+            >
+                Your demonstrated skills will appear here
+                after practical work has been reviewed and verified.
+            </div>
+        </section>
+
+        <section
+            id="verifiedProofSection"
+            style="margin-top: 32px;"
+        >
+            <h2>
+                Verified Proof
+            </h2>
+
+            <p id="proofIntro">
+                Approved work that has been reviewed and verified.
+            </p>
+
+            <div id="proofList"></div>
+
+            <div
+                id="proofEmpty"
+                class="status"
+                style="display:none;"
+            >
+                No verified proof yet.
+                Complete practical missions and submit your work
+                for review.
+            </div>
+
+            <div
+                id="proofError"
+                class="status"
+                style="display:none;"
+            >
+                Unable to load your verified proof right now.
+            </div>
+        </section>
+
+        <a
+            href="dashboard.html"
+            class="button"
+        >
+            Back to Dashboard
+        </a>
+
+    </section>
+
+</main>
+
+<footer>
+    © 2026 VELMORA GROUP · A world connected by possibility.
+</footer>
+
+<script>
+    const user =
+        JSON.parse(
+            localStorage.getItem("velmora_user") || "null"
+        );
+
+    const token =
+        localStorage.getItem("velmora_token");
+
+    if (user?.full_name) {
+        document.getElementById(
+            "passportName"
+        ).textContent =
+            user.full_name;
+    }
+
+    const proofList =
+        document.getElementById(
+            "proofList"
+        );
+
+    const proofEmpty =
+        document.getElementById(
+            "proofEmpty"
+        );
+
+    const proofError =
+        document.getElementById(
+            "proofError"
+        );
+
+    function escapeHtml(value) {
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    function formatDate(value) {
+        if (!value) return "Unknown date";
+
+        return new Date(
+            value
+        ).toLocaleDateString(
+            undefined,
+            {
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            }
+        );
+    }
+
+    async function loadProof() {
+
+        if (!token) {
+            window.location.href =
+                "login.html";
+            return;
+        }
+
+        try {
+
+            const response =
+                await fetch(
+                    "http://127.0.0.1:5000/api/proofs",
+                    {
+                        headers: {
+                            Authorization:
+                                `Bearer ${token}`
+                        }
+                    }
+                );
+
+            const data =
+                await response.json();
+
+            if (
+                response.status === 401
+            ) {
+                localStorage.removeItem(
+                    "velmora_token"
+                );
+
+                localStorage.removeItem(
+                    "velmora_user"
+                );
+
+                window.location.href =
+                    "login.html";
+
+                return;
+            }
+
+            if (
+                !response.ok ||
+                !data.success
+            ) {
+                throw new Error(
+                    data.message ||
+                    "Unable to load proof."
+                );
+            }
+
+            const proofs =
+                data.proofs || [];
+
+            const skillsEvidenceList =
+                document.getElementById(
+                    "skillsEvidenceList"
+                );
+
+            const skillsEvidenceEmpty =
+                document.getElementById(
+                    "skillsEvidenceEmpty"
+                );
+
+            const professionalCommunicationProof =
+                proofs.find(
+                    proof =>
+                        proof.title ===
+                        "professional-communication-1"
+                );
+
+            if (
+                professionalCommunicationProof
+            ) {
+
+                skillsEvidenceList.innerHTML = `
+                    <article
+                        style="
+                            margin-top:16px;
+                            padding:22px;
+                            border:1px solid var(--border);
+                            border-radius:18px;
+                            background:#ffffff;
+                        "
+                    >
+                        <div
+                            style="
+                                color:var(--green);
+                                font-size:.7rem;
+                                font-weight:800;
+                                letter-spacing:.1em;
+                                text-transform:uppercase;
+                                margin-bottom:8px;
+                            "
+                        >
+                            Skill demonstrated
+                        </div>
+
+                        <strong
+                            style="
+                                display:block;
+                                font-family:Georgia,serif;
+                                font-size:1.35rem;
+                                font-weight:500;
+                                margin-bottom:14px;
+                            "
+                        >
+                            Professional Communication
+                        </strong>
+
+                        <div
+                            style="
+                                display:grid;
+                                gap:10px;
+                            "
+                        >
+                            <div>
+                                <strong>Practice</strong>
+                                <span
+                                    style="
+                                        display:block;
+                                        color:var(--muted);
+                                        font-size:.82rem;
+                                        margin-top:4px;
+                                    "
+                                >
+                                    Professional communication mission completed.
+                                </span>
+                            </div>
+
+                            <div>
+                                <strong>Proof</strong>
+                                <span
+                                    style="
+                                        display:block;
+                                        color:var(--green);
+                                        font-size:.82rem;
+                                        margin-top:4px;
+                                        font-weight:700;
+                                    "
+                                >
+                                    ✓ Verified
+                                </span>
+                            </div>
+
+                            <div>
+                                <strong>Evidence</strong>
+                                <span
+                                    style="
+                                        display:block;
+                                        color:var(--muted);
+                                        font-size:.82rem;
+                                        line-height:1.6;
+                                        margin-top:4px;
+                                    "
+                                >
+                                    ${escapeHtml(
+                                        professionalCommunicationProof.description
+                                    )}
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+                `;
+
+            } else {
+
+                skillsEvidenceEmpty.style.display =
+                    "block";
+            }
+
+            if (
+                proofs.length === 0
+            ) {
+                proofEmpty.style.display =
+                    "block";
+
+                return;
+            }
+
+            proofList.innerHTML =
+                proofs.map(
+                    proof => `
+                        <article
+                            style="
+                                margin-top:16px;
+                                padding:20px;
+                                border:1px solid var(--border);
+                                border-radius:16px;
+                                background:#fbfcfa;
+                            "
+                        >
+                            <div
+                                style="
+                                    color:var(--green);
+                                    font-size:.7rem;
+                                    font-weight:800;
+                                    letter-spacing:.1em;
+                                    text-transform:uppercase;
+                                    margin-bottom:8px;
+                                "
+                            >
+                                Verified
+                            </div>
+
+                            <strong
+                                style="
+                                    display:block;
+                                    margin-bottom:8px;
+                                "
+                            >
+                                ${escapeHtml(
+                                    proof.title
+                                )}
+                            </strong>
+
+                            <p
+                                style="
+                                    margin:0 0 12px;
+                                "
+                            >
+                                ${escapeHtml(
+                                    proof.description
+                                )}
+                            </p>
+
+                            <span
+                                style="
+                                    color:var(--muted);
+                                    font-size:.78rem;
+                                "
+                            >
+                                Verified ${escapeHtml(
+                                    formatDate(
+                                        proof.verified_at
+                                    )
+                                )}
+                            </span>
+                        </article>
+                    `
+                ).join("");
+
+        } catch (error) {
+
+            console.error(
+                "Proof loading error:",
+                error
+            );
+
+            proofError.style.display =
+                "block";
+        }
+    }
+
+    loadProof();
+</script>
+
+<script src="global-nav.js"></script>
+</body>
+</html>

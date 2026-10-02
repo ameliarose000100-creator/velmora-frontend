@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Your VELMORA Profile</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --ink: #142019;
+            --muted: #68766e;
+            --line: #dce5df;
+            --green: #147a45;
+            --green-dark: #0d6035;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--ink);
+            font-family: Arial, sans-serif;
+            background:
+                radial-gradient(circle at 8% 5%, rgba(30,150,82,.09), transparent 27%),
+                radial-gradient(circle at 94% 88%, rgba(30,150,82,.07), transparent 30%),
+                #f8faf8;
+        }
+
+        .page {
+            width: min(1180px, 92%);
+            min-height: 100vh;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            padding: 28px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(20,32,25,.07);
+        }
+
+        .brand {
+            color: #123d28;
+            font-size: 1.05rem;
+            font-weight: 800;
+            letter-spacing: .20em;
+        }
+
+        .back {
+            color: var(--green);
+            text-decoration: none;
+            font-size: .78rem;
+            font-weight: 800;
+        }
+
+        main {
+            flex: 1;
+            padding: 65px 0 90px;
+        }
+
+        .content {
+            width: min(940px, 100%);
+            margin: auto;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            color: var(--green);
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .17em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 28px;
+            height: 1px;
+            background: var(--green);
+        }
+
+        h1 {
+            margin: 0;
+            max-width: 800px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(3rem, 7vw, 5.3rem);
+            line-height: .95;
+            font-weight: 500;
+            letter-spacing: -.055em;
+        }
+
+        .intro {
+            max-width: 650px;
+            margin: 25px 0 52px;
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .section {
+            margin-top: 46px;
+        }
+
+        .section:first-of-type {
+            margin-top: 0;
+        }
+
+        .section-title {
+            margin: 0 0 17px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 1.65rem;
+            font-weight: 500;
+            letter-spacing: -.025em;
+        }
+
+        .choices {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 11px;
+        }
+
+        .choice {
+            position: relative;
+            display: flex;
+            align-items: center;
+            min-height: 62px;
+            padding: 15px 17px;
+            cursor: pointer;
+            border: 1px solid var(--line);
+            border-radius: 13px;
+            background: rgba(255,255,255,.82);
+            transition: .2s ease;
+        }
+
+        .choice:hover {
+            transform: translateY(-2px);
+            border-color: #a9cdb7;
+        }
+
+        .choice.selected {
+            border-color: var(--green);
+            background: #eff8f2;
+            box-shadow: 0 0 0 2px rgba(20,122,69,.07);
+        }
+
+        .choice input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .choice-check {
+            width: 21px;
+            height: 21px;
+            flex: 0 0 21px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #d3dfd7;
+            border-radius: 6px;
+            color: transparent;
+            background: white;
+            font-size: .65rem;
+            font-weight: 900;
+        }
+
+        .choice.selected .choice-check {
+            color: white;
+            border-color: var(--green);
+            background: var(--green);
+        }
+
+        .choice-text {
+            color: #34443b;
+            font-size: .84rem;
+            line-height: 1.4;
+        }
+
+        .single-choice .choice.selected .choice-check {
+            border-radius: 50%;
+        }
+
+        .action {
+            margin-top: 52px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .save {
+            width: min(390px, 100%);
+            padding: 17px 25px;
+            border: 0;
+            border-radius: 12px;
+            color: white;
+            background: var(--green);
+            font-size: .88rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 12px 25px rgba(20,122,69,.14);
+            transition: .2s ease;
+        }
+
+        .save:hover:not(:disabled) {
+            background: var(--green-dark);
+            transform: translateY(-2px);
+        }
+
+        .save:disabled {
+            opacity: .42;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .note {
+            margin-top: 14px;
+            color: #7b877f;
+            font-size: .75rem;
+            text-align: center;
+        }
+
+        .status {
+            min-height: 22px;
+            margin-top: 15px;
+            color: var(--green);
+            font-size: .8rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        @media (max-width: 760px) {
+            .choices {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            main {
+                padding-top: 45px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .choices {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 3.1rem;
+            }
+
+            header {
+                padding: 22px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <header>
+        <div class="brand">VELMORA</div>
+
+        <a href="profile-view.html" class="back">
+            ← Back to Profile
+        </a>
+    </header>
+
+    <main>
+        <div class="content">
+
+            <div class="eyebrow">Your profile</div>
+
+            <h1>Edit what you're bringing to the world.</h1>
+
+            <p class="intro">
+                Your VELMORA profile can grow with you. Update your
+                directions, interests, resources and experience whenever
+                your journey changes.
+            </p>
+
+            <form id="profileEditForm">
+
+                <section class="section">
+                    <h2 class="section-title">Your directions</h2>
+
+                    <div class="choices">
+
+                        <label class="choice">
+                            <input type="checkbox" name="paths" value="earn">
+                            <span class="choice-check">✓</span>
+                            <span class="choice-text">
+                                Earn — Find legitimate opportunities to use what you can do.
+                            </span>
+                        </label>
+
+                        <label class="choice">
+                            <input type="checkbox" name="paths" value="learn">
+                            <span class="choice-check">✓</span>
+                            <span class="choice-text">
+                                Learn — Develop skills and build evidence.
+                            </span>
+                        </label>
+
+                        <label class="choice">
+                            <input type="checkbox" name="paths" value="build">
+                            <span class="choice-check">✓</span>
+                            <span class="choice-text">
+                                Build — Turn ideas, skills or knowledge into something useful.
+                            </span>
+                        </label>
+
+                        <label class="choice">
+                            <input type="checkbox" name="paths" value="help">
+                            <span class="choice-check">✓</span>
+                            <span class="choice-text">
+                                Help — Teach, mentor, connect or create opportunities.
+                            </span>
+                        </label>
+
+                    </div>
+                </section>
+
+
+                <section class="section">
+                    <h2 class="section-title">What do you have?</h2>
+
+                    <div class="choices">
+
+                        <label class="choice">
+                            <input type="checkbox" name="resources" value="smartphone">
+                            <span class="choice-check">✓</span>
+                            <span class="choice-text">Smartphone</span>
+                        </label>
+
+                        <label class="choice">
+                            <input type="checkbox" name="resources" value="computer">
+                            <span class="choice-check">✓</span>
+                            <span class="choice-text">Computer</span>
+                        </label>
+
+                        <label class="choice">
+                            <input type="checkbox" name="resources" value="internet">
+                            <span class="choice-check">✓</span>
+                            <span class="choice-text">Internet access</span>
+                        </label>
+
+                        <label class="choice">
+                            <input type="checkbox" name="resources" value="professional-skill">
+                            <span class="choice-check">✓</span>
+                            <span class="choice-text">Professional skill</span>
+                        </label>
+
+                        <label class="choice">
+                            <input type="checkbox" name="resources" value="creative-skill">
+                            <span class="choice-check">✓</span>
+                            <span class="choice-text">Creative skill</span>
+                        </label>
+
+                        <label class="choice">
+                            <input type="checkbox" name="resources" value="business-experience">
+                            <span class="choice-check">✓</span>
+                            <span class="choice-text">Business experience</span>
+                        </label>
+
+                    </div>
+                </section>
+
+
+                <section class="section">
+                    <h2 class="section-title">What interests you?</h2>
+
+                    <div class="choices">
+
+                        <label class="choice">
+                            <input type="checkbox" name="interests" value="technology">
+                            <span class="choice-check">✓</span>
+                            <span class="choice-text">Technology</span>
+                        </label>
+
+                        <label class="choice">
+                            <input type="checkbox" name="interests" value="design">
+                            <span class="choice-check">✓</span>
+                            <span class="choice-text">Design</span>
+                        </label>
+
+                        <label class="choice">
+                            <input type="checkbox" name="interests" value="marketing">
+                            <span class="choice-check">✓</span>
+                            <span class="choice-text">Marketing</span>
+                        </label>
+
+                        <label class="choice">
+                            <input type="checkbox" name="interests" value="ai">
+                            <span class="choice-check">✓</span>
+                            <span class="choice-text">AI</span>
+                        </label>
+
+                        <label class="choice">
+                            <input type="checkbox" name="interests" value="business">
+                            <span class="choice-check">✓</span>
+                            <span class="choice-text">Business</span>
+                        </label>
+
+                        <label class="choice">
+                            <input type="checkbox" name="interests" value="education">
+                            <span class="choice-check">✓</span>
+                            <span class="choice-text">Education</span>
+                        </label>
+
+                    </div>
+                </section>
+
+
+                <section class="section">
+                    <h2 class="section-title">Your experience</h2>
+
+                    <div class="choices single-choice">
+
+                        <label class="choice">
+                            <input type="radio" name="experience" value="beginner">
+                            <span class="choice-check">✓</span>
+                            <span class="choice-text">Beginner</span>
+                        </label>
+
+                        <label class="choice">
+                            <input type="radio" name="experience" value="intermediate">
+                            <span class="choice-check">✓</span>
+                            <span class="choice-text">Intermediate</span>
+                        </label>
+
+                        <label class="choice">
+                            <input type="radio" name="experience" value="advanced">
+                            <span class="choice-check">✓</span>
+                            <span class="choice-text">Advanced</span>
+                        </label>
+
+                    </div>
+                </section>
+
+
+                <div class="action">
+
+                    <button
+                        type="submit"
+                        class="save"
+                        id="saveButton"
+                        disabled
+                    >
+                        Save Profile
+                    </button>
+
+                    <div class="status" id="status"></div>
+
+                    <div class="note">
+                        Your changes are saved securely to your VELMORA profile.
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </main>
+
+</div>
+
+
+<script>
+(async function () {
+
+    const token =
+        localStorage.getItem("velmora_token");
+
+    if (!token) {
+        window.location.replace("login.html");
+        return;
+    }
+
+    const form =
+        document.getElementById("profileEditForm");
+
+    const saveButton =
+        document.getElementById("saveButton");
+
+    const status =
+        document.getElementById("status");
+
+    try {
+
+        const response = await fetch(
+            "http://127.0.0.1:5000/api/profile",
+            {
+                method: "GET",
+                headers: {
+                    "Authorization":
+                        `Bearer ${token}`
+                }
+            }
+        );
+
+        if (response.status === 401) {
+            throw new Error("Authentication expired.");
+        }
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(
+                data.message ||
+                "Unable to load your profile."
+            );
+        }
+
+        const profile = data.profile;
+
+        if (!profile) {
+            window.location.replace("onboarding.html");
+            return;
+        }
+
+        function selectValues(name, values) {
+
+            if (!Array.isArray(values)) return;
+
+            document
+                .querySelectorAll(
+                    `input[name="${name}"]`
+                )
+                .forEach(input => {
+
+                    input.checked =
+                        values.includes(input.value);
+
+                    input.closest(".choice")
+                        .classList.toggle(
+                            "selected",
+                            input.checked
+                        );
+                });
+        }
+
+        selectValues("paths", profile.paths);
+        selectValues("resources", profile.resources);
+        selectValues("interests", profile.interests);
+
+        const experience =
+            document.querySelector(
+                `input[name="experience"][value="${profile.experience || ""}"]`
+            );
+
+        if (experience) {
+            experience.checked = true;
+
+            experience.closest(".choice")
+                .classList.add("selected");
+        }
+
+        saveButton.disabled = false;
+
+    } catch (error) {
+
+        console.error(
+            "Profile edit load error:",
+            error
+        );
+
+        if (
+            error.message ===
+            "Authentication expired."
+        ) {
+            localStorage.removeItem("velmora_token");
+            localStorage.removeItem("velmora_user");
+            window.location.replace("login.html");
+            return;
+        }
+
+        status.textContent =
+            error.message ||
+            "Unable to load your profile.";
+    }
+
+
+    document
+        .querySelectorAll(".choice")
+        .forEach(choice => {
+
+            const input =
+                choice.querySelector("input");
+
+            input.addEventListener(
+                "change",
+                () => {
+
+                    if (input.type === "radio") {
+
+                        document
+                            .querySelectorAll(
+                                `input[name="${input.name}"]`
+                            )
+                            .forEach(item => {
+                                item.closest(".choice")
+                                    .classList.remove(
+                                        "selected"
+                                    );
+                            });
+                    }
+
+                    choice.classList.toggle(
+                        "selected",
+                        input.checked
+                    );
+                }
+            );
+        });
+
+
+    form.addEventListener(
+        "submit",
+        async event => {
+
+            event.preventDefault();
+
+            const paths =
+                Array.from(
+                    document.querySelectorAll(
+                        'input[name="paths"]:checked'
+                    )
+                ).map(input => input.value);
+
+            const resources =
+                Array.from(
+                    document.querySelectorAll(
+                        'input[name="resources"]:checked'
+                    )
+                ).map(input => input.value);
+
+            const interests =
+                Array.from(
+                    document.querySelectorAll(
+                        'input[name="interests"]:checked'
+                    )
+                ).map(input => input.value);
+
+            const experienceInput =
+                document.querySelector(
+                    'input[name="experience"]:checked'
+                );
+
+            if (paths.length === 0) {
+                status.textContent =
+                    "Choose at least one direction.";
+                return;
+            }
+
+            if (resources.length === 0) {
+                status.textContent =
+                    "Choose at least one resource.";
+                return;
+            }
+
+            if (interests.length === 0) {
+                status.textContent =
+                    "Choose at least one interest.";
+                return;
+            }
+
+            if (!experienceInput) {
+                status.textContent =
+                    "Choose your experience level.";
+                return;
+            }
+
+            saveButton.disabled = true;
+            saveButton.textContent = "Saving...";
+            status.textContent = "";
+
+            try {
+
+                const response = await fetch(
+                    "http://127.0.0.1:5000/api/profile",
+                    {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type":
+                                "application/json",
+                            "Authorization":
+                                `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            paths,
+                            resources,
+                            interests,
+                            experience:
+                                experienceInput.value,
+
+                            goals:
+                                Array.isArray(
+                                    JSON.parse(
+                                        localStorage.getItem(
+                                            "velmora_goals"
+                                        ) || "[]"
+                                    )
+                                )
+                                    ? JSON.parse(
+                                        localStorage.getItem(
+                                            "velmora_goals"
+                                        ) || "[]"
+                                    )
+                                    : [],
+
+                            primaryPath:
+                                paths[0] || null,
+
+                            primaryInterest:
+                                interests[0] || null
+                        })
+                    }
+                );
+
+                if (response.status === 401) {
+                    throw new Error(
+                        "Authentication expired."
+                    );
+                }
+
+                const data =
+                    await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(
+                        data.message ||
+                        "Unable to save your profile."
+                    );
+                }
+
+                localStorage.setItem(
+                    "velmora_profile",
+                    JSON.stringify({
+                        resources,
+                        interests,
+                        experience:
+                            experienceInput.value
+                    })
+                );
+
+                localStorage.setItem(
+                    "velmora_paths",
+                    JSON.stringify(paths)
+                );
+
+                status.textContent =
+                    "Your profile has been updated.";
+
+                saveButton.textContent =
+                    "Saved";
+
+                setTimeout(() => {
+                    window.location.replace(
+                        "profile-view.html"
+                    );
+                }, 700);
+
+            } catch (error) {
+
+                console.error(
+                    "Profile edit save error:",
+                    error
+                );
+
+                if (
+                    error.message ===
+                    "Authentication expired."
+                ) {
+                    localStorage.removeItem(
+                        "velmora_token"
+                    );
+
+                    localStorage.removeItem(
+                        "velmora_user"
+                    );
+
+                    window.location.replace(
+                        "login.html"
+                    );
+
+                    return;
+                }
+
+                status.textContent =
+                    error.message ||
+                    "Unable to save your profile.";
+
+                saveButton.disabled = false;
+                saveButton.textContent =
+                    "Save Profile";
+            }
+        }
+    );
+
+})();
+</script>
+
+</body>
+</html>

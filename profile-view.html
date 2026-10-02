@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Profile · VELMORA</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .profile-page {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 70px 24px 100px;
+        }
+
+        .profile-header {
+            margin-bottom: 45px;
+        }
+
+        .profile-header h1 {
+            margin: 8px 0 16px;
+        }
+
+        .profile-header p {
+            max-width: 680px;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .profile-card {
+            background: rgba(255, 255, 255, 0.86);
+            border: 1px solid rgba(20, 120, 70, 0.12);
+            border-radius: 24px;
+            padding: 28px;
+        }
+
+        .profile-card.full {
+            grid-column: 1 / -1;
+        }
+
+        .profile-card h2 {
+            margin: 8px 0 18px;
+        }
+
+        .profile-value {
+            color: #176b43;
+            font-weight: 700;
+            line-height: 1.8;
+        }
+
+        .profile-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+        }
+
+        .profile-tag {
+            padding: 8px 13px;
+            border-radius: 999px;
+            background: rgba(20, 120, 70, 0.08);
+            color: #176b43;
+            font-size: 0.84rem;
+            font-weight: 650;
+        }
+
+        .profile-actions {
+            margin-top: 30px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+
+        .profile-edit-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 180px;
+            padding: 13px 22px;
+            border-radius: 999px;
+            background: #176b43;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.84rem;
+            font-weight: 750;
+            border: 1px solid #176b43;
+            box-shadow: 0 10px 22px rgba(20, 120, 70, 0.14);
+            transition:
+                background 180ms ease,
+                border-color 180ms ease,
+                transform 180ms ease,
+                box-shadow 180ms ease;
+        }
+
+        .profile-edit-button:hover {
+            background: #0f5937;
+            border-color: #0f5937;
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(20, 120, 70, 0.18);
+        }
+
+        .profile-edit-button:active {
+            transform: translateY(0);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            color: #176b43;
+            font-weight: 700;
+            padding: 12px 18px;
+            border-radius: 999px;
+            border: 1px solid rgba(20, 120, 70, 0.2);
+        }
+
+        .profile-loading,
+        .profile-error {
+            padding: 25px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        @media (max-width: 700px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-card.full {
+                grid-column: auto;
+            }
+
+            .profile-page {
+                padding-top: 45px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<script>
+    const token = localStorage.getItem("velmora_token");
+
+    if (!token) {
+        window.location.replace("login.html");
+    }
+</script>
+
+<header class="site-header">
+
+    <a href="dashboard.html" class="logo">
+        VELMORA
+    </a>
+
+    <div class="header-right">
+
+        <a
+            href="dashboard.html"
+            class="back-link"
+        >
+            Dashboard
+        </a>
+
+    </div>
+
+</header>
+
+<main class="profile-page">
+
+    <section class="profile-header">
+
+        <div class="eyebrow">
+            Your VELMORA identity
+        </div>
+
+        <h1 id="profileTitle">
+            Your Profile
+        </h1>
+
+        <p id="profileIntro" class="description">
+            This is your evolving VELMORA profile. You can update
+            your direction, interests, experience and goals as you grow.
+        </p>
+
+    </section>
+
+    <div id="profileLoading" class="profile-loading">
+        Loading your profile...
+    </div>
+
+    <div
+        id="profileContent"
+        class="profile-grid"
+        style="display:none;"
+    >
+
+        <article class="profile-card full">
+
+            <div class="card-label">
+                VELMORA identity
+            </div>
+
+            <h2 id="profileName">
+                —
+            </h2>
+
+            <div
+                id="profileCountry"
+                class="profile-value"
+            >
+                —
+            </div>
+
+        </article>
+
+        <article class="profile-card full">
+
+            <div class="card-label">
+                VELMORA direction
+            </div>
+
+            <h2 id="direction">
+                —
+            </h2>
+
+            <div
+                id="directionDetails"
+                class="profile-value"
+            >
+                —
+            </div>
+
+        </article>
+
+        <article class="profile-card">
+
+            <div class="card-label">
+                What you have
+            </div>
+
+            <h2>Resources</h2>
+
+            <div
+                id="resources"
+                class="profile-list"
+            ></div>
+
+        </article>
+
+        <article class="profile-card">
+
+            <div class="card-label">
+                Your interests
+            </div>
+
+            <h2>Areas of interest</h2>
+
+            <div
+                id="interests"
+                class="profile-list"
+            ></div>
+
+        </article>
+
+        <article class="profile-card">
+
+            <div class="card-label">
+                Experience
+            </div>
+
+            <h2 id="experience">
+                —
+            </h2>
+
+        </article>
+
+        <article class="profile-card">
+
+            <div class="card-label">
+                Goals
+            </div>
+
+            <h2>Your direction</h2>
+
+            <div
+                id="goals"
+                class="profile-list"
+            ></div>
+
+        </article>
+
+    </div>
+
+    <div
+        id="profileError"
+        class="profile-error"
+        style="display:none;"
+    ></div>
+
+    <div
+        id="profileActions"
+        class="profile-actions"
+        style="display:none;"
+    >
+
+        <a
+            id="messageProfileButton"
+            href="#"
+            class="profile-edit-button"
+            style="display:none;"
+        >
+            Message
+        </a>
+
+        <a
+            href="profile-edit.html"
+            class="profile-edit-button"
+        >
+            Edit Profile
+        </a>
+
+        <a
+            href="dashboard.html"
+            class="back-link"
+        >
+            Back to Dashboard
+        </a>
+
+    </div>
+
+</main>
+
+<footer>
+    <span>© 2026 VELMORA</span>
+    <span>Opportunity has no borders.</span>
+</footer>
+
+<script>
+
+async function loadProfile() {
+
+    const loading =
+        document.getElementById("profileLoading");
+
+    const content =
+        document.getElementById("profileContent");
+
+    const errorBox =
+        document.getElementById("profileError");
+
+    const actions =
+        document.getElementById("profileActions");
+
+    const profileTitle =
+        document.getElementById("profileTitle");
+
+    const profileIntro =
+        document.getElementById("profileIntro");
+
+    const profileName =
+        document.getElementById("profileName");
+
+    const profileCountry =
+        document.getElementById("profileCountry");
+
+    const params =
+        new URLSearchParams(window.location.search);
+
+    const requestedUserId =
+        params.get("userId");
+
+    const isViewingSomeoneElse =
+        Boolean(requestedUserId);
+
+    const endpoint =
+        isViewingSomeoneElse
+            ? `http://127.0.0.1:5000/api/profile/${encodeURIComponent(requestedUserId)}`
+            : "http://127.0.0.1:5000/api/profile";
+
+    try {
+
+        const response = await fetch(
+            endpoint,
+            {
+                method: "GET",
+                headers: {
+                    "Authorization":
+                        `Bearer ${token}`
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        if (response.status === 401) {
+
+            localStorage.removeItem("velmora_token");
+            localStorage.removeItem("velmora_user");
+
+            window.location.replace("login.html");
+            return;
+        }
+
+        if (!response.ok || !data.success) {
+
+            loading.style.display = "none";
+            errorBox.style.display = "block";
+
+            errorBox.textContent =
+                data.message ||
+                "Unable to load this profile.";
+
+            return;
+        }
+
+        if (!data.profile) {
+
+            loading.style.display = "none";
+            errorBox.style.display = "block";
+
+            errorBox.textContent =
+                "This profile is not available yet.";
+
+            return;
+        }
+
+        const profile = data.profile;
+
+        const messageButton =
+            document.getElementById("messageProfileButton");
+
+        if (messageButton && isViewingSomeoneElse) {
+            messageButton.style.display = "inline-flex";
+            messageButton.href =
+                `messages.html?userId=${encodeURIComponent(profile.id)}`;
+        }
+
+        const pathNames = {
+            earn: "Earn",
+            learn: "Learn",
+            build: "Build",
+            help: "Help"
+        };
+
+        const path =
+            pathNames[profile.primary_path] ||
+            "Discover";
+
+        if (isViewingSomeoneElse) {
+
+            profileTitle.textContent =
+                profile.full_name || "VELMORA Member";
+
+            profileIntro.textContent =
+                "Discover what this person is learning, building and bringing to the VELMORA network.";
+
+            profileName.textContent =
+                profile.full_name || "VELMORA Member";
+
+            profileCountry.textContent =
+                profile.country
+                    ? `Based in ${profile.country}`
+                    : "Country not specified";
+
+        } else {
+
+            profileTitle.textContent =
+                "Your Profile";
+
+            profileIntro.textContent =
+                "This is your evolving VELMORA profile. You can update your direction, interests, experience and goals as you grow.";
+
+            profileName.textContent =
+                profile.full_name || "Your Profile";
+
+            profileCountry.textContent =
+                profile.country
+                    ? `Based in ${profile.country}`
+                    : "Country not specified";
+        }
+
+        document.getElementById("direction").textContent =
+            path;
+
+        document.getElementById("directionDetails").textContent =
+            profile.primary_interest
+                ? `Focus: ${profile.primary_interest}`
+                : "Direction is still developing.";
+
+        document.getElementById("experience").textContent =
+            profile.experience || "Not specified";
+
+        function renderTags(id, items) {
+
+            const container =
+                document.getElementById(id);
+
+            container.innerHTML = "";
+
+            if (!Array.isArray(items) || items.length === 0) {
+
+                const empty =
+                    document.createElement("span");
+
+                empty.className = "profile-value";
+                empty.textContent = "Not specified";
+
+                container.appendChild(empty);
+                return;
+            }
+
+            items.forEach(item => {
+
+                const tag =
+                    document.createElement("span");
+
+                tag.className = "profile-tag";
+                tag.textContent = item;
+
+                container.appendChild(tag);
+            });
+        }
+
+        renderTags("resources", profile.resources);
+        renderTags("interests", profile.interests);
+        renderTags("goals", profile.goals);
+
+        if (isViewingSomeoneElse) {
+
+            actions.innerHTML = `
+                <a
+                    id="messageProfileButton"
+                    href="messages.html?userId=${encodeURIComponent(profile.id)}"
+                    class="profile-edit-button"
+                >
+                    Message
+                </a>
+
+                <a
+                    href="people.html"
+                    class="back-link"
+                >
+                    Back to People
+                </a>
+
+                <a
+                    href="dashboard.html"
+                    class="back-link"
+                >
+                    Dashboard
+                </a>
+            `;
+
+        } else {
+
+            actions.innerHTML = `
+                <a
+                    href="profile-edit.html"
+                    class="profile-edit-button"
+                >
+                    Edit Profile
+                </a>
+
+                <a
+                    href="dashboard.html"
+                    class="back-link"
+                >
+                    Back to Dashboard
+                </a>
+            `;
+        }
+
+        loading.style.display = "none";
+        content.style.display = "grid";
+        actions.style.display = "flex";
+
+    } catch (error) {
+
+        console.error(
+            "Profile loading error:",
+            error
+        );
+
+        loading.style.display = "none";
+        errorBox.style.display = "block";
+
+        errorBox.textContent =
+            "Unable to load this profile right now.";
+    }
+}
+
+loadProfile();
+
+</script>
+
+<script src="global-nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+<title>Dashboard — VELMORA</title>
+
+<style>
+:root {
+    --green: #16794b;
+    --green-dark: #0d5a37;
+    --text: #18211d;
+    --muted: #68736d;
+    --border: #dfe5e1;
+    --bg: #f7f8f6;
+    --white: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background:
+        radial-gradient(circle at 85% 5%, rgba(22,121,75,.09), transparent 25%),
+        var(--bg);
+    color: var(--text);
+    font-family: Arial, sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.header {
+    height: 74px;
+    padding: 0 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    background: rgba(247,248,246,.94);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-weight: 700;
+    letter-spacing: .15em;
+}
+
+
+.logout-button {
+    border: 1px solid rgba(20, 110, 70, 0.18);
+    background: transparent;
+    color: #24563d;
+    padding: 9px 14px;
+    border-radius: 999px;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 650;
+    cursor: pointer;
+    transition: 180ms ease;
+}
+
+.logout-button:hover {
+    background: #24563d;
+    color: #ffffff;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #e0eee7;
+    color: var(--green-dark);
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+}
+
+.container {
+    width: min(1200px, 90%);
+    margin: auto;
+    padding: 55px 0 80px;
+}
+
+.eyebrow {
+    color: var(--green);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+}
+
+.hero h1 {
+    max-width: 750px;
+    margin: 12px 0;
+    font-family: Georgia, serif;
+    font-size: clamp(2.5rem, 6vw, 4.8rem);
+    line-height: 1.02;
+    font-weight: 500;
+}
+
+.hero p {
+    max-width: 650px;
+    color: var(--muted);
+    line-height: 1.75;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1.5fr .8fr;
+    gap: 22px;
+    margin-top: 38px;
+}
+
+.card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 28px;
+    box-shadow: 0 12px 35px rgba(23,39,31,.04);
+}
+
+.card-label {
+    color: var(--muted);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+}
+
+.card h2 {
+    font-family: Georgia, serif;
+    font-weight: 500;
+    font-size: 2rem;
+    margin: 10px 0;
+}
+
+.description {
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+.badge {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: #e9f4ee;
+    color: var(--green-dark);
+    font-size: .75rem;
+    font-weight: 700;
+}
+
+.journey {
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    gap: 10px;
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid var(--border);
+}
+
+.step {
+    font-size: .8rem;
+}
+
+.dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #dfe6e1;
+    margin-bottom: 10px;
+}
+
+.step.active .dot {
+    background: var(--green);
+    box-shadow: 0 0 0 5px #e3f1e9;
+}
+
+.step span {
+    display: block;
+    color: var(--muted);
+    font-size: .7rem;
+    margin-top: 4px;
+}
+
+.mission {
+    margin-top: 22px;
+}
+
+.mission h2 {
+    font-family: Georgia, serif;
+    font-weight: 500;
+    font-size: 1.8rem;
+}
+
+.button {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 13px 20px;
+    border-radius: 999px;
+    background: var(--green);
+    color: white;
+    font-size: .82rem;
+    font-weight: 700;
+}
+
+.side {
+    display: grid;
+    gap: 22px;
+}
+
+.profile-line {
+    color: var(--muted);
+    font-size: .85rem;
+    line-height: 1.8;
+}
+
+.profile-completion {
+    margin-top: 18px;
+}
+
+.profile-completion-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+    font-size: .78rem;
+    color: var(--muted);
+}
+
+.profile-completion-top strong {
+    color: var(--green);
+    font-size: .8rem;
+}
+
+.profile-progress {
+    width: 100%;
+    height: 7px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--border);
+}
+
+.profile-progress-bar {
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--green);
+    transition: width 400ms ease;
+}
+
+.profile-completion-message {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: .72rem;
+    line-height: 1.5;
+}
+
+.opportunity {
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-top: 10px;
+}
+
+.opportunity strong {
+    display: block;
+    font-size: .83rem;
+}
+
+.opportunity span {
+    color: var(--muted);
+    font-size: .72rem;
+}
+
+.help {
+    background: #13251d;
+    color: white;
+    border-color: #13251d;
+}
+
+.help .card-label,
+.help p {
+    color: rgba(255,255,255,.65);
+}
+
+.section {
+    margin-top: 65px;
+}
+
+.section h2 {
+    font-family: Georgia, serif;
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.four {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 16px;
+}
+
+.direction {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 23px;
+    min-height: 175px;
+}
+
+.direction-number {
+    color: var(--green);
+    font-weight: 700;
+    font-size: .72rem;
+}
+
+.direction h3 {
+    font-family: Georgia, serif;
+    font-size: 1.45rem;
+    margin-top: 35px;
+    margin-bottom: 8px;
+}
+
+.direction p {
+    color: var(--muted);
+    font-size: .8rem;
+    line-height: 1.55;
+}
+
+footer {
+    border-top: 1px solid var(--border);
+    padding: 30px 5%;
+    color: var(--muted);
+    font-size: .75rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+@media(max-width:900px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .four {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px) {
+    .journey {
+        grid-template-columns: 1fr;
+    }
+
+    .four {
+        grid-template-columns: 1fr;
+    }
+
+    footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<script>
+(async function () {
+
+    const token = localStorage.getItem("velmora_token");
+
+    if (!token) {
+        window.location.replace("login.html");
+        return;
+    }
+
+    try {
+        const response = await fetch("http://127.0.0.1:5000/api/auth/me", {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            localStorage.removeItem("velmora_token");
+            localStorage.removeItem("velmora_user");
+            window.location.replace("login.html");
+            return;
+        }
+
+        const data = await response.json();
+
+        if (!data.success || !data.user) {
+            localStorage.removeItem("velmora_token");
+            localStorage.removeItem("velmora_user");
+            window.location.replace("login.html");
+            return;
+        }
+
+        localStorage.setItem(
+            "velmora_user",
+            JSON.stringify(data.user)
+        );
+
+    } catch (error) {
+        console.error("VELMORA authentication check failed:", error);
+
+        localStorage.removeItem("velmora_token");
+        localStorage.removeItem("velmora_user");
+
+        window.location.replace("login.html");
+    }
+
+})();
+</script>
+
+
+<header class="header">
+    <a href="index.html" class="logo">VELMORA</a>
+
+    <div class="header-right">
+        <span id="headerName">Your journey</span>
+        <div class="avatar" id="avatar">V</div>
+
+        <button
+            type="button"
+            id="logoutButton"
+            class="logout-button"
+        >
+            Logout
+        </button>
+    </div>
+</header>
+
+<main class="container">
+
+<section class="hero">
+    <div class="eyebrow">Your VELMORA journey</div>
+
+    <h1 id="greeting">
+        Welcome to your next possibility.
+    </h1>
+
+    <p>
+        Learn useful things, practice them, prove what you can do,
+        and connect with people and opportunities around the world.
+    </p>
+</section>
+
+<section class="grid">
+
+<div>
+
+<article class="card">
+
+    <div class="card-label">Your current direction</div>
+
+    <h2 id="pathName">Discover</h2>
+
+    <span class="badge">Starting Path</span>
+
+    <p class="description" id="pathDescription">
+        Your VELMORA direction will appear here after onboarding.
+    </p>
+
+    <div class="journey">
+
+        <div class="step active">
+            <div class="dot"></div>
+            <strong>Discover</strong>
+            <span>Find direction</span>
+        </div>
+
+        <div class="step">
+            <div class="dot"></div>
+            <strong>Learn</strong>
+            <span>Build knowledge</span>
+        </div>
+
+        <div class="step">
+            <div class="dot"></div>
+            <strong>Practice</strong>
+            <span>Build ability</span>
+        </div>
+
+        <div class="step">
+            <div class="dot"></div>
+            <strong>Prove</strong>
+            <span>Create evidence</span>
+        </div>
+
+        <div class="step">
+            <div class="dot"></div>
+            <strong>Connect</strong>
+            <span>Meet opportunity</span>
+        </div>
+
+    </div>
+
+</article>
+
+<article class="card mission">
+
+    <div class="card-label">Today's first mission</div>
+
+    <h2 id="missionTitle">
+        Start building your first proof of ability.
+    </h2>
+
+    <p class="description" id="missionDescription">
+        Complete one small practical task related to your chosen direction.
+    </p>
+
+    <a href="#" class="button">
+        Begin Mission
+    </a>
+
+</article>
+
+</div>
+
+<aside class="side">
+
+<article class="card">
+
+    <div class="card-label">Your profile</div>
+
+    <h2 id="profileName">Your VELMORA identity</h2>
+
+    <div class="profile-line">
+        <div id="interest">Interest: —</div>
+        <div id="experience">Experience: —</div>
+        <div id="goal">Goal: —</div>
+    </div>
+
+    <div class="profile-completion">
+        <div class="profile-completion-top">
+            <span>Profile completion</span>
+            <strong id="profileCompletionPercent">0%</strong>
+        </div>
+
+        <div class="profile-progress">
+            <div
+                id="profileProgressBar"
+                class="profile-progress-bar"
+            ></div>
+        </div>
+
+        <div
+            id="profileCompletionMessage"
+            class="profile-completion-message"
+        >
+            Keep building your VELMORA identity.
+        </div>
+    </div>
+
+    <a href="profile-view.html" class="button profile-button">
+        View Profile
+    </a>
+
+    <a href="account.html" class="button profile-button">
+        Account Settings
+    </a>
+
+</article>
+
+<article class="card">
+
+    <div class="card-label">Your Skills Passport</div>
+
+    <h2>Show what you can do.</h2>
+
+    <p class="description">
+        Build a record of your skills, practice, proof and experience
+        as you grow through VELMORA.
+    </p>
+
+    <div class="opportunity">
+        <strong>Skills &amp; proof</strong>
+        <span>Your evidence will appear here as you build it.</span>
+    </div>
+
+    <a href="skills-passport.html" class="button profile-button">
+        Open Skills Passport
+    </a>
+
+</article>
+
+<article class="card">
+
+    <div class="card-label">Practice &amp; Proof</div>
+
+    <h2>Turn knowledge into evidence.</h2>
+
+    <p class="description">
+        Apply what you learn through practical missions,
+        save your work and build evidence of what you can do.
+    </p>
+
+    <div class="opportunity">
+        <strong>Practice submissions</strong>
+        <span>Complete missions and build your VELMORA record.</span>
+    </div>
+
+    <a href="practice.html" class="button profile-button">
+        Open Practice
+    </a>
+
+</article>
+
+<article class="card">
+
+    <div class="card-label">People</div>
+
+    <h2>Meet people and possibilities.</h2>
+
+    <p class="description">
+        Discover people around the world, explore what they can do,
+        and build genuine connections that can lead to learning,
+        collaboration, work and opportunity.
+    </p>
+
+    <div class="opportunity">
+        <strong>People &amp; connections</strong>
+        <span>Discover people, connect and grow your network.</span>
+    </div>
+
+    <a href="people.html" class="button profile-button">
+        Explore People
+    </a>
+
+</article>
+
+<article class="card">
+
+    <div class="card-label">Messages</div>
+
+    <h2>Talk to your connections.</h2>
+
+    <p class="description">
+        Continue conversations with people you are connected with
+        and build relationships that can lead to learning,
+        collaboration, work and opportunity.
+    </p>
+
+    <div class="opportunity">
+        <strong>Conversations</strong>
+        <span>Connect, communicate and build genuine relationships.</span>
+    </div>
+
+    <a href="messages.html" class="button profile-button">
+        Open Messages
+    </a>
+
+</article>
+
+<article class="card">
+
+    <div class="card-label">Opportunity</div>
+
+    <h2>Your network is ahead.</h2>
+
+    <p class="description">
+        As your skills and proof grow, VELMORA will connect you
+        with relevant opportunities, people, businesses and collaborators.
+    </p>
+
+    <div class="opportunity">
+        <strong>Work opportunities</strong>
+        <span>Coming as your profile develops</span>
+    </div>
+
+    <div class="opportunity">
+        <strong>People to learn from</strong>
+        <span>Mentors, teachers and professionals</span>
+    </div>
+
+</article>
+
+<article class="card help">
+
+    <div class="card-label">Create opportunity too</div>
+
+    <h2>Help someone move forward.</h2>
+
+    <p>
+        Teach, mentor, hire, collaborate or share an opportunity.
+        You don't have to need an opportunity to create one.
+    </p>
+
+</article>
+
+</aside>
+
+</section>
+
+<section class="section">
+
+    <div class="eyebrow">Four directions</div>
+
+    <h2>There is more than one way forward.</h2>
+
+    <div class="four">
+
+        <div class="direction">
+            <div class="direction-number">01</div>
+            <h3>EARN</h3>
+            <p>
+                Turn demonstrated skills and useful abilities
+                into legitimate opportunities.
+            </p>
+        </div>
+
+        <div class="direction">
+            <div class="direction-number">02</div>
+            <h3>LEARN</h3>
+            <p>
+                Develop skills, practice them and build evidence.
+            </p>
+        </div>
+
+        <div class="direction">
+            <div class="direction-number">03</div>
+            <h3>BUILD</h3>
+            <p>
+                Turn ideas, knowledge and skills into products,
+                services, projects or businesses.
+            </p>
+        </div>
+
+        <div class="direction">
+            <div class="direction-number">04</div>
+            <h3>HELP</h3>
+            <p>
+                Teach, mentor, connect, collaborate, hire or
+                create opportunities for others.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+<footer>
+    <span>© 2026 VELMORA</span>
+    <span>Opportunity has no borders.</span>
+</footer>
+
+<script>
+
+
+const logoutButton = document.getElementById("logoutButton");
+
+if (logoutButton) {
+    logoutButton.addEventListener("click", async () => {
+
+        const token =
+            localStorage.getItem("velmora_token");
+
+        try {
+            if (token) {
+                await fetch(
+                    "http://127.0.0.1:5000/api/auth/logout",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Authorization":
+                                `Bearer ${token}`
+                        }
+                    }
+                );
+            }
+        } catch (error) {
+            console.error(
+                "VELMORA logout error:",
+                error
+            );
+        }
+
+        localStorage.removeItem("velmora_token");
+        localStorage.removeItem("velmora_user");
+
+        window.location.replace("login.html");
+    });
+}
+
+const user =
+    JSON.parse(localStorage.getItem("velmora_user") || "null");
+
+const startingPath =
+    JSON.parse(localStorage.getItem("velmora_starting_path") || "null");
+
+const profile =
+    JSON.parse(localStorage.getItem("velmora_profile") || "{}");
+
+const goals =
+    JSON.parse(localStorage.getItem("velmora_goals") || "[]");
+
+function firstName(name) {
+    if (!name) return "there";
+    return name.trim().split(/\s+/)[0];
+}
+
+function readablePath(path) {
+    const names = {
+        earn: "Earn",
+        learn: "Learn",
+        build: "Build",
+        help: "Help"
+    };
+
+    return names[path] || "Discover";
+}
+
+const name = firstName(user?.full_name);
+
+document.getElementById("greeting").textContent =
+    `Welcome, ${name}.`;
+
+document.getElementById("headerName").textContent =
+    `Welcome, ${name}`;
+
+document.getElementById("profileName").textContent =
+    user?.full_name || "Your VELMORA identity";
+
+const profileCompletionItems = [
+    Boolean(user?.full_name),
+    Boolean(user?.email),
+    Boolean(user?.country),
+    Boolean(startingPath?.primaryPath),
+    Boolean(startingPath?.primaryInterest),
+    Boolean(profile?.resources?.length),
+    Boolean(profile?.interests?.length),
+    Boolean(profile?.experience),
+    Boolean(goals?.length)
+];
+
+const completedProfileItems =
+    profileCompletionItems.filter(Boolean).length;
+
+const profileCompletionPercent =
+    Math.round(
+        (
+            completedProfileItems /
+            profileCompletionItems.length
+        ) * 100
+    );
+
+document.getElementById(
+    "profileCompletionPercent"
+).textContent =
+    `${profileCompletionPercent}%`;
+
+document.getElementById(
+    "profileProgressBar"
+).style.width =
+    `${profileCompletionPercent}%`;
+
+if (profileCompletionPercent >= 100) {
+    document.getElementById(
+        "profileCompletionMessage"
+    ).textContent =
+        "Your VELMORA profile is complete.";
+} else if (profileCompletionPercent >= 70) {
+    document.getElementById(
+        "profileCompletionMessage"
+    ).textContent =
+        "Your profile is taking shape. Keep building it.";
+} else {
+    document.getElementById(
+        "profileCompletionMessage"
+    ).textContent =
+        "Keep building your VELMORA identity.";
+}
+
+if (name !== "there") {
+    document.getElementById("avatar").textContent =
+        name.charAt(0).toUpperCase();
+}
+
+if (startingPath) {
+
+    const path =
+        readablePath(startingPath.primaryPath);
+
+    const interest =
+        startingPath.primaryInterest || "Your chosen area";
+
+    const experience =
+        startingPath.experience || "Not specified";
+
+    document.getElementById("pathName").textContent =
+        path;
+
+    document.getElementById("pathDescription").textContent =
+        `Your starting direction is ${path.toLowerCase()}, with a focus on ${interest}. We will help you move toward practical evidence and real opportunities.`;
+
+    document.getElementById("interest").textContent =
+        `Interest: ${interest}`;
+
+    document.getElementById("experience").textContent =
+        `Experience: ${experience}`;
+
+    document.getElementById("goal").textContent =
+        `Goal: ${goals.length ? goals[0] : "Your next goal"}`;
+
+}
+
+</script>
+
+<script src="global-nav.js"></script>
+</body>
+</html>

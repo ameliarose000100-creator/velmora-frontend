@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Opportunities — VELMORA</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .opportunities-page {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+        }
+
+        .opportunities-header {
+            margin-bottom: 32px;
+        }
+
+        .opportunities-header .eyebrow {
+            margin-bottom: 10px;
+        }
+
+        .opportunities-header h1 {
+            margin: 0 0 12px;
+        }
+
+        .opportunities-header p {
+            max-width: 720px;
+            line-height: 1.7;
+            color: var(--cm-text-muted, #8d969d);
+        }
+
+        .opportunities-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 24px;
+        }
+
+        .opportunity-tools {
+            display: grid;
+            grid-template-columns: minmax(220px, 1fr) auto;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .opportunity-search,
+        .opportunity-filter {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid rgba(255,255,255,.10);
+            background: rgba(255,255,255,.04);
+            color: inherit;
+            border-radius: 14px;
+            padding: 14px 16px;
+            outline: none;
+        }
+
+        .opportunity-search:focus,
+        .opportunity-filter:focus {
+            border-color: rgba(80, 220, 150, .55);
+        }
+
+        .opportunity-filters {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+
+        .opportunity-filter-button {
+            border: 1px solid rgba(255,255,255,.10);
+            background: rgba(255,255,255,.035);
+            color: inherit;
+            border-radius: 999px;
+            padding: 9px 14px;
+            cursor: pointer;
+        }
+
+        .opportunity-filter-button.active {
+            border-color: rgba(80, 220, 150, .65);
+            background: rgba(80, 220, 150, .12);
+        }
+
+        .opportunities-list {
+            display: grid;
+            gap: 18px;
+        }
+
+        .opportunity-card {
+            padding: 24px;
+        }
+
+        .opportunity-card h2 {
+            margin: 8px 0 10px;
+        }
+
+        .opportunity-meta {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 14px 0;
+        }
+
+        .opportunity-tag {
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: .78rem;
+        }
+
+        .opportunity-description {
+            line-height: 1.7;
+        }
+
+        .opportunity-skills {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
+        .opportunity-skill {
+            font-size: .78rem;
+            padding: 6px 9px;
+            border-radius: 8px;
+            background: rgba(80, 220, 150, .08);
+        }
+
+        .opportunity-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 22px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255,255,255,.08);
+        }
+
+        .opportunity-owner {
+            font-size: .85rem;
+            opacity: .8;
+        }
+
+        .opportunity-empty,
+        .opportunity-error,
+        .opportunity-loading {
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 18px;
+        }
+
+        @media (max-width: 700px) {
+            .opportunities-page {
+                padding: 28px 16px 60px;
+            }
+
+            .opportunity-tools {
+                grid-template-columns: 1fr;
+            }
+
+            .opportunity-footer {
+                align-items: stretch;
+            }
+
+            .opportunity-footer .button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<main class="opportunities-page">
+
+    <header class="opportunities-header">
+
+        <div class="eyebrow">VELMORA Opportunities</div>
+
+        <h1>Find possibility. Create possibility.</h1>
+
+        <p>
+            Discover jobs, freelance projects, tasks, remote roles,
+            internships, mentorships and collaborations from people
+            and businesses around the world.
+        </p>
+
+        <div class="opportunities-actions">
+            <a href="dashboard.html" class="button">
+                Dashboard
+            </a>
+
+            <a href="people.html" class="button">
+                People
+            </a>
+
+            <a href="messages.html" class="button">
+                Messages
+            </a>
+
+            <a href="opportunity-create.html" class="button">
+                Create Opportunity
+            </a>
+        </div>
+
+    </header>
+
+    <section>
+
+        <div class="opportunity-tools">
+
+            <input
+                id="opportunitySearch"
+                class="opportunity-search"
+                type="search"
+                placeholder="Search opportunities..."
+                autocomplete="off"
+            >
+
+            <select id="opportunitySort" class="opportunity-filter">
+                <option value="newest">Newest first</option>
+                <option value="oldest">Oldest first</option>
+            </select>
+
+        </div>
+
+        <div class="opportunity-filters" id="opportunityFilters">
+
+            <button class="opportunity-filter-button active" data-type="all">
+                All
+            </button>
+
+            <button class="opportunity-filter-button" data-type="job">
+                Jobs
+            </button>
+
+            <button class="opportunity-filter-button" data-type="freelance">
+                Freelance
+            </button>
+
+            <button class="opportunity-filter-button" data-type="task">
+                Tasks
+            </button>
+
+            <button class="opportunity-filter-button" data-type="remote_role">
+                Remote Roles
+            </button>
+
+            <button class="opportunity-filter-button" data-type="internship">
+                Internships
+            </button>
+
+            <button class="opportunity-filter-button" data-type="apprenticeship">
+                Apprenticeships
+            </button>
+
+            <button class="opportunity-filter-button" data-type="contract">
+                Contracts
+            </button>
+
+            <button class="opportunity-filter-button" data-type="mentorship">
+                Mentorship
+            </button>
+
+            <button class="opportunity-filter-button" data-type="collaboration">
+                Collaboration
+            </button>
+
+        </div>
+
+        <div id="opportunitiesList" class="opportunities-list">
+
+            <div class="opportunity-loading">
+                Loading opportunities...
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<script>
+const API_BASE = "http://127.0.0.1:5000";
+
+const searchInput = document.getElementById("opportunitySearch");
+const sortSelect = document.getElementById("opportunitySort");
+const filters = document.querySelectorAll(".opportunity-filter-button");
+const list = document.getElementById("opportunitiesList");
+
+let opportunities = [];
+let selectedType = "all";
+
+function getToken() {
+    return localStorage.getItem("velmora_token") ||
+           localStorage.getItem("token") ||
+           localStorage.getItem("accessToken");
+}
+
+function formatType(type) {
+    const labels = {
+        job: "Job",
+        freelance: "Freelance",
+        task: "One-time Task",
+        remote_role: "Remote Role",
+        internship: "Internship",
+        apprenticeship: "Apprenticeship",
+        contract: "Contract",
+        mentorship: "Mentorship",
+        collaboration: "Collaboration"
+    };
+
+    return labels[type] || type;
+}
+
+function formatCompensation(opportunity) {
+    if (
+        opportunity.compensation_min == null &&
+        opportunity.compensation_max == null
+    ) {
+        return "Compensation not specified";
+    }
+
+    const currency = opportunity.currency || "USD";
+    const min = opportunity.compensation_min;
+    const max = opportunity.compensation_max;
+
+    if (min != null && max != null) {
+        return `${currency} ${Number(min).toLocaleString()} – ${Number(max).toLocaleString()}`;
+    }
+
+    if (min != null) {
+        return `From ${currency} ${Number(min).toLocaleString()}`;
+    }
+
+    return `Up to ${currency} ${Number(max).toLocaleString()}`;
+}
+
+function renderOpportunities() {
+
+    const search = searchInput.value.trim().toLowerCase();
+
+    let filtered = opportunities.filter(opportunity => {
+
+        const matchesType =
+            selectedType === "all" ||
+            opportunity.opportunity_type === selectedType;
+
+        const haystack = [
+            opportunity.title,
+            opportunity.description,
+            opportunity.location,
+            opportunity.owner_name,
+            ...(Array.isArray(opportunity.skills)
+                ? opportunity.skills
+                : [])
+        ]
+        .join(" ")
+        .toLowerCase();
+
+        return matchesType && haystack.includes(search);
+    });
+
+    if (sortSelect.value === "oldest") {
+        filtered.sort(
+            (a, b) =>
+                new Date(a.created_at) -
+                new Date(b.created_at)
+        );
+    } else {
+        filtered.sort(
+            (a, b) =>
+                new Date(b.created_at) -
+                new Date(a.created_at)
+        );
+    }
+
+    if (!filtered.length) {
+        list.innerHTML = `
+            <div class="opportunity-empty">
+                <h2>No opportunities found</h2>
+                <p>
+                    Try another search or create an opportunity
+                    for someone else.
+                </p>
+            </div>
+        `;
+        return;
+    }
+
+    list.innerHTML = filtered.map(opportunity => {
+
+        const skills = Array.isArray(opportunity.skills)
+            ? opportunity.skills
+            : [];
+
+        return `
+            <article class="card opportunity-card">
+
+                <div class="card-label">
+                    ${formatType(opportunity.opportunity_type)}
+                </div>
+
+                <h2>${escapeHtml(opportunity.title)}</h2>
+
+                <p class="opportunity-description">
+                    ${escapeHtml(opportunity.description)}
+                </p>
+
+                <div class="opportunity-meta">
+
+                    <span class="opportunity-tag">
+                        ${opportunity.is_remote ? "Remote" : "On-site"}
+                    </span>
+
+                    <span class="opportunity-tag">
+                        ${escapeHtml(opportunity.location || "Global")}
+                    </span>
+
+                    <span class="opportunity-tag">
+                        ${escapeHtml(formatCompensation(opportunity))}
+                    </span>
+
+                </div>
+
+                ${
+                    skills.length
+                        ? `
+                            <div class="opportunity-skills">
+                                ${skills.map(skill => `
+                                    <span class="opportunity-skill">
+                                        ${escapeHtml(skill)}
+                                    </span>
+                                `).join("")}
+                            </div>
+                        `
+                        : ""
+                }
+
+                <div class="opportunity-footer">
+
+                    <div class="opportunity-owner">
+                        Posted by
+                        <strong>
+                            ${escapeHtml(opportunity.owner_name || "VELMORA member")}
+                        </strong>
+                        ${opportunity.owner_country
+                            ? ` · ${escapeHtml(opportunity.owner_country)}`
+                            : ""}
+                    </div>
+
+                    <a
+                        href="opportunity-view.html?id=${encodeURIComponent(opportunity.id)}"
+                        class="button profile-button"
+                    >
+                        View Opportunity
+                    </a>
+
+                </div>
+
+            </article>
+        `;
+    }).join("");
+}
+
+function escapeHtml(value) {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+async function loadOpportunities() {
+
+    const token = getToken();
+
+    if (!token) {
+        list.innerHTML = `
+            <div class="opportunity-error">
+                <h2>Login required</h2>
+                <p>Please log in to view VELMORA opportunities.</p>
+                <a href="login.html" class="button">
+                    Login
+                </a>
+            </div>
+        `;
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `${API_BASE}/api/opportunities`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(
+                data.message || "Unable to load opportunities."
+            );
+        }
+
+        opportunities = data.opportunities || [];
+
+        renderOpportunities();
+
+    } catch (error) {
+
+        console.error("OPPORTUNITIES ERROR:", error);
+
+        list.innerHTML = `
+            <div class="opportunity-error">
+                <h2>Unable to load opportunities</h2>
+                <p>
+                    Please try again.
+                </p>
+            </div>
+        `;
+    }
+}
+
+filters.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        filters.forEach(item =>
+            item.classList.remove("active")
+        );
+
+        button.classList.add("active");
+
+        selectedType = button.dataset.type;
+
+        renderOpportunities();
+    });
+});
+
+searchInput.addEventListener(
+    "input",
+    renderOpportunities
+);
+
+sortSelect.addEventListener(
+    "change",
+    renderOpportunities
+);
+
+loadOpportunities();
+</script>
+
+<script src="global-nav.js"></script>
+</body>
+</html>

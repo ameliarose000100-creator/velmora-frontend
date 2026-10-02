@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Lesson 4 — Creating Value & Choosing an Offer | VELMORA</title>
+
+    <style>
+        :root {
+            --bg: #f5f3ee;
+            --card: #ffffff;
+            --text: #172019;
+            --muted: #69736b;
+            --green: #23884d;
+            --green-dark: #176638;
+            --border: #dfe5df;
+            --wrong: #b43b3b;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            padding: 22px 7%;
+            border-bottom: 1px solid var(--border);
+            background: rgba(245, 243, 238, .96);
+        }
+
+        .header-inner {
+            max-width: 1050px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .brand {
+            font-size: 1.05rem;
+            font-weight: 800;
+            letter-spacing: .08em;
+        }
+
+        .back {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: .82rem;
+            font-weight: 700;
+        }
+
+        main {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 55px 22px 80px;
+        }
+
+        .eyebrow {
+            color: var(--green);
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 12px 0 16px;
+            font-family: Georgia, serif;
+            font-size: clamp(2.2rem, 6vw, 4.2rem);
+            line-height: 1.02;
+            font-weight: 500;
+        }
+
+        .intro {
+            color: var(--muted);
+            max-width: 680px;
+            font-size: 1.05rem;
+            line-height: 1.75;
+        }
+
+        .progress-wrap {
+            margin-top: 30px;
+        }
+
+        .progress-top {
+            display: flex;
+            justify-content: space-between;
+            color: var(--muted);
+            font-size: .7rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .progress {
+            width: 100%;
+            height: 6px;
+            background: var(--border);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 66.67%;
+            height: 100%;
+            background: var(--green);
+            border-radius: inherit;
+        }
+
+        .lesson-card {
+            margin-top: 38px;
+            padding: 32px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+        }
+
+        .lesson-card h2 {
+            margin: 0 0 16px;
+            font-family: Georgia, serif;
+            font-size: 1.8rem;
+            font-weight: 500;
+        }
+
+        .lesson-card p {
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .lesson-card ul {
+            padding-left: 22px;
+            color: var(--muted);
+            line-height: 1.9;
+        }
+
+        .highlight {
+            margin: 25px 0;
+            padding: 20px;
+            border-left: 4px solid var(--green);
+            background: #f1f7f2;
+            border-radius: 10px;
+            line-height: 1.7;
+        }
+
+        .offer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 24px 0 30px;
+        }
+
+        .offer-item {
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: #fafbf9;
+        }
+
+        .offer-item strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .offer-item span {
+            color: var(--muted);
+            font-size: .86rem;
+            line-height: 1.6;
+        }
+
+        .check {
+            margin-top: 38px;
+            padding: 28px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+        }
+
+        .check h3 {
+            margin-top: 0;
+            font-family: Georgia, serif;
+            font-size: 1.4rem;
+            font-weight: 500;
+        }
+
+        .answer {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            padding: 15px 16px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: white;
+            color: var(--text);
+            text-align: left;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .answer:hover {
+            border-color: var(--green);
+        }
+
+        .answer.correct {
+            border-color: var(--green);
+            background: #edf8f0;
+        }
+
+        .answer.wrong {
+            border-color: var(--wrong);
+            background: #fff1f1;
+        }
+
+        #result {
+            display: none;
+            margin-top: 18px;
+            color: var(--green-dark);
+            line-height: 1.6;
+            font-weight: 700;
+        }
+
+        #continueButton {
+            display: none;
+            margin-top: 22px;
+            padding: 14px 22px;
+            border: 0;
+            border-radius: 999px;
+            background: var(--green);
+            color: white;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        #continueButton:hover {
+            background: var(--green-dark);
+        }
+
+        footer {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 0 22px 55px;
+            color: var(--muted);
+            font-size: .75rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 700px) {
+            .offer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 650px) {
+            main {
+                padding-top: 40px;
+            }
+
+            .lesson-card {
+                padding: 24px;
+            }
+
+            .progress-top {
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-inner">
+
+        <div class="brand">
+            VELMORA
+        </div>
+
+        <a
+            href="learn.html"
+            class="back"
+        >
+            ← Back to Learn
+        </a>
+
+    </div>
+</header>
+
+<main>
+
+    <div class="eyebrow">
+        Starting a Business · Lesson 4
+    </div>
+
+    <h1>
+        Creating Value &amp; Choosing an Offer
+    </h1>
+
+    <p class="intro">
+        A business creates value when it helps people achieve
+        something they care about. Your offer is the specific product,
+        service, or solution you provide to make that value available.
+    </p>
+
+    <div class="progress-wrap">
+
+        <div class="progress-top">
+            <span>Learning path progress</span>
+            <span>4 of 6</span>
+        </div>
+
+        <div class="progress">
+            <div
+                class="progress-bar"
+                style="width: 66.67%;"
+            ></div>
+        </div>
+
+    </div>
+
+    <section class="lesson-card">
+
+        <h2>
+            Start with value
+        </h2>
+
+        <p>
+            A business is not valuable simply because it has a product
+            or service. The important question is whether the offer
+            provides something useful to the people it is designed for.
+        </p>
+
+        <div class="highlight">
+            <strong>Value is the useful outcome a customer receives.</strong>
+            The offer is the way the business delivers that value.
+        </div>
+
+        <p>
+            For example, a customer may not actually want a particular
+            tool, lesson, delivery service, or piece of software by
+            itself. They may want to save time, learn a skill, solve a
+            problem, complete a task, reduce inconvenience, or achieve
+            another useful outcome.
+        </p>
+
+        <h2>
+            Product, service, or solution?
+        </h2>
+
+        <div class="offer-grid">
+
+            <div class="offer-item">
+                <strong>Product</strong>
+                <span>
+                    Something a customer can buy or use, such as a
+                    physical item or digital product.
+                </span>
+            </div>
+
+            <div class="offer-item">
+                <strong>Service</strong>
+                <span>
+                    Work performed for a customer, such as design,
+                    tutoring, repair, consulting, or delivery.
+                </span>
+            </div>
+
+            <div class="offer-item">
+                <strong>Solution</strong>
+                <span>
+                    A combination of products, services, or processes
+                    designed around a particular customer need.
+                </span>
+            </div>
+
+        </div>
+
+        <h2>
+            Make the offer clear
+        </h2>
+
+        <p>
+            A strong early offer should be understandable. A potential
+            customer should be able to see what you provide, who it is
+            for, and what useful result it is intended to create.
+        </p>
+
+        <ul>
+            <li>Who is the offer for?</li>
+            <li>What problem or need does it address?</li>
+            <li>What exactly does the customer receive?</li>
+            <li>What outcome or benefit can reasonably be expected?</li>
+            <li>What makes the offer useful compared with available alternatives?</li>
+        </ul>
+
+        <h2>
+            Start with a focused offer
+        </h2>
+
+        <p>
+            New businesses can be tempted to offer everything at once.
+            A focused offer can make it easier to understand customer
+            needs, test demand, deliver consistently, and improve from
+            real feedback.
+        </p>
+
+        <p>
+            Starting focused does not mean staying small forever.
+            As you learn more, you can expand your products, services,
+            customer groups, or delivery methods.
+        </p>
+
+        <h2>
+            Test before you overbuild
+        </h2>
+
+        <p>
+            You do not always need to build a large product before
+            learning whether people find the idea useful. A simple
+            prototype, sample service, conversation, demonstration, or
+            small pilot can help you collect evidence.
+        </p>
+
+        <p>
+            The goal is not to guarantee success. The goal is to learn
+            what works, what does not, and what customers actually value.
+        </p>
+
+        <div class="check">
+
+            <h3>
+                Knowledge check
+            </h3>
+
+            <p>
+                What best describes a useful business offer?
+            </p>
+
+            <button
+                class="answer"
+                data-correct="false"
+            >
+                A. Anything the business owner wants to sell
+            </button>
+
+            <button
+                class="answer"
+                data-correct="true"
+            >
+                B. A clear product, service, or solution designed to create useful value for a customer
+            </button>
+
+            <button
+                class="answer"
+                data-correct="false"
+            >
+                C. The largest possible collection of products and services
+            </button>
+
+            <button
+                class="answer"
+                data-correct="false"
+            >
+                D. An offer that guarantees a particular result for every customer
+            </button>
+
+            <div id="result"></div>
+
+            <button id="continueButton">
+                Complete Lesson
+            </button>
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    Your learning progress is saved to your VELMORA account.
+    Complete each lesson to build your learning record.
+</footer>
+
+<script>
+
+    let completed = false;
+
+    const answers =
+        document.querySelectorAll(".answer");
+
+    const result =
+        document.getElementById("result");
+
+    const continueButton =
+        document.getElementById("continueButton");
+
+    answers.forEach(
+        function(answer) {
+
+            answer.addEventListener(
+                "click",
+                function() {
+
+                    if (completed) {
+                        return;
+                    }
+
+                    answers.forEach(
+                        function(item) {
+                            item.classList.remove(
+                                "correct",
+                                "wrong"
+                            );
+                        }
+                    );
+
+                    const isCorrect =
+                        this.dataset.correct === "true";
+
+                    if (isCorrect) {
+
+                        this.classList.add(
+                            "correct"
+                        );
+
+                        result.style.display =
+                            "block";
+
+                        result.textContent =
+                            "Correct. A useful offer connects a real customer need with a clear product, service, or solution.";
+
+                        continueButton.style.display =
+                            "inline-block";
+
+                        completed = true;
+
+                    } else {
+
+                        this.classList.add(
+                            "wrong"
+                        );
+
+                        result.style.display =
+                            "block";
+
+                        result.textContent =
+                            "Not quite. Think about the connection between a customer need and the value a business provides.";
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+    continueButton.addEventListener(
+        "click",
+        async function() {
+
+            const token =
+                localStorage.getItem(
+                    "velmora_token"
+                );
+
+            if (!token) {
+                window.location.replace(
+                    "login.html"
+                );
+                return;
+            }
+
+            continueButton.disabled = true;
+
+            continueButton.textContent =
+                "Saving progress...";
+
+            try {
+
+                const response =
+                    await fetch(
+                        "http://127.0.0.1:5000/api/learning/progress",
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type":
+                                    "application/json",
+                                "Authorization":
+                                    `Bearer ${token}`
+                            },
+                            body: JSON.stringify({
+                                learningPath:
+                                    "Starting a Business",
+
+                                lessonKey:
+                                    "starting-a-business-lesson-4",
+
+                                status:
+                                    "completed"
+                            })
+                        }
+                    );
+
+                const data =
+                    await response.json();
+
+                if (
+                    response.status === 401
+                ) {
+
+                    localStorage.removeItem(
+                        "velmora_token"
+                    );
+
+                    localStorage.removeItem(
+                        "velmora_user"
+                    );
+
+                    window.location.replace(
+                        "login.html"
+                    );
+
+                    return;
+                }
+
+                if (
+                    !response.ok ||
+                    !data.success
+                ) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to save learning progress."
+                    );
+
+                }
+
+                localStorage.setItem(
+                    "velmora_lesson_starting_a_business_4",
+                    "completed"
+                );
+
+                window.location.replace(
+                    "lesson-starting-a-business-5.html"
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "Lesson completion error:",
+                    error
+                );
+
+                continueButton.disabled =
+                    false;
+
+                continueButton.textContent =
+                    "Complete Lesson";
+
+                result.style.display =
+                    "block";
+
+                result.textContent =
+                    error.message ||
+                    "Unable to save your progress. Please try again.";
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>

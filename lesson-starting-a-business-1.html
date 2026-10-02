@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Lesson 1 — What Is a Business? | VELMORA</title>
+
+    <style>
+        :root {
+            --bg: #f5f3ee;
+            --card: #ffffff;
+            --text: #172019;
+            --muted: #69736b;
+            --green: #23884d;
+            --green-dark: #176638;
+            --border: #dfe5df;
+            --wrong: #b43b3b;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            padding: 22px 7%;
+            border-bottom: 1px solid var(--border);
+            background: rgba(245, 243, 238, .96);
+        }
+
+        .header-inner {
+            max-width: 1050px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .brand {
+            font-size: 1.05rem;
+            font-weight: 800;
+            letter-spacing: .08em;
+        }
+
+        .back {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: .82rem;
+            font-weight: 700;
+        }
+
+        main {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 55px 22px 80px;
+        }
+
+        .eyebrow {
+            color: var(--green);
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 12px 0 16px;
+            font-family: Georgia, serif;
+            font-size: clamp(2.2rem, 6vw, 4.2rem);
+            line-height: 1.02;
+            font-weight: 500;
+        }
+
+        .intro {
+            color: var(--muted);
+            max-width: 680px;
+            font-size: 1.05rem;
+            line-height: 1.75;
+        }
+
+        .progress-wrap {
+            margin-top: 30px;
+        }
+
+        .progress-top {
+            display: flex;
+            justify-content: space-between;
+            color: var(--muted);
+            font-size: .7rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .progress {
+            width: 100%;
+            height: 6px;
+            background: var(--border);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 16.67%;
+            height: 100%;
+            background: var(--green);
+            border-radius: inherit;
+        }
+
+        .lesson-card {
+            margin-top: 38px;
+            padding: 32px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+        }
+
+        .lesson-card h2 {
+            margin: 0 0 16px;
+            font-family: Georgia, serif;
+            font-size: 1.8rem;
+            font-weight: 500;
+        }
+
+        .lesson-card p {
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .lesson-card ul {
+            padding-left: 22px;
+            color: var(--muted);
+            line-height: 1.9;
+        }
+
+        .highlight {
+            margin: 25px 0;
+            padding: 20px;
+            border-left: 4px solid var(--green);
+            background: #f1f7f2;
+            border-radius: 10px;
+            line-height: 1.7;
+        }
+
+        .check {
+            margin-top: 38px;
+            padding: 28px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+        }
+
+        .check h3 {
+            margin-top: 0;
+            font-family: Georgia, serif;
+            font-size: 1.4rem;
+            font-weight: 500;
+        }
+
+        .answer {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            padding: 15px 16px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: white;
+            color: var(--text);
+            text-align: left;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .answer:hover {
+            border-color: var(--green);
+        }
+
+        .answer.correct {
+            border-color: var(--green);
+            background: #edf8f0;
+        }
+
+        .answer.wrong {
+            border-color: var(--wrong);
+            background: #fff1f1;
+        }
+
+        #result {
+            display: none;
+            margin-top: 18px;
+            color: var(--green-dark);
+            line-height: 1.6;
+            font-weight: 700;
+        }
+
+        #continueButton {
+            display: none;
+            margin-top: 22px;
+            padding: 14px 22px;
+            border: 0;
+            border-radius: 999px;
+            background: var(--green);
+            color: white;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        #continueButton:hover {
+            background: var(--green-dark);
+        }
+
+        footer {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 0 22px 55px;
+            color: var(--muted);
+            font-size: .75rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 650px) {
+            main {
+                padding-top: 40px;
+            }
+
+            .lesson-card {
+                padding: 24px;
+            }
+
+            .progress-top {
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-inner">
+
+        <div class="brand">
+            VELMORA
+        </div>
+
+        <a
+            href="learn.html"
+            class="back"
+        >
+            ← Back to Learn
+        </a>
+
+    </div>
+</header>
+
+<main>
+
+    <div class="eyebrow">
+        Starting a Business · Lesson 1
+    </div>
+
+    <h1>
+        What Is a Business?
+    </h1>
+
+    <p class="intro">
+        A business is more than selling something. At its foundation,
+        a business identifies a need, creates value for people, and
+        exchanges that value for money or another agreed form of value.
+    </p>
+
+    <div class="progress-wrap">
+
+        <div class="progress-top">
+            <span>Learning path progress</span>
+            <span>1 of 6</span>
+        </div>
+
+        <div class="progress">
+            <div
+                class="progress-bar"
+                style="width: 16.67%;"
+            ></div>
+        </div>
+
+    </div>
+
+    <section class="lesson-card">
+
+        <h2>
+            Start with value
+        </h2>
+
+        <p>
+            People and organizations have problems, needs, desires,
+            goals, and tasks they want to accomplish. A business can
+            create value by helping them solve those problems or achieve
+            those goals.
+        </p>
+
+        <div class="highlight">
+            A useful starting question is:
+            <strong>
+                “What problem can I help someone solve?”
+            </strong>
+        </div>
+
+        <h2>
+            The basic business cycle
+        </h2>
+
+        <ul>
+            <li>Identify a real need or problem.</li>
+            <li>Understand the people who experience it.</li>
+            <li>Create a useful product, service, or solution.</li>
+            <li>Offer that solution clearly.</li>
+            <li>Receive payment when people choose to buy.</li>
+            <li>Improve the business based on experience and feedback.</li>
+        </ul>
+
+        <p>
+            A business does not have to begin as a large company.
+            Someone can start with a small service, product, skill,
+            creative work, local solution, or online offer and develop
+            it gradually.
+        </p>
+
+        <p>
+            The goal is not simply to “make money.” A sustainable
+            business needs to create enough value that customers have
+            a reason to choose the offer and enough financial structure
+            for the business to operate responsibly.
+        </p>
+
+        <div class="check">
+
+            <h3>
+                Knowledge check
+            </h3>
+
+            <p>
+                Which statement best describes the foundation of a
+                business?
+            </p>
+
+            <button
+                class="answer"
+                data-correct="false"
+            >
+                A. Making money without needing to solve a problem
+            </button>
+
+            <button
+                class="answer"
+                data-correct="true"
+            >
+                B. Creating value by helping people solve a need or problem
+            </button>
+
+            <button
+                class="answer"
+                data-correct="false"
+            >
+                C. Starting with a large office and many employees
+            </button>
+
+            <button
+                class="answer"
+                data-correct="false"
+            >
+                D. Selling anything regardless of whether people need it
+            </button>
+
+            <div id="result"></div>
+
+            <button id="continueButton">
+                Complete Lesson
+            </button>
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    Your learning progress is saved to your VELMORA account.
+    Complete each lesson to build your learning record.
+</footer>
+
+<script>
+
+    let completed = false;
+
+    const answers =
+        document.querySelectorAll(".answer");
+
+    const result =
+        document.getElementById("result");
+
+    const continueButton =
+        document.getElementById("continueButton");
+
+    answers.forEach(
+        function(answer) {
+
+            answer.addEventListener(
+                "click",
+                function() {
+
+                    if (completed) {
+                        return;
+                    }
+
+                    answers.forEach(
+                        function(item) {
+                            item.classList.remove(
+                                "correct",
+                                "wrong"
+                            );
+                        }
+                    );
+
+                    const isCorrect =
+                        this.dataset.correct === "true";
+
+                    if (isCorrect) {
+
+                        this.classList.add(
+                            "correct"
+                        );
+
+                        result.style.display =
+                            "block";
+
+                        result.textContent =
+                            "Correct. A business creates value by helping people solve real needs or problems.";
+
+                        continueButton.style.display =
+                            "inline-block";
+
+                        completed = true;
+
+                    } else {
+
+                        this.classList.add(
+                            "wrong"
+                        );
+
+                        result.style.display =
+                            "block";
+
+                        result.textContent =
+                            "Not quite. Think about what value a business provides to another person.";
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+    continueButton.addEventListener(
+        "click",
+        async function() {
+
+            const token =
+                localStorage.getItem(
+                    "velmora_token"
+                );
+
+            if (!token) {
+                window.location.replace(
+                    "login.html"
+                );
+                return;
+            }
+
+            continueButton.disabled = true;
+
+            continueButton.textContent =
+                "Saving progress...";
+
+            try {
+
+                const response =
+                    await fetch(
+                        "http://127.0.0.1:5000/api/learning/progress",
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type":
+                                    "application/json",
+                                "Authorization":
+                                    `Bearer ${token}`
+                            },
+                            body: JSON.stringify({
+                                learningPath:
+                                    "Starting a Business",
+
+                                lessonKey:
+                                    "starting-a-business-lesson-1",
+
+                                status:
+                                    "completed"
+                            })
+                        }
+                    );
+
+                const data =
+                    await response.json();
+
+                if (
+                    response.status === 401
+                ) {
+
+                    localStorage.removeItem(
+                        "velmora_token"
+                    );
+
+                    localStorage.removeItem(
+                        "velmora_user"
+                    );
+
+                    window.location.replace(
+                        "login.html"
+                    );
+
+                    return;
+                }
+
+                if (
+                    !response.ok ||
+                    !data.success
+                ) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to save learning progress."
+                    );
+
+                }
+
+                localStorage.setItem(
+                    "velmora_lesson_starting_a_business_1",
+                    "completed"
+                );
+
+                window.location.replace(
+                    "lesson-starting-a-business-2.html"
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "Lesson completion error:",
+                    error
+                );
+
+                continueButton.disabled =
+                    false;
+
+                continueButton.textContent =
+                    "Complete Lesson";
+
+                result.style.display =
+                    "block";
+
+                result.textContent =
+                    error.message ||
+                    "Unable to save your progress. Please try again.";
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>

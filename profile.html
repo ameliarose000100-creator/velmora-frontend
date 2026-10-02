@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Your VELMORA Profile</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --ink: #142019;
+            --muted: #68766e;
+            --line: #dce5df;
+            --green: #147a45;
+            --green-dark: #0d6035;
+            --green-light: #e9f6ee;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--ink);
+            font-family: Arial, sans-serif;
+            background:
+                radial-gradient(circle at 8% 5%, rgba(30,150,82,.09), transparent 27%),
+                radial-gradient(circle at 94% 88%, rgba(30,150,82,.07), transparent 30%),
+                #f8faf8;
+        }
+
+        .page {
+            width: min(1180px, 92%);
+            min-height: 100vh;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            padding: 28px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(20,32,25,.07);
+        }
+
+        .brand {
+            color: #123d28;
+            font-size: 1.05rem;
+            font-weight: 800;
+            letter-spacing: .20em;
+        }
+
+        .progress {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .progress-label {
+            color: #68766e;
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: .12em;
+        }
+
+        .progress-line {
+            width: 105px;
+            height: 4px;
+            overflow: hidden;
+            border-radius: 100px;
+            background: #dfe8e2;
+        }
+
+        .progress-line span {
+            display: block;
+            width: 50%;
+            height: 100%;
+            border-radius: inherit;
+            background: var(--green);
+        }
+
+        main {
+            flex: 1;
+            padding: 70px 0 90px;
+        }
+
+        .content {
+            width: min(940px, 100%);
+            margin: auto;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            color: var(--green);
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .17em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 28px;
+            height: 1px;
+            background: var(--green);
+        }
+
+        h1 {
+            margin: 0;
+            max-width: 800px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            line-height: .95;
+            font-weight: 500;
+            letter-spacing: -.055em;
+        }
+
+        .intro {
+            max-width: 650px;
+            margin: 25px 0 52px;
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .section {
+            margin-top: 46px;
+        }
+
+        .section:first-of-type {
+            margin-top: 0;
+        }
+
+        .section-title {
+            margin: 0 0 17px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 1.65rem;
+            font-weight: 500;
+            letter-spacing: -.025em;
+        }
+
+        .section-note {
+            margin: -7px 0 20px;
+            color: #7b877f;
+            font-size: .78rem;
+        }
+
+        .choices {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 11px;
+        }
+
+        .choice {
+            position: relative;
+            display: flex;
+            align-items: center;
+            min-height: 62px;
+            padding: 15px 17px;
+            cursor: pointer;
+            border: 1px solid var(--line);
+            border-radius: 13px;
+            background: rgba(255,255,255,.82);
+            transition: .2s ease;
+        }
+
+        .choice:hover {
+            transform: translateY(-2px);
+            border-color: #a9cdb7;
+        }
+
+        .choice.selected {
+            border-color: var(--green);
+            background: #eff8f2;
+            box-shadow: 0 0 0 2px rgba(20,122,69,.07);
+        }
+
+        .choice input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .choice-text {
+            color: #34443b;
+            font-size: .84rem;
+            line-height: 1.4;
+        }
+
+        .choice-check {
+            width: 21px;
+            height: 21px;
+            flex: 0 0 21px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #d3dfd7;
+            border-radius: 6px;
+            color: transparent;
+            background: white;
+            font-size: .65rem;
+            font-weight: 900;
+        }
+
+        .choice.selected .choice-check {
+            color: white;
+            border-color: var(--green);
+            background: var(--green);
+        }
+
+        .single-choice {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .single-choice .choice.selected .choice-check {
+            border-radius: 50%;
+        }
+
+        .action {
+            margin-top: 52px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .continue {
+            width: min(390px, 100%);
+            padding: 17px 25px;
+            border: 0;
+            border-radius: 12px;
+            color: white;
+            background: var(--green);
+            font-size: .88rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 12px 25px rgba(20,122,69,.14);
+            transition: .2s ease;
+        }
+
+        .continue:hover:not(:disabled) {
+            background: var(--green-dark);
+            transform: translateY(-2px);
+        }
+
+        .continue:disabled {
+            opacity: .42;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .note {
+            margin-top: 14px;
+            color: #89938d;
+            font-size: .72rem;
+            text-align: center;
+        }
+
+        footer {
+            padding: 25px 0 30px;
+            color: #8a958e;
+            text-align: center;
+            font-size: .72rem;
+            border-top: 1px solid rgba(20,32,25,.06);
+        }
+
+        @media (max-width: 800px) {
+            .choices {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .single-choice {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .page {
+                width: min(92%, 560px);
+            }
+
+            header {
+                padding: 21px 0;
+            }
+
+            .progress-line {
+                width: 65px;
+            }
+
+            main {
+                padding: 48px 0 65px;
+            }
+
+            h1 {
+                font-size: clamp(2.65rem, 13vw, 4.2rem);
+            }
+
+            .intro {
+                margin-top: 21px;
+                margin-bottom: 42px;
+                font-size: .91rem;
+            }
+
+            .section {
+                margin-top: 38px;
+            }
+
+            .choices {
+                grid-template-columns: 1fr;
+            }
+
+            .choice {
+                min-height: 58px;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .brand {
+                font-size: .92rem;
+            }
+
+            .progress {
+                gap: 8px;
+            }
+
+            .progress-line {
+                display: none;
+            }
+
+            .eyebrow {
+                font-size: .65rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<script>
+(async function () {
+
+    const token = localStorage.getItem("velmora_token");
+
+    if (!token) {
+        window.location.replace("login.html");
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            "http://127.0.0.1:5000/api/auth/me",
+            {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
+
+        if (!response.ok) {
+            localStorage.removeItem("velmora_token");
+            localStorage.removeItem("velmora_user");
+            window.location.replace("login.html");
+            return;
+        }
+
+        const data = await response.json();
+
+        if (!data.success || !data.user) {
+            localStorage.removeItem("velmora_token");
+            localStorage.removeItem("velmora_user");
+            window.location.replace("login.html");
+            return;
+        }
+
+        localStorage.setItem(
+            "velmora_user",
+            JSON.stringify(data.user)
+        );
+
+    } catch (error) {
+        console.error("VELMORA authentication check failed:", error);
+
+        localStorage.removeItem("velmora_token");
+        localStorage.removeItem("velmora_user");
+
+        window.location.replace("login.html");
+    }
+
+})();
+</script>
+
+
+<div class="page">
+
+    <header>
+        <div class="brand">VELMORA</div>
+
+        <div class="progress">
+            <div class="progress-label">02 / 04</div>
+            <div class="progress-line">
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="content">
+
+            <div class="eyebrow">Build your profile</div>
+
+            <h1>Tell us what you have.</h1>
+
+            <p class="intro">
+                Your starting point matters. Tell VELMORA what resources,
+                interests and experience you already have so we can understand
+                where your possibilities may begin.
+            </p>
+
+            <!-- RESOURCES -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    What do you have access to?
+                </h2>
+
+                <p class="section-note">
+                    Select everything that applies.
+                </p>
+
+                <div class="choices">
+
+                    <label class="choice">
+                        <input type="checkbox" name="resources" value="smartphone">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Smartphone</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="resources" value="computer">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Computer</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="resources" value="internet">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Internet access</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="resources" value="physical-product">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Physical products</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="resources" value="business">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">A business</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="resources" value="professional-skill">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Professional skill</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="resources" value="knowledge">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Knowledge or experience</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="resources" value="creative-ability">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Creative ability</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="resources" value="time-to-learn">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Time to learn</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="resources" value="other">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Something else</span>
+                    </label>
+
+                </div>
+            </div>
+
+            <!-- INTERESTS -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    What interests you?
+                </h2>
+
+                <p class="section-note">
+                    Select the areas you would like to explore.
+                </p>
+
+                <div class="choices">
+
+                    <label class="choice">
+                        <input type="checkbox" name="interests" value="technology">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Technology</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="interests" value="design">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Design</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="interests" value="writing">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Writing</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="interests" value="marketing">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Marketing</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="interests" value="sales">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Sales</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="interests" value="education">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Education</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="interests" value="business">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Business</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="interests" value="finance">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Finance</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="interests" value="beauty-fashion">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Beauty &amp; Fashion</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="interests" value="agriculture">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Agriculture</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="interests" value="media-video">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Media &amp; Video</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="interests" value="customer-service">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Customer Service</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="interests" value="programming">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Programming</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="interests" value="ai">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Artificial Intelligence</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="interests" value="languages">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Languages</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="interests" value="crafts">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Crafts</span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="checkbox" name="interests" value="professional-services">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">Professional Services</span>
+                    </label>
+
+                </div>
+            </div>
+
+            <!-- EXPERIENCE -->
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    Where are you right now?
+                </h2>
+
+                <p class="section-note">
+                    Choose the level that feels closest to your current experience.
+                </p>
+
+                <div class="choices single-choice">
+
+                    <label class="choice">
+                        <input type="radio" name="experience" value="beginner">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">
+                            <strong>Beginner</strong><br>
+                            I am starting out.
+                        </span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="experience" value="some-experience">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">
+                            <strong>Some experience</strong><br>
+                            I have started learning or practicing.
+                        </span>
+                    </label>
+
+                    <label class="choice">
+                        <input type="radio" name="experience" value="experienced">
+                        <span class="choice-check">✓</span>
+                        <span class="choice-text">
+                            <strong>Experienced</strong><br>
+                            I already have useful experience.
+                        </span>
+                    </label>
+
+                </div>
+            </div>
+
+            <div class="action">
+
+                <button class="continue" id="continueButton" disabled>
+                    Continue
+                </button>
+
+                <div class="note">
+                    You can develop new skills and change direction as you grow.
+                </div>
+
+            </div>
+
+        </section>
+    </main>
+
+    <footer>
+        © 2026 VELMORA GROUP · A world connected by possibility.
+    </footer>
+
+</div>
+
+<script>
+    const choices = document.querySelectorAll(".choice");
+    const continueButton = document.getElementById("continueButton");
+
+    function updateChoice(choice) {
+        const input = choice.querySelector("input");
+
+        if (input.type === "radio") {
+            document
+                .querySelectorAll('input[name="' + input.name + '"]')
+                .forEach(item => {
+                    item.closest(".choice").classList.remove("selected");
+                });
+        }
+
+        choice.classList.toggle("selected", input.checked);
+    }
+
+    function validateProfile() {
+        const resources = document.querySelectorAll(
+            'input[name="resources"]:checked'
+        );
+
+        const interests = document.querySelectorAll(
+            'input[name="interests"]:checked'
+        );
+
+        const experience = document.querySelector(
+            'input[name="experience"]:checked'
+        );
+
+        continueButton.disabled =
+            resources.length === 0 ||
+            interests.length === 0 ||
+            !experience;
+    }
+
+    choices.forEach(choice => {
+        const input = choice.querySelector("input");
+
+        input.addEventListener("change", () => {
+            updateChoice(choice);
+            validateProfile();
+        });
+    });
+
+    continueButton.addEventListener("click", async () => {
+
+        const resources = Array.from(
+            document.querySelectorAll(
+                'input[name="resources"]:checked'
+            )
+        ).map(input => input.value);
+
+        const interests = Array.from(
+            document.querySelectorAll(
+                'input[name="interests"]:checked'
+            )
+        ).map(input => input.value);
+
+        const experience = document.querySelector(
+            'input[name="experience"]:checked'
+        ).value;
+
+        const paths =
+            JSON.parse(
+                localStorage.getItem("velmora_paths") || "[]"
+            );
+
+        const goals =
+            JSON.parse(
+                localStorage.getItem("velmora_goals") || "[]"
+            );
+
+        const profile = {
+            resources,
+            interests,
+            experience
+        };
+
+        const token =
+            localStorage.getItem("velmora_token");
+
+        if (!token) {
+            window.location.replace("login.html");
+            return;
+        }
+
+        const originalText =
+            continueButton.textContent;
+
+        continueButton.disabled = true;
+        continueButton.textContent = "Saving...";
+
+        try {
+
+            const response = await fetch(
+                "http://127.0.0.1:5000/api/profile",
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        paths,
+                        resources,
+                        interests,
+                        experience,
+                        goals,
+                        primaryPath: paths[0] || null,
+                        primaryInterest: interests[0] || null
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                throw new Error(
+                    data.message || "Unable to save your profile."
+                );
+            }
+
+            localStorage.setItem(
+                "velmora_profile",
+                JSON.stringify(profile)
+            );
+
+            window.location.href = "profile-goal.html";
+
+        } catch (error) {
+
+            console.error("Profile save error:", error);
+
+            alert(error.message);
+
+            continueButton.disabled = false;
+            continueButton.textContent = originalText;
+        }
+    });
+</script>
+
+<script src="global-nav.js"></script>
+</body>
+</html>

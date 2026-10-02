@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Practice — VELMORA</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            background: #f5f4ef;
+        }
+
+        .practice-page {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 48px 22px 90px;
+        }
+
+        .practice-hero {
+            max-width: 760px;
+            margin-bottom: 38px;
+        }
+
+        .practice-eyebrow {
+            color: var(--green);
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .practice-hero h1 {
+            margin: 0;
+            font-size: clamp(2.3rem, 6vw, 4.8rem);
+            line-height: .98;
+            letter-spacing: -.045em;
+        }
+
+        .practice-hero p {
+            margin: 20px 0 0;
+            max-width: 650px;
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .practice-list {
+            display: grid;
+            gap: 18px;
+        }
+
+        .practice-card {
+            background: rgba(255,255,255,.72);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 12px 40px rgba(0,0,0,.045);
+        }
+
+        .practice-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .practice-label {
+            color: var(--muted);
+            font-size: .68rem;
+            font-weight: 800;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .practice-card h2 {
+            margin: 0;
+            font-size: 1.35rem;
+        }
+
+        .practice-date {
+            color: var(--muted);
+            font-size: .78rem;
+            white-space: nowrap;
+        }
+
+        .practice-status {
+            display: inline-flex;
+            margin-top: 12px;
+            padding: 7px 11px;
+            border-radius: 999px;
+            background: rgba(0,0,0,.055);
+            font-size: .7rem;
+            font-weight: 800;
+        }
+
+        .practice-submission {
+            margin-top: 22px;
+            padding: 18px;
+            border-radius: 16px;
+            background: rgba(0,0,0,.035);
+            color: #333;
+            line-height: 1.65;
+            white-space: pre-wrap;
+        }
+
+        .practice-feedback {
+            margin-top: 18px;
+            padding: 18px;
+            border-left: 3px solid var(--green);
+            background: rgba(0,0,0,.025);
+        }
+
+        .practice-feedback strong {
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        .practice-empty,
+        .practice-error,
+        .practice-loading {
+            padding: 30px;
+            border: 1px dashed var(--border);
+            border-radius: 22px;
+            color: var(--muted);
+            text-align: center;
+        }
+
+        @media (max-width: 650px) {
+            .practice-page {
+                padding: 32px 16px 70px;
+            }
+
+            .practice-card {
+                padding: 20px;
+            }
+
+            .practice-card-top {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .practice-date {
+                white-space: normal;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="practice-page">
+
+        <section class="practice-hero">
+            <div class="practice-eyebrow">
+                Practice
+            </div>
+
+            <h1>
+                Turn knowledge into proof.
+            </h1>
+
+            <p>
+                Your practice submissions become part of your
+                VELMORA learning record. As you complete more
+                missions, this space will grow into evidence of
+                what you can actually do.
+            </p>
+        </section>
+
+        <section
+            id="practiceList"
+            class="practice-list"
+        >
+            <div class="practice-loading">
+                Loading your practice...
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const token =
+            localStorage.getItem(
+                "velmora_token"
+            );
+
+        const practiceList =
+            document.getElementById(
+                "practiceList"
+            );
+
+        if (!token) {
+            window.location.replace(
+                "login.html"
+            );
+        }
+
+        function formatDate(value) {
+
+            if (!value) {
+                return "";
+            }
+
+            const date =
+                new Date(value);
+
+            return date.toLocaleDateString(
+                undefined,
+                {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                }
+            );
+        }
+
+        function missionTitle(
+            missionKey
+        ) {
+
+            const titles = {
+                "professional-communication-1":
+                    "Professional Communication — Reply to a Customer"
+            };
+
+            return (
+                titles[missionKey] ||
+                missionKey
+            );
+        }
+
+        function statusLabel(
+            reviewStatus
+        ) {
+
+            if (
+                reviewStatus ===
+                "approved"
+            ) {
+                return "Reviewed";
+            }
+
+            if (
+                reviewStatus ===
+                "rejected"
+            ) {
+                return "Needs Revision";
+            }
+
+            return "Pending Review";
+        }
+
+        async function loadPractice() {
+
+            try {
+
+                const response =
+                    await fetch(
+                        "http://127.0.0.1:5000/api/missions/submissions",
+                        {
+                            method: "GET",
+                            headers: {
+                                "Authorization":
+                                    `Bearer ${token}`
+                            }
+                        }
+                    );
+
+                const data =
+                    await response.json();
+
+                if (
+                    response.status === 401
+                ) {
+                    localStorage.removeItem(
+                        "velmora_token"
+                    );
+
+                    localStorage.removeItem(
+                        "velmora_user"
+                    );
+
+                    window.location.replace(
+                        "login.html"
+                    );
+
+                    return;
+                }
+
+                if (
+                    !response.ok ||
+                    !data.success
+                ) {
+                    throw new Error(
+                        data.message ||
+                        "Unable to load practice."
+                    );
+                }
+
+                if (
+                    !data.submissions ||
+                    data.submissions.length === 0
+                ) {
+                    practiceList.innerHTML = `
+                        <div class="practice-empty">
+                            You have not submitted any practice yet.
+                        </div>
+                    `;
+
+                    return;
+                }
+
+                practiceList.innerHTML =
+                    data.submissions
+                        .map(
+                            submission => `
+                                <article class="practice-card">
+
+                                    <div class="practice-card-top">
+
+                                        <div>
+                                            <div class="practice-label">
+                                                Practice Mission
+                                            </div>
+
+                                            <h2>
+                                                ${missionTitle(
+                                                    submission.mission_key
+                                                )}
+                                            </h2>
+
+                                            <div class="practice-status">
+                                                ${statusLabel(
+                                                    submission.review_status
+                                                )}
+                                            </div>
+                                        </div>
+
+                                        <div class="practice-date">
+                                            Submitted ${formatDate(
+                                                submission.submitted_at
+                                            )}
+                                        </div>
+
+                                    </div>
+
+                                    <div class="practice-submission">
+                                        ${submission.submission_text}
+                                    </div>
+
+                                    ${
+                                        submission.feedback
+                                            ? `
+                                                <div class="practice-feedback">
+                                                    <strong>
+                                                        VELMORA feedback
+                                                    </strong>
+
+                                                    ${submission.feedback}
+                                                </div>
+                                            `
+                                            : ""
+                                    }
+
+                                </article>
+                            `
+                        )
+                        .join("");
+
+            } catch (error) {
+
+                console.error(
+                    "Practice history error:",
+                    error
+                );
+
+                practiceList.innerHTML = `
+                    <div class="practice-error">
+                        Unable to load your practice right now.
+                    </div>
+                `;
+            }
+        }
+
+        loadPractice();
+    </script>
+
+<script src="global-nav.js"></script>
+</body>
+</html>

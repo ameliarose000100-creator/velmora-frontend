@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+<title>Messages · VELMORA</title>
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;
+    background:#f7f7f2;
+    color:#17231c;
+    font-family:Arial,sans-serif;
+}
+header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:22px 6%;
+    border-bottom:1px solid #dfe5df;
+    background:#fff;
+}
+.logo{
+    font-family:Georgia,serif;
+    font-size:24px;
+    font-weight:bold;
+    color:#177245;
+}
+nav a{
+    margin-left:22px;
+    color:#435047;
+    text-decoration:none;
+    font-size:14px;
+}
+main{
+    max-width:1100px;
+    margin:50px auto;
+    padding:0 22px;
+}
+.hero h1{
+    font-family:Georgia,serif;
+    font-size:clamp(38px,6vw,68px);
+    margin:0 0 12px;
+    letter-spacing:-2px;
+}
+.hero p{
+    max-width:650px;
+    color:#657169;
+    line-height:1.7;
+}
+.messages-layout{
+    margin-top:40px;
+    display:grid;
+    grid-template-columns:330px 1fr;
+    min-height:560px;
+    background:#fff;
+    border:1px solid #dfe5df;
+    border-radius:22px;
+    overflow:hidden;
+}
+.conversations{
+    border-right:1px solid #dfe5df;
+}
+.panel-title{
+    padding:22px;
+    border-bottom:1px solid #e7ebe7;
+    font-weight:bold;
+}
+.conversation{
+    padding:18px 20px;
+    border-bottom:1px solid #edf0ed;
+    cursor:pointer;
+}
+.conversation:hover{
+    background:#f7faf7;
+}
+.conversation.active{
+    background:#eef7f0;
+}
+.conversation strong{
+    display:block;
+    margin-bottom:5px;
+}
+.conversation span{
+    color:#78827b;
+    font-size:13px;
+}
+.chat{
+    display:flex;
+    flex-direction:column;
+}
+.chat-empty{
+    margin:auto;
+    text-align:center;
+    color:#7a837d;
+    padding:30px;
+}
+.chat-header{
+    padding:20px 24px;
+    border-bottom:1px solid #e1e6e1;
+    font-weight:bold;
+}
+.chat-messages{
+    flex:1;
+    padding:24px;
+    overflow-y:auto;
+}
+.message{
+    max-width:70%;
+    padding:12px 15px;
+    margin-bottom:12px;
+    border-radius:16px;
+    line-height:1.5;
+    font-size:14px;
+}
+.message.mine{
+    margin-left:auto;
+    background:#177245;
+    color:#fff;
+    border-bottom-right-radius:5px;
+}
+.message.theirs{
+    background:#eef1ee;
+    border-bottom-left-radius:5px;
+}
+.message-time{
+    display:block;
+    margin-top:5px;
+    font-size:10px;
+    opacity:.65;
+}
+.message-form{
+    display:flex;
+    gap:10px;
+    padding:18px;
+    border-top:1px solid #e1e6e1;
+}
+.message-form textarea{
+    flex:1;
+    resize:none;
+    min-height:48px;
+    border:1px solid #ccd5ce;
+    border-radius:14px;
+    padding:14px;
+    font:inherit;
+}
+button{
+    border:0;
+    border-radius:14px;
+    padding:0 22px;
+    background:#177245;
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+}
+.status{
+    padding:18px;
+    color:#737d76;
+}
+.error{
+    color:#a33b3b;
+}
+@media(max-width:760px){
+    nav{display:none}
+    .messages-layout{
+        grid-template-columns:1fr;
+    }
+    .conversations{
+        border-right:0;
+        border-bottom:1px solid #dfe5df;
+        max-height:250px;
+        overflow-y:auto;
+    }
+    .chat{
+        min-height:450px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">VELMORA</div>
+
+    <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="people.html">People</a>
+        <a href="skills-passport.html">Skills</a>
+        <a href="account.html">Account</a>
+    </nav>
+</header>
+
+<main>
+
+<section class="hero">
+    <h1>Messages.</h1>
+    <p>
+        Connect with people you know through VELMORA.
+        Conversations open after a connection is accepted.
+    </p>
+</section>
+
+<section class="messages-layout">
+
+    <aside class="conversations">
+        <div class="panel-title">Your conversations</div>
+        <div id="conversationList">
+            <div class="status">Loading conversations...</div>
+        </div>
+    </aside>
+
+    <section class="chat">
+
+        <div id="chatHeader" class="chat-header" style="display:none;"></div>
+
+        <div id="chatEmpty" class="chat-empty">
+            <h2>Your messages will appear here.</h2>
+            <p>
+                Connect with someone from People, then start a conversation.
+            </p>
+        </div>
+
+        <div id="chatMessages" class="chat-messages" style="display:none;"></div>
+
+        <form id="messageForm" class="message-form" style="display:none;">
+            <textarea
+                id="messageInput"
+                maxlength="5000"
+                placeholder="Write a message..."
+                required
+            ></textarea>
+            <button type="submit">Send</button>
+        </form>
+
+    </section>
+
+</section>
+
+</main>
+
+<script>
+const API = "http://127.0.0.1:5000";
+const token = localStorage.getItem("velmora_token");
+const user = JSON.parse(localStorage.getItem("velmora_user") || "null");
+
+if (!token || !user) {
+    window.location.href = "login.html";
+}
+
+const conversationList =
+    document.getElementById("conversationList");
+
+const chatHeader =
+    document.getElementById("chatHeader");
+
+const chatEmpty =
+    document.getElementById("chatEmpty");
+
+const chatMessages =
+    document.getElementById("chatMessages");
+
+const messageForm =
+    document.getElementById("messageForm");
+
+const messageInput =
+    document.getElementById("messageInput");
+
+let conversations = [];
+let activeConversation = null;
+
+const requestedUserId =
+    new URLSearchParams(window.location.search).get("userId");
+
+let directUser = null;
+
+function escapeHtml(value) {
+    const div = document.createElement("div");
+    div.textContent = value ?? "";
+    return div.innerHTML;
+}
+
+function formatDate(value) {
+    if (!value) return "";
+    return new Date(value).toLocaleString();
+}
+
+async function loadConversations() {
+    try {
+        const response = await fetch(
+            `${API}/api/conversations`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        if (response.status === 401) {
+            localStorage.removeItem("velmora_token");
+            localStorage.removeItem("velmora_user");
+            window.location.href = "login.html";
+            return;
+        }
+
+        const data = await response.json();
+
+        if (!data.success) {
+            throw new Error(data.message);
+        }
+
+        conversations = data.conversations || [];
+
+        if (!conversations.length) {
+            conversationList.innerHTML = `
+                <div class="status">
+                    No conversations yet.
+                </div>
+            `;
+            return;
+        }
+
+        conversationList.innerHTML =
+            conversations.map(conversation => `
+                <div
+                    class="conversation"
+                    data-id="${conversation.id}"
+                >
+                    <strong>
+                        ${escapeHtml(conversation.other_user_name)}
+                    </strong>
+
+                    <span>
+                        ${escapeHtml(
+                            conversation.last_message || "No messages"
+                        )}
+                    </span>
+                </div>
+            `).join("");
+
+        document
+            .querySelectorAll(".conversation")
+            .forEach(item => {
+                item.addEventListener("click", () => {
+                    openConversation(
+                        Number(item.dataset.id)
+                    );
+                });
+            });
+
+    } catch (error) {
+        conversationList.innerHTML = `
+            <div class="status error">
+                Unable to load messages.
+            </div>
+        `;
+    }
+}
+
+async function prepareDirectMessage() {
+    if (!requestedUserId) return;
+
+    if (Number(requestedUserId) === Number(user.id)) {
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            `${API}/api/profile/${encodeURIComponent(requestedUserId)}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        if (!response.ok) return;
+
+        const data = await response.json();
+
+        if (!data.success || !data.profile) return;
+
+        directUser = data.profile;
+
+        const existingConversation =
+            conversations.find(
+                conversation =>
+                    Number(conversation.other_user_id) ===
+                    Number(requestedUserId)
+            );
+
+        if (existingConversation) {
+            await openConversation(
+                Number(existingConversation.id)
+            );
+            return;
+        }
+
+        chatEmpty.style.display = "none";
+        chatHeader.style.display = "block";
+        chatMessages.style.display = "block";
+        messageForm.style.display = "flex";
+
+        chatHeader.textContent =
+            directUser.full_name || "VELMORA Member";
+
+        chatMessages.innerHTML = `
+            <div class="chat-empty">
+                <h2>Start a conversation.</h2>
+                <p>
+                    You are connected with
+                    ${escapeHtml(directUser.full_name || "this person")}.
+                    Send your first message below.
+                </p>
+            </div>
+        `;
+
+    } catch (error) {
+        console.error(
+            "Direct message preparation error:",
+            error
+        );
+    }
+}
+
+async function openConversation(conversationId) {
+
+    activeConversation =
+        conversations.find(
+            item => Number(item.id) === conversationId
+        );
+
+    if (!activeConversation) return;
+
+    document
+        .querySelectorAll(".conversation")
+        .forEach(item => {
+            item.classList.toggle(
+                "active",
+                Number(item.dataset.id) === conversationId
+            );
+        });
+
+    chatEmpty.style.display = "none";
+    chatHeader.style.display = "block";
+    chatMessages.style.display = "block";
+    messageForm.style.display = "flex";
+
+    chatHeader.textContent =
+        activeConversation.other_user_name;
+
+    chatMessages.innerHTML =
+        `<div class="status">Loading messages...</div>`;
+
+    try {
+        const response = await fetch(
+            `${API}/api/conversations/${conversationId}/messages`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        if (response.status === 401) {
+            window.location.href = "login.html";
+            return;
+        }
+
+        const data = await response.json();
+
+        if (!data.success) {
+            throw new Error(data.message);
+        }
+
+        const messages = data.messages || [];
+
+        if (!messages.length) {
+            chatMessages.innerHTML =
+                `<div class="status">No messages yet.</div>`;
+            return;
+        }
+
+        chatMessages.innerHTML =
+            messages.map(message => {
+
+                const mine =
+                    Number(message.sender_id) === Number(user.id);
+
+                return `
+                    <div class="message ${mine ? "mine" : "theirs"}">
+                        ${escapeHtml(message.message_text)}
+
+                        <span class="message-time">
+                            ${formatDate(message.created_at)}
+                        </span>
+                    </div>
+                `;
+            }).join("");
+
+        chatMessages.scrollTop =
+            chatMessages.scrollHeight;
+
+    } catch (error) {
+        chatMessages.innerHTML = `
+            <div class="status error">
+                Unable to load this conversation.
+            </div>
+        `;
+    }
+}
+
+messageForm.addEventListener("submit", async event => {
+
+    event.preventDefault();
+
+    if (!activeConversation) return;
+
+    const text =
+        messageInput.value.trim();
+
+    if (!text) return;
+
+    const recipientId =
+        activeConversation.other_user_id;
+
+    try {
+
+        const response = await fetch(
+            `${API}/api/messages/${recipientId}`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    messageText: text
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(
+                data.message || "Unable to send message."
+            );
+        }
+
+        messageInput.value = "";
+
+        await loadConversations();
+
+        await openConversation(
+            Number(data.message.conversation_id)
+        );
+
+    } catch (error) {
+        alert(error.message);
+    }
+});
+
+async function openUserFromUrl() {
+    const params =
+        new URLSearchParams(window.location.search);
+
+    const userId =
+        params.get("userId");
+
+    if (!userId) return;
+
+    if (Number(userId) === Number(user.id)) {
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            `${API}/api/profile/${encodeURIComponent(userId)}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        if (!response.ok) {
+            console.error(
+                "Unable to load requested profile."
+            );
+            return;
+        }
+
+        const data = await response.json();
+
+        if (!data.success || !data.profile) {
+            return;
+        }
+
+        const profile = data.profile;
+
+        const existing =
+            conversations.find(
+                item =>
+                    Number(item.other_user_id) ===
+                    Number(profile.id)
+            );
+
+        if (existing) {
+            await openConversation(
+                Number(existing.id)
+            );
+            return;
+        }
+
+        const connectionResponse = await fetch(
+            `${API}/api/connections`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        let connected = false;
+
+        if (connectionResponse.ok) {
+            const connectionData =
+                await connectionResponse.json();
+
+            connected =
+                (connectionData.connections || []).some(
+                    connection =>
+                        Number(connection.user_id) ===
+                        Number(profile.id)
+                );
+        }
+
+        chatEmpty.style.display = "none";
+        chatHeader.style.display = "block";
+        chatMessages.style.display = "block";
+
+        chatHeader.textContent =
+            profile.full_name || "VELMORA Member";
+
+        if (connected) {
+            messageForm.style.display = "flex";
+
+            chatMessages.innerHTML = `
+                <div class="status">
+                    Start a conversation with
+                    <strong>
+                        ${escapeHtml(
+                            profile.full_name ||
+                            "this person"
+                        )}
+                    </strong>.
+                </div>
+            `;
+
+            activeConversation = {
+                other_user_id: profile.id,
+                other_user_name: profile.full_name
+            };
+
+        } else {
+            messageForm.style.display = "none";
+
+            chatMessages.innerHTML = `
+                <div class="status">
+                    <strong>
+                        ${escapeHtml(
+                            profile.full_name ||
+                            "VELMORA Member"
+                        )}
+                    </strong>
+                    <br><br>
+                    You can message this person after
+                    your connection is accepted.
+                </div>
+            `;
+
+            activeConversation = null;
+        }
+
+    } catch (error) {
+        console.error(
+            "Direct message loading error:",
+            error
+        );
+    }
+}
+loadConversations().then(openUserFromUrl);
+</script>
+
+<script src="global-nav.js"></script>
+</body>
+</html>

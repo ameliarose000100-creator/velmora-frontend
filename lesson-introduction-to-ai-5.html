@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Lesson 5 · Introduction to AI · VELMORA</title>
+
+    <style>
+        :root {
+            --bg: #f7f7f2;
+            --card: #ffffff;
+            --text: #172019;
+            --muted: #68736b;
+            --green: #177245;
+            --green-dark: #105734;
+            --border: #dfe5df;
+            --soft: #eef5ef;
+            --danger: #a13d3d;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Arial, sans-serif;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .header {
+            min-height: 72px;
+            padding: 18px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            background: rgba(247, 247, 242, .96);
+        }
+
+        .logo {
+            font-family: Georgia, serif;
+            font-size: 1.25rem;
+            letter-spacing: .08em;
+        }
+
+        .back {
+            color: var(--green);
+            font-size: .8rem;
+            font-weight: 700;
+        }
+
+        main {
+            width: min(850px, 90%);
+            margin: 0 auto;
+            padding: 65px 0 90px;
+        }
+
+        .eyebrow {
+            color: var(--green);
+            font-size: .7rem;
+            font-weight: 800;
+            letter-spacing: .13em;
+            text-transform: uppercase;
+        }
+
+        .progress-wrap {
+            margin-top: 18px;
+        }
+
+        .progress-top {
+            display: flex;
+            justify-content: space-between;
+            color: var(--muted);
+            font-size: .7rem;
+            margin-bottom: 8px;
+        }
+
+        .progress {
+            width: 100%;
+            height: 6px;
+            background: var(--border);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 83.33%;
+            height: 100%;
+            background: var(--green);
+            border-radius: inherit;
+        }
+
+        h1 {
+            max-width: 760px;
+            margin: 20px 0 15px;
+            font-family: Georgia, serif;
+            font-size: clamp(2.5rem, 7vw, 4.8rem);
+            line-height: .98;
+            font-weight: 500;
+            letter-spacing: -.035em;
+        }
+
+        .intro {
+            max-width: 700px;
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .lesson-card {
+            margin-top: 45px;
+            padding: 34px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+        }
+
+        .lesson-card h2 {
+            margin: 0 0 15px;
+            font-family: Georgia, serif;
+            font-size: 1.8rem;
+            font-weight: 500;
+        }
+
+        .lesson-card p {
+            color: var(--muted);
+            font-size: .9rem;
+            line-height: 1.8;
+        }
+
+        .concept {
+            margin: 28px 0;
+            padding: 22px;
+            background: var(--soft);
+            border-radius: 17px;
+        }
+
+        .concept strong {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--green);
+        }
+
+        .concept p {
+            margin: 0;
+        }
+
+        .examples {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-top: 25px;
+        }
+
+        .example {
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 17px;
+        }
+
+        .example strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .example span {
+            color: var(--muted);
+            font-size: .78rem;
+            line-height: 1.6;
+        }
+
+        .check {
+            margin-top: 45px;
+            padding: 28px;
+            background: var(--text);
+            color: white;
+            border-radius: 22px;
+        }
+
+        .check-label {
+            color: #8fd1a8;
+            font-size: .68rem;
+            font-weight: 800;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+
+        .check h2 {
+            margin: 12px 0 22px;
+            font-family: Georgia, serif;
+            font-size: 1.65rem;
+            font-weight: 500;
+        }
+
+        .answers {
+            display: grid;
+            gap: 10px;
+        }
+
+        .answer {
+            width: 100%;
+            padding: 15px 17px;
+            border: 1px solid rgba(255,255,255,.16);
+            border-radius: 13px;
+            background: transparent;
+            color: white;
+            text-align: left;
+            cursor: pointer;
+            font-size: .8rem;
+            transition: background 160ms ease;
+        }
+
+        .answer:hover {
+            background: rgba(255,255,255,.08);
+        }
+
+        .answer.correct {
+            background: #276d47;
+            border-color: #4f9d70;
+        }
+
+        .answer.wrong {
+            background: #713d3d;
+            border-color: #a86262;
+        }
+
+        .result {
+            display: none;
+            margin-top: 18px;
+            padding: 15px;
+            border-radius: 12px;
+            background: rgba(255,255,255,.08);
+            color: #d7e1da;
+            font-size: .76rem;
+            line-height: 1.6;
+        }
+
+        .continue {
+            display: none;
+            margin-top: 25px;
+            padding: 14px 20px;
+            border: 0;
+            border-radius: 999px;
+            background: white;
+            color: var(--green-dark);
+            font-size: .78rem;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .continue:hover {
+            background: #e9f1eb;
+        }
+
+        .footer-note {
+            margin-top: 24px;
+            color: var(--muted);
+            font-size: .72rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+
+            main {
+                padding-top: 48px;
+            }
+
+            .lesson-card {
+                padding: 23px;
+            }
+
+            .examples {
+                grid-template-columns: 1fr;
+            }
+
+            .check {
+                padding: 23px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <a href="learn.html" class="logo">
+        VELMORA
+    </a>
+
+    <a href="learn.html" class="back">
+        ← Back to Learn
+    </a>
+
+</header>
+
+<main>
+
+    <div class="eyebrow">
+        Introduction to AI · Lesson 5
+    </div>
+
+    <div class="progress-wrap">
+
+        <div class="progress-top">
+            <span>Learning path progress</span>
+            <span>5 of 6</span>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar"></div>
+        </div>
+
+    </div>
+
+    <h1>
+        Using AI Effectively and Responsibly
+    </h1>
+
+    <p class="intro">
+        AI becomes more useful when people know how to give it clear
+        instructions, review its results and use it responsibly.
+    </p>
+
+
+    <section class="lesson-card">
+
+        <h2>
+            Give AI a Clear Task
+        </h2>
+
+        <p>
+            When working with an AI tool, the quality of the instructions
+            you provide can affect the usefulness of the result. A clear
+            request tells the system what you want it to do.
+        </p>
+
+        <p>
+            Useful instructions can include the task, relevant context,
+            the desired format and important limits or requirements.
+        </p>
+
+
+        <div class="concept">
+
+            <strong>
+                A useful request
+            </strong>
+
+            <p>
+                Instead of asking only for "a business plan," you could
+                explain the type of business, the audience, the goal,
+                the information you already have and the format you want.
+            </p>
+
+        </div>
+
+
+        <h2>
+            Improve Results Through Iteration
+        </h2>
+
+        <p>
+            Your first AI-generated result does not have to be the final
+            result. You can review it, identify what needs improvement
+            and give the system additional instructions.
+        </p>
+
+        <p>
+            This process of asking, reviewing and refining can help you
+            move toward a result that better fits your actual needs.
+        </p>
+
+
+        <div class="examples">
+
+            <div class="example">
+
+                <strong>
+                    Be specific
+                </strong>
+
+                <span>
+                    Clearly explain the task and the result you are
+                    trying to achieve.
+                </span>
+
+            </div>
+
+            <div class="example">
+
+                <strong>
+                    Add context
+                </strong>
+
+                <span>
+                    Provide relevant information that helps the AI
+                    understand the situation.
+                </span>
+
+            </div>
+
+            <div class="example">
+
+                <strong>
+                    Review
+                </strong>
+
+                <span>
+                    Check whether the result is accurate, relevant and
+                    appropriate for your purpose.
+                </span>
+
+            </div>
+
+            <div class="example">
+
+                <strong>
+                    Refine
+                </strong>
+
+                <span>
+                    Give additional instructions when the first result
+                    does not meet your needs.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="concept">
+
+            <strong>
+                Check important information
+            </strong>
+
+            <p>
+                AI systems can produce incorrect information, incomplete
+                explanations or misleading results. Important facts should
+                be checked against reliable sources before you rely on them.
+            </p>
+
+        </div>
+
+
+        <div class="concept">
+
+            <strong>
+                Protect private information
+            </strong>
+
+            <p>
+                Think carefully before entering personal, confidential or
+                sensitive information into an AI service. Understand the
+                service's privacy practices and avoid sharing information
+                that you do not need to provide.
+            </p>
+
+        </div>
+
+
+        <div class="concept">
+
+            <strong>
+                People remain responsible
+            </strong>
+
+            <p>
+                Using AI does not remove human responsibility. The person
+                using the tool remains responsible for reviewing important
+                outputs and deciding how those outputs should be used.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="check">
+
+        <div class="check-label">
+            Quick knowledge check
+        </div>
+
+        <h2>
+            What is an important part of using AI responsibly?
+        </h2>
+
+        <div class="answers">
+
+            <button
+                class="answer"
+                data-correct="false"
+            >
+                Accept every AI-generated answer without checking it.
+            </button>
+
+            <button
+                class="answer"
+                data-correct="true"
+            >
+                Give clear instructions, review important results and protect private information.
+            </button>
+
+            <button
+                class="answer"
+                data-correct="false"
+            >
+                Share as much private information as possible so the AI always knows everything.
+            </button>
+
+            <button
+                class="answer"
+                data-correct="false"
+            >
+                Assume that an AI system cannot make mistakes.
+            </button>
+
+        </div>
+
+        <div
+            id="result"
+            class="result"
+        ></div>
+
+        <button
+            id="continueButton"
+            class="continue"
+            type="button"
+        >
+            Complete Lesson
+        </button>
+
+    </section>
+
+
+    <div class="footer-note">
+        Your learning progress is saved to your VELMORA account.
+    </div>
+
+</main>
+
+
+<script>
+
+    const token =
+        localStorage.getItem("velmora_token");
+
+    if (!token) {
+        window.location.replace("login.html");
+    }
+
+
+    const answers =
+        document.querySelectorAll(".answer");
+
+    const result =
+        document.getElementById("result");
+
+    const continueButton =
+        document.getElementById(
+            "continueButton"
+        );
+
+
+    let completed = false;
+
+
+    answers.forEach(answer => {
+
+        answer.addEventListener(
+            "click",
+            function() {
+
+                if (completed) {
+                    return;
+                }
+
+                answers.forEach(item => {
+                    item.classList.remove(
+                        "correct",
+                        "wrong"
+                    );
+                });
+
+                const isCorrect =
+                    this.dataset.correct === "true";
+
+                if (isCorrect) {
+
+                    this.classList.add(
+                        "correct"
+                    );
+
+                    result.style.display =
+                        "block";
+
+                    result.textContent =
+                        "Correct. AI can be useful, but its results can contain mistakes or miss important context.";
+
+                    continueButton.style.display =
+                        "inline-block";
+
+                    completed = true;
+
+                } else {
+
+                    this.classList.add(
+                        "wrong"
+                    );
+
+                    result.style.display =
+                        "block";
+
+                    result.textContent =
+                        "Not quite. Think about why people should check important information produced by AI tools.";
+
+                }
+
+            }
+        );
+
+    });
+
+
+    continueButton.addEventListener(
+        "click",
+        async function() {
+
+            const token =
+                localStorage.getItem(
+                    "velmora_token"
+                );
+
+            if (!token) {
+                window.location.replace(
+                    "login.html"
+                );
+                return;
+            }
+
+            continueButton.disabled = true;
+            continueButton.textContent =
+                "Saving progress...";
+
+            try {
+
+                const response =
+                    await fetch(
+                        "http://127.0.0.1:5000/api/learning/progress",
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type":
+                                    "application/json",
+                                "Authorization":
+                                    `Bearer ${token}`
+                            },
+                            body: JSON.stringify({
+                                learningPath:
+                                    "Introduction to AI",
+                                lessonKey:
+                                    "introduction-to-ai-lesson-5",
+                                status:
+                                    "completed"
+                            })
+                        }
+                    );
+
+                const data =
+                    await response.json();
+
+                if (
+                    response.status === 401
+                ) {
+                    localStorage.removeItem(
+                        "velmora_token"
+                    );
+
+                    localStorage.removeItem(
+                        "velmora_user"
+                    );
+
+                    window.location.replace(
+                        "login.html"
+                    );
+
+                    return;
+                }
+
+                if (
+                    !response.ok ||
+                    !data.success
+                ) {
+                    throw new Error(
+                        data.message ||
+                        "Unable to save learning progress."
+                    );
+                }
+
+                localStorage.setItem(
+                    "velmora_lesson_introduction_to_ai_5",
+                    "completed"
+                );
+
+                window.location.replace(
+                    "lesson-introduction-to-ai-6.html"
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "Lesson completion error:",
+                    error
+                );
+
+                continueButton.disabled =
+                    false;
+
+                continueButton.textContent =
+                    "Complete Lesson";
+
+                result.style.display =
+                    "block";
+
+                result.textContent =
+                    error.message ||
+                    "Unable to save your progress. Please try again.";
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Account Settings · VELMORA</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .account-page {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 70px 24px 100px;
+        }
+
+        .account-header {
+            margin-bottom: 42px;
+        }
+
+        .account-header h1 {
+            margin: 8px 0 16px;
+        }
+
+        .account-header p {
+            max-width: 650px;
+        }
+
+        .velmora-id-card {
+            margin-bottom: 24px;
+            padding: 24px 26px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            background: #0d1511;
+            border: 1px solid #29342e;
+            border-radius: 22px;
+            color: #ffffff;
+        }
+
+        .velmora-id-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #9aa49e;
+            font-size: .65rem;
+            font-weight: 800;
+            letter-spacing: .16em;
+        }
+
+        #velmoraPublicId {
+            display: block;
+            font-family: Inter, Arial, Helvetica, sans-serif;
+            font-size: 1.55rem;
+            letter-spacing: .12em;
+        }
+
+        .velmora-id-card p {
+            margin: 8px 0 0;
+            max-width: 520px;
+            color: #b8c2bc;
+            font-size: .75rem;
+            line-height: 1.5;
+        }
+
+        .copy-velmora-id {
+            flex-shrink: 0;
+            border: 1px solid #3c5749;
+            border-radius: 999px;
+            padding: 11px 18px;
+            background: #16834f;
+            color: #ffffff;
+            font: inherit;
+            font-size: .76rem;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .copy-velmora-id:hover {
+            background: #0d5d38;
+        }
+
+        .account-card {
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid rgba(20, 120, 70, 0.12);
+            border-radius: 24px;
+            padding: 30px;
+        }
+
+        .account-section-title {
+            margin: 0 0 22px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .field.full {
+            grid-column: 1 / -1;
+        }
+
+        .field label {
+            color: #34443b;
+            font-size: .78rem;
+            font-weight: 750;
+        }
+
+        .field input,
+        .field select {
+            width: 100%;
+            min-height: 48px;
+            padding: 12px 14px;
+            border: 1px solid #dce5df;
+            border-radius: 12px;
+            outline: none;
+            color: #142019;
+            background: #ffffff;
+            font: inherit;
+            transition:
+                border-color 180ms ease,
+                box-shadow 180ms ease;
+        }
+
+        .field input:focus,
+        .field select:focus {
+            border-color: #147a45;
+            box-shadow: 0 0 0 3px rgba(20, 122, 69, .08);
+        }
+
+        .field input[readonly] {
+            color: #718078;
+            background: #f3f6f4;
+            cursor: not-allowed;
+        }
+
+        .field-note {
+            margin: 0;
+            color: #7b877f;
+            font-size: .72rem;
+            line-height: 1.5;
+        }
+
+        .actions {
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .save-button {
+            border: 0;
+            border-radius: 999px;
+            padding: 13px 24px;
+            color: #ffffff;
+            background: #176b43;
+            font-size: .84rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 10px 22px rgba(20, 120, 70, .14);
+            transition: .2s ease;
+        }
+
+        .save-button:hover:not(:disabled) {
+            background: #0f5937;
+            transform: translateY(-2px);
+        }
+
+        .save-button:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+        }
+
+        .cancel-link {
+            color: #176b43;
+            text-decoration: none;
+            font-size: .84rem;
+            font-weight: 750;
+        }
+
+        .status {
+            min-height: 20px;
+            margin-top: 18px;
+            font-size: .8rem;
+            font-weight: 700;
+        }
+
+        .status.success {
+            color: #176b43;
+        }
+
+        .status.error {
+            color: #a33a3a;
+        }
+
+        @media (max-width: 700px) {
+            .account-page {
+                padding-top: 45px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .field.full {
+                grid-column: auto;
+            }
+
+            .account-card {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<script>
+    const token =
+        localStorage.getItem("velmora_token");
+
+    if (!token) {
+        window.location.replace("login.html");
+    }
+</script>
+
+
+<header class="site-header">
+
+    <a href="dashboard.html" class="logo">
+        VELMORA
+    </a>
+
+    <div class="header-right">
+
+        <a
+            href="dashboard.html"
+            class="back-link"
+        >
+            Dashboard
+        </a>
+
+    </div>
+
+</header>
+
+
+<main class="account-page">
+
+    <section class="account-header">
+
+        <div class="eyebrow">
+            Account settings
+        </div>
+
+        <h1>Your account.</h1>
+
+        <p class="description">
+            Keep your personal information accurate as your
+            VELMORA journey grows.
+        </p>
+
+    </section>
+
+
+    <section class="velmora-id-card">
+
+        <div>
+            <span class="velmora-id-label">
+                YOUR VELMORA ID
+            </span>
+
+            <strong id="velmoraPublicId">
+                —
+            </strong>
+
+            <p>
+                Share this ID when someone wants to find
+                or send money to your VELMORA account.
+            </p>
+        </div>
+
+        <button
+            type="button"
+            id="copyVelmoraId"
+            class="copy-velmora-id"
+        >
+            Copy ID
+        </button>
+
+    </section>
+
+
+    <section class="account-card">
+
+        <h2 class="account-section-title">
+            Personal information
+        </h2>
+
+        <form id="accountForm">
+
+            <div class="form-grid">
+
+                <div class="field full">
+
+                    <label for="fullName">
+                        Full name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="fullName"
+                        autocomplete="name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="field full">
+
+                    <label for="email">
+                        Email address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        readonly
+                    >
+
+                    <p class="field-note">
+                        Email changes will require a separate
+                        verification process.
+                    </p>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="phone">
+                        Phone number
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        autocomplete="tel"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="whatsapp">
+                        WhatsApp number
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="whatsapp"
+                        autocomplete="tel"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="field full">
+
+                    <label for="country">
+                        Country
+                    </label>
+
+                    <input
+                        type="text"
+                        id="country"
+                        autocomplete="country-name"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    type="submit"
+                    class="save-button"
+                    id="saveButton"
+                >
+                    Save Changes
+                </button>
+
+                <a
+                    href="dashboard.html"
+                    class="cancel-link"
+                >
+                    Cancel
+                </a>
+
+            </div>
+
+
+            <div
+                id="status"
+                class="status"
+                aria-live="polite"
+            ></div>
+
+        </form>
+
+    </section>
+
+    <section class="account-card">
+
+        <h2 class="account-section-title">
+            Change password
+        </h2>
+
+        <p class="section-description">
+            Update your password to help keep your VELMORA account secure.
+        </p>
+
+        <form id="passwordForm">
+
+            <div class="form-grid">
+
+                <div class="field full">
+
+                    <label for="currentPassword">
+                        Current password
+                    </label>
+
+                    <div class="password-field">
+                        <input
+                            type="password"
+                            id="currentPassword"
+                            autocomplete="current-password"
+                            required
+                        >
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            data-target="currentPassword"
+                        >Show</button>
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="newPassword">
+                        New password
+                    </label>
+
+                    <div class="password-field">
+                        <input
+                            type="password"
+                            id="newPassword"
+                            autocomplete="new-password"
+                            minlength="8"
+                            required
+                        >
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            data-target="newPassword"
+                        >Show</button>
+                    </div>
+
+                    <p class="field-note">
+                        Use at least 8 characters.
+                    </p>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="confirmPassword">
+                        Confirm new password
+                    </label>
+
+                    <div class="password-field">
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            autocomplete="new-password"
+                            minlength="8"
+                            required
+                        >
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            data-target="confirmPassword"
+                        >Show</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    type="submit"
+                    class="save-button"
+                    id="passwordButton"
+                >
+                    Change Password
+                </button>
+
+            </div>
+
+
+            <div
+                id="passwordStatus"
+                class="status"
+                aria-live="polite"
+            ></div>
+
+        </form>
+
+    </section>
+
+
+    <section class="account-card security-card">
+
+        <h2 class="account-section-title">
+            Active Sessions
+        </h2>
+
+        <p class="field-note">
+            These are the VELMORA sessions currently active on your account.
+        </p>
+
+        <div
+            id="sessionsList"
+            class="sessions-list"
+        >
+            <p class="field-note">
+                Loading active sessions...
+            </p>
+        </div>
+
+    </section>
+
+
+    <section class="account-card security-card">
+
+        <h2 class="account-section-title">
+            Account Security
+        </h2>
+
+        <p class="field-note">
+            If you are signed in on another device or browser,
+            you can end all active VELMORA sessions at once.
+        </p>
+
+        <div class="actions">
+
+            <button
+                type="button"
+                class="save-button"
+                id="logoutAllButton"
+            >
+                Log out everywhere
+            </button>
+
+        </div>
+
+        <div
+            id="logoutAllStatus"
+            class="status"
+            aria-live="polite"
+        ></div>
+
+    </section>
+
+
+</main>
+
+
+<script>
+(async function () {
+
+    const token =
+        localStorage.getItem("velmora_token");
+
+    if (!token) {
+        return;
+    }
+
+    const form =
+        document.getElementById("accountForm");
+
+    const saveButton =
+        document.getElementById("saveButton");
+
+    const status =
+        document.getElementById("status");
+
+    const fullName =
+        document.getElementById("fullName");
+
+    const email =
+        document.getElementById("email");
+
+    const phone =
+        document.getElementById("phone");
+
+    const whatsapp =
+        document.getElementById("whatsapp");
+
+    const country =
+        document.getElementById("country");
+
+
+    try {
+
+        const response = await fetch(
+            "http://127.0.0.1:5000/api/auth/me",
+            {
+                method: "GET",
+                headers: {
+                    "Authorization":
+                        `Bearer ${token}`
+                }
+            }
+        );
+
+        if (response.status === 401) {
+            throw new Error(
+                "Authentication expired."
+            );
+        }
+
+        const data =
+            await response.json();
+
+        if (!response.ok || !data.success || !data.user) {
+            throw new Error(
+                data.message ||
+                "Unable to load your account."
+            );
+        }
+
+        const user = data.user;
+
+        const velmoraPublicId =
+            String(user.id).padStart(9, "0");
+
+        const velmoraIdElement =
+            document.getElementById("velmoraPublicId");
+
+        if (velmoraIdElement) {
+            velmoraIdElement.textContent =
+                velmoraPublicId;
+        }
+
+        fullName.value =
+            user.full_name || "";
+
+        email.value =
+            user.email || "";
+
+        phone.value =
+            user.phone || "";
+
+        whatsapp.value =
+            user.whatsapp || "";
+
+        country.value =
+            user.country || "";
+
+
+    } catch (error) {
+
+        console.error(
+            "Account load error:",
+            error
+        );
+
+        if (
+            error.message ===
+            "Authentication expired."
+        ) {
+
+            localStorage.removeItem(
+                "velmora_token"
+            );
+
+            localStorage.removeItem(
+                "velmora_user"
+            );
+
+            window.location.replace(
+                "login.html"
+            );
+
+            return;
+        }
+
+        status.textContent =
+            error.message ||
+            "Unable to load your account.";
+
+        status.className =
+            "status error";
+    }
+
+
+    form.addEventListener(
+        "submit",
+        async event => {
+
+            event.preventDefault();
+
+            status.textContent = "";
+            status.className = "status";
+
+            saveButton.disabled = true;
+            saveButton.textContent = "Saving...";
+
+            try {
+
+                const response = await fetch(
+                    "http://127.0.0.1:5000/api/account",
+                    {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type":
+                                "application/json",
+                            "Authorization":
+                                `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            fullName:
+                                fullName.value.trim(),
+
+                            phone:
+                                phone.value.trim(),
+
+                            whatsapp:
+                                whatsapp.value.trim(),
+
+                            country:
+                                country.value.trim()
+                        })
+                    }
+                );
+
+                if (response.status === 401) {
+                    throw new Error(
+                        "Authentication expired."
+                    );
+                }
+
+                const data =
+                    await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(
+                        data.message ||
+                        "Unable to save your account."
+                    );
+                }
+
+                localStorage.setItem(
+                    "velmora_user",
+                    JSON.stringify(data.user)
+                );
+
+                status.textContent =
+                    "Your account information has been updated.";
+
+                status.className =
+                    "status success";
+
+                saveButton.textContent =
+                    "Saved";
+
+                setTimeout(() => {
+                    window.location.replace(
+                        "dashboard.html"
+                    );
+                }, 1200);
+
+
+            } catch (error) {
+
+                console.error(
+                    "Account save error:",
+                    error
+                );
+
+                if (
+                    error.message ===
+                    "Authentication expired."
+                ) {
+
+                    localStorage.removeItem(
+                        "velmora_token"
+                    );
+
+                    localStorage.removeItem(
+                        "velmora_user"
+                    );
+
+                    window.location.replace(
+                        "login.html"
+                    );
+
+                    return;
+                }
+
+                status.textContent =
+                    error.message ||
+                    "Unable to save your account.";
+
+                status.className =
+                    "status error";
+
+                saveButton.disabled = false;
+                saveButton.textContent =
+                    "Save Changes";
+            }
+        }
+    );
+
+
+    const passwordForm =
+        document.getElementById("passwordForm");
+
+    const passwordButton =
+        document.getElementById("passwordButton");
+
+    const passwordStatus =
+        document.getElementById("passwordStatus");
+
+    const currentPassword =
+        document.getElementById("currentPassword");
+
+    const newPassword =
+        document.getElementById("newPassword");
+
+    const confirmPassword =
+        document.getElementById("confirmPassword");
+
+    document.querySelectorAll(".password-toggle").forEach(
+        button => {
+            button.addEventListener("click", () => {
+                const input = document.getElementById(
+                    button.dataset.target
+                );
+
+                if (input.type === "password") {
+                    input.type = "text";
+                    button.textContent = "Hide";
+                } else {
+                    input.type = "password";
+                    button.textContent = "Show";
+                }
+            });
+        }
+    );
+
+
+    passwordForm.addEventListener(
+        "submit",
+        async event => {
+
+            event.preventDefault();
+
+            passwordStatus.textContent = "";
+            passwordStatus.className = "status";
+
+            passwordButton.disabled = true;
+            passwordButton.textContent = "Changing...";
+
+            try {
+
+                const response = await fetch(
+                    "http://127.0.0.1:5000/api/account/change-password",
+                    {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type":
+                                "application/json",
+                            "Authorization":
+                                `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            currentPassword:
+                                currentPassword.value,
+
+                            newPassword:
+                                newPassword.value,
+
+                            confirmPassword:
+                                confirmPassword.value
+                        })
+                    }
+                );
+
+                const data =
+                    await response.json();
+
+                if (response.status === 401) {
+
+                    if (
+                        data.message ===
+                        "Authentication required."
+                    ) {
+                        throw new Error(
+                            "Authentication expired."
+                        );
+                    }
+                }
+
+                if (!response.ok || !data.success) {
+                    throw new Error(
+                        data.message ||
+                        "Unable to change your password."
+                    );
+                }
+
+                passwordStatus.textContent =
+                    "Your password has been changed successfully.";
+
+                passwordStatus.className =
+                    "status success";
+
+                passwordForm.reset();
+
+                passwordButton.textContent =
+                    "Changed";
+
+                setTimeout(() => {
+                    passwordButton.disabled = false;
+                    passwordButton.textContent =
+                        "Change Password";
+                }, 1200);
+
+
+            } catch (error) {
+
+                console.error(
+                    "Change password error:",
+                    error
+                );
+
+                if (
+                    error.message ===
+                    "Authentication expired."
+                ) {
+
+                    localStorage.removeItem(
+                        "velmora_token"
+                    );
+
+                    localStorage.removeItem(
+                        "velmora_user"
+                    );
+
+                    window.location.replace(
+                        "login.html"
+                    );
+
+                    return;
+                }
+
+                passwordStatus.textContent =
+                    error.message ||
+                    "Unable to change your password.";
+
+                passwordStatus.className =
+                    "status error";
+
+                passwordButton.disabled = false;
+                passwordButton.textContent =
+                    "Change Password";
+            }
+        }
+    );
+
+
+    const logoutAllButton =
+        document.getElementById("logoutAllButton");
+
+    const logoutAllStatus =
+        document.getElementById("logoutAllStatus");
+
+
+    if (logoutAllButton) {
+
+        logoutAllButton.addEventListener(
+            "click",
+            async () => {
+
+                const confirmed =
+                    window.confirm(
+                        "Log out of VELMORA on all active devices and browsers?"
+                    );
+
+                if (!confirmed) {
+                    return;
+                }
+
+                logoutAllButton.disabled = true;
+                logoutAllButton.textContent =
+                    "Logging out...";
+
+                logoutAllStatus.textContent = "";
+                logoutAllStatus.className =
+                    "status";
+
+                try {
+
+                    const response =
+                        await fetch(
+                            "http://127.0.0.1:5000/api/auth/logout-all",
+                            {
+                                method: "POST",
+                                headers: {
+                                    "Authorization":
+                                        `Bearer ${token}`
+                                }
+                            }
+                        );
+
+                    const data =
+                        await response.json();
+
+                    if (
+                        response.status === 401
+                    ) {
+
+                        localStorage.removeItem(
+                            "velmora_token"
+                        );
+
+                        localStorage.removeItem(
+                            "velmora_user"
+                        );
+
+                        window.location.replace(
+                            "login.html"
+                        );
+
+                        return;
+                    }
+
+                    if (
+                        !response.ok ||
+                        !data.success
+                    ) {
+                        throw new Error(
+                            data.message ||
+                            "Unable to log out all sessions."
+                        );
+                    }
+
+                    localStorage.removeItem(
+                        "velmora_token"
+                    );
+
+                    localStorage.removeItem(
+                        "velmora_user"
+                    );
+
+                    window.location.replace(
+                        "login.html"
+                    );
+
+                } catch (error) {
+
+                    console.error(
+                        "Logout-all error:",
+                        error
+                    );
+
+                    logoutAllStatus.textContent =
+                        error.message ||
+                        "Unable to log out all sessions.";
+
+                    logoutAllStatus.className =
+                        "status error";
+
+                    logoutAllButton.disabled =
+                        false;
+
+                    logoutAllButton.textContent =
+                        "Log out everywhere";
+                }
+            }
+        );
+
+    }
+
+    
+    const sessionsList =
+        document.getElementById("sessionsList");
+
+    async function loadActiveSessions() {
+
+        if (!sessionsList) {
+            return;
+        }
+
+        const token =
+            localStorage.getItem("velmora_token");
+
+        if (!token) {
+            window.location.replace("login.html");
+            return;
+        }
+
+        try {
+
+            const response = await fetch(
+                "http://127.0.0.1:5000/api/account/sessions",
+                {
+                    method: "GET",
+                    headers: {
+                        "Authorization":
+                            `Bearer ${token}`
+                    }
+                }
+            );
+
+            const data =
+                await response.json();
+
+            if (
+                response.status === 401
+            ) {
+                localStorage.removeItem(
+                    "velmora_token"
+                );
+
+                localStorage.removeItem(
+                    "velmora_user"
+                );
+
+                window.location.replace(
+                    "login.html"
+                );
+
+                return;
+            }
+
+            if (
+                !response.ok ||
+                !data.success
+            ) {
+                throw new Error(
+                    data.message ||
+                    "Unable to load active sessions."
+                );
+            }
+
+            if (
+                !Array.isArray(data.sessions) ||
+                data.sessions.length === 0
+            ) {
+                sessionsList.innerHTML = `
+                    <p class="field-note">
+                        No active sessions found.
+                    </p>
+                `;
+                return;
+            }
+
+            sessionsList.innerHTML =
+                data.sessions.map(session => {
+
+                    const created =
+                        new Date(
+                            session.created_at
+                        ).toLocaleString();
+
+                    const expires =
+                        new Date(
+                            session.expires_at
+                        ).toLocaleString();
+
+                    return `
+                        <div class="session-item">
+
+                            <div class="session-info">
+
+                                <div class="session-title">
+                                    ${
+                                        session.is_current
+                                            ? "Current session"
+                                            : "Active session"
+                                    }
+                                </div>
+
+                                <div class="session-detail">
+                                    Started: ${created}
+                                </div>
+
+                                <div class="session-detail">
+                                    Expires: ${expires}
+                                </div>
+
+                            </div>
+
+                            ${
+                                session.is_current
+                                    ? `
+                                        <span class="session-badge">
+                                            This device
+                                        </span>
+                                      `
+                                    : ""
+                            }
+
+                        </div>
+                    `;
+
+                }).join("");
+
+        } catch (error) {
+
+            console.error(
+                "Active sessions error:",
+                error
+            );
+
+            sessionsList.innerHTML = `
+                <p class="field-note error">
+                    ${
+                        error.message ||
+                        "Unable to load active sessions."
+                    }
+                </p>
+            `;
+        }
+    }
+
+    loadActiveSessions();
+
+
+})();
+</script>
+
+<script src="global-nav.js">
+    const copyVelmoraId =
+        document.getElementById("copyVelmoraId");
+
+    if (copyVelmoraId) {
+
+        copyVelmoraId.addEventListener(
+            "click",
+            async function () {
+
+                const idElement =
+                    document.getElementById(
+                        "velmoraPublicId"
+                    );
+
+                const publicId =
+                    idElement
+                        ? idElement.textContent.trim()
+                        : "";
+
+                if (!/^\d{9}$/.test(publicId)) {
+                    return;
+                }
+
+                try {
+
+                    await navigator.clipboard.writeText(
+                        publicId
+                    );
+
+                    copyVelmoraId.textContent =
+                        "Copied ✓";
+
+                    setTimeout(function () {
+                        copyVelmoraId.textContent =
+                            "Copy ID";
+                    }, 1600);
+
+                } catch (error) {
+
+                    copyVelmoraId.textContent =
+                        "Copy failed";
+
+                    setTimeout(function () {
+                        copyVelmoraId.textContent =
+                            "Copy ID";
+                    }, 1600);
+                }
+            }
+        );
+    }
+
+</script>
+</body>
+</html>

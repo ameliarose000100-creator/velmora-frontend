@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Lesson 3 · Introduction to AI · VELMORA</title>
+
+    <style>
+        :root {
+            --bg: #f7f7f2;
+            --card: #ffffff;
+            --text: #172019;
+            --muted: #68736b;
+            --green: #177245;
+            --green-dark: #105734;
+            --border: #dfe5df;
+            --soft: #eef5ef;
+            --danger: #a13d3d;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Arial, sans-serif;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .header {
+            min-height: 72px;
+            padding: 18px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            background: rgba(247, 247, 242, .96);
+        }
+
+        .logo {
+            font-family: Georgia, serif;
+            font-size: 1.25rem;
+            letter-spacing: .08em;
+        }
+
+        .back {
+            color: var(--green);
+            font-size: .8rem;
+            font-weight: 700;
+        }
+
+        main {
+            width: min(850px, 90%);
+            margin: 0 auto;
+            padding: 65px 0 90px;
+        }
+
+        .eyebrow {
+            color: var(--green);
+            font-size: .7rem;
+            font-weight: 800;
+            letter-spacing: .13em;
+            text-transform: uppercase;
+        }
+
+        .progress-wrap {
+            margin-top: 18px;
+        }
+
+        .progress-top {
+            display: flex;
+            justify-content: space-between;
+            color: var(--muted);
+            font-size: .7rem;
+            margin-bottom: 8px;
+        }
+
+        .progress {
+            width: 100%;
+            height: 6px;
+            background: var(--border);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 50%;
+            height: 100%;
+            background: var(--green);
+            border-radius: inherit;
+        }
+
+        h1 {
+            max-width: 760px;
+            margin: 20px 0 15px;
+            font-family: Georgia, serif;
+            font-size: clamp(2.5rem, 7vw, 4.8rem);
+            line-height: .98;
+            font-weight: 500;
+            letter-spacing: -.035em;
+        }
+
+        .intro {
+            max-width: 700px;
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .lesson-card {
+            margin-top: 45px;
+            padding: 34px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+        }
+
+        .lesson-card h2 {
+            margin: 0 0 15px;
+            font-family: Georgia, serif;
+            font-size: 1.8rem;
+            font-weight: 500;
+        }
+
+        .lesson-card p {
+            color: var(--muted);
+            font-size: .9rem;
+            line-height: 1.8;
+        }
+
+        .concept {
+            margin: 28px 0;
+            padding: 22px;
+            background: var(--soft);
+            border-radius: 17px;
+        }
+
+        .concept strong {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--green);
+        }
+
+        .concept p {
+            margin: 0;
+        }
+
+        .examples {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-top: 25px;
+        }
+
+        .example {
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 17px;
+        }
+
+        .example strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .example span {
+            color: var(--muted);
+            font-size: .78rem;
+            line-height: 1.6;
+        }
+
+        .check {
+            margin-top: 45px;
+            padding: 28px;
+            background: var(--text);
+            color: white;
+            border-radius: 22px;
+        }
+
+        .check-label {
+            color: #8fd1a8;
+            font-size: .68rem;
+            font-weight: 800;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+
+        .check h2 {
+            margin: 12px 0 22px;
+            font-family: Georgia, serif;
+            font-size: 1.65rem;
+            font-weight: 500;
+        }
+
+        .answers {
+            display: grid;
+            gap: 10px;
+        }
+
+        .answer {
+            width: 100%;
+            padding: 15px 17px;
+            border: 1px solid rgba(255,255,255,.16);
+            border-radius: 13px;
+            background: transparent;
+            color: white;
+            text-align: left;
+            cursor: pointer;
+            font-size: .8rem;
+            transition: background 160ms ease;
+        }
+
+        .answer:hover {
+            background: rgba(255,255,255,.08);
+        }
+
+        .answer.correct {
+            background: #276d47;
+            border-color: #4f9d70;
+        }
+
+        .answer.wrong {
+            background: #713d3d;
+            border-color: #a86262;
+        }
+
+        .result {
+            display: none;
+            margin-top: 18px;
+            padding: 15px;
+            border-radius: 12px;
+            background: rgba(255,255,255,.08);
+            color: #d7e1da;
+            font-size: .76rem;
+            line-height: 1.6;
+        }
+
+        .continue {
+            display: none;
+            margin-top: 25px;
+            padding: 14px 20px;
+            border: 0;
+            border-radius: 999px;
+            background: white;
+            color: var(--green-dark);
+            font-size: .78rem;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .continue:hover {
+            background: #e9f1eb;
+        }
+
+        .footer-note {
+            margin-top: 24px;
+            color: var(--muted);
+            font-size: .72rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+
+            main {
+                padding-top: 48px;
+            }
+
+            .lesson-card {
+                padding: 23px;
+            }
+
+            .examples {
+                grid-template-columns: 1fr;
+            }
+
+            .check {
+                padding: 23px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <a href="learn.html" class="logo">
+        VELMORA
+    </a>
+
+    <a href="learn.html" class="back">
+        ← Back to Learn
+    </a>
+
+</header>
+
+<main>
+
+    <div class="eyebrow">
+        Introduction to AI · Lesson 3
+    </div>
+
+    <div class="progress-wrap">
+
+        <div class="progress-top">
+            <span>Learning path progress</span>
+            <span>3 of 6</span>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar"></div>
+        </div>
+
+    </div>
+
+    <h1>
+        How AI Generates and Predicts
+    </h1>
+
+    <p class="intro">
+        AI can use patterns learned from data to produce results
+        when it receives new information. Understanding this helps
+        you use AI tools more carefully and effectively.
+    </p>
+
+
+    <section class="lesson-card">
+
+        <h2>
+            From Input to Output
+        </h2>
+
+        <p>
+            After an AI system has been developed using data, it can
+            receive new information and use patterns it has learned
+            to produce an output.
+        </p>
+
+        <p>
+            Depending on the system and the task, that output might
+            be a prediction, classification, recommendation, generated
+            text, image, audio or another type of result.
+        </p>
+
+
+        <div class="concept">
+
+            <strong>
+                The important idea
+            </strong>
+
+            <p>
+                An AI system does not simply know the answer in the
+                same way a person does. It uses patterns learned during
+                development to produce a result for the information
+                it receives.
+            </p>
+
+        </div>
+
+
+        <h2>
+            A simple example
+        </h2>
+
+        <p>
+            Imagine an AI system that has been developed using many
+            examples of emails. It may learn patterns associated with
+            different types of messages.
+        </p>
+
+        <p>
+            When a new email arrives, the system can use those learned
+            patterns to predict or classify what type of message it
+            might be.
+        </p>
+
+
+        <div class="examples">
+
+            <div class="example">
+
+                <strong>
+                    Input
+                </strong>
+
+                <span>
+                    The new information provided to an AI system,
+                    such as a question, image, email or other data.
+                </span>
+
+            </div>
+
+            <div class="example">
+
+                <strong>
+                    Learned patterns
+                </strong>
+
+                <span>
+                    Relationships or features identified from examples
+                    and data during the system's development.
+                </span>
+
+            </div>
+
+            <div class="example">
+
+                <strong>
+                    Prediction
+                </strong>
+
+                <span>
+                    A result produced by the system based on the patterns
+                    it has learned.
+                </span>
+
+            </div>
+
+            <div class="example">
+
+                <strong>
+                    Generated output
+                </strong>
+
+                <span>
+                    Content or another result produced by an AI system,
+                    such as text, an image or audio.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="concept">
+
+            <strong>
+                Prediction is not certainty
+            </strong>
+
+            <p>
+                An AI-generated prediction or result is not automatically
+                a fact. The system can produce an incorrect result,
+                especially when the input is unusual, unclear, outside
+                its learned patterns or affected by limitations in its
+                development data.
+            </p>
+
+        </div>
+
+
+        <div class="concept">
+
+            <strong>
+                Why human judgment matters
+            </strong>
+
+            <p>
+                AI can be useful for generating ideas, finding patterns
+                and helping with tasks, but people should review important
+                results before relying on them. Human judgment remains
+                important when accuracy, safety, money or other significant
+                decisions are involved.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="check">
+
+        <div class="check-label">
+            Quick knowledge check
+        </div>
+
+        <h2>
+            Why can an AI system produce an incorrect or unreliable result?
+        </h2>
+
+        <div class="answers">
+
+            <button
+                class="answer"
+                data-correct="false"
+            >
+                Because AI systems always understand information perfectly.
+            </button>
+
+            <button
+                class="answer"
+                data-correct="true"
+            >
+                Because the patterns or information used by the system may not be sufficient, accurate, or appropriate for the new input.
+            </button>
+
+            <button
+                class="answer"
+                data-correct="false"
+            >
+                Because every prediction made by AI is guaranteed to be correct.
+            </button>
+
+            <button
+                class="answer"
+                data-correct="false"
+            >
+                Because AI systems never need human review.
+            </button>
+
+        </div>
+
+        <div
+            id="result"
+            class="result"
+        ></div>
+
+        <button
+            id="continueButton"
+            class="continue"
+            type="button"
+        >
+            Complete Lesson
+        </button>
+
+    </section>
+
+
+    <div class="footer-note">
+        Your learning progress is saved to your VELMORA account.
+    </div>
+
+</main>
+
+
+<script>
+
+    const token =
+        localStorage.getItem("velmora_token");
+
+    if (!token) {
+        window.location.replace("login.html");
+    }
+
+
+    const answers =
+        document.querySelectorAll(".answer");
+
+    const result =
+        document.getElementById("result");
+
+    const continueButton =
+        document.getElementById(
+            "continueButton"
+        );
+
+
+    let completed = false;
+
+
+    answers.forEach(answer => {
+
+        answer.addEventListener(
+            "click",
+            function() {
+
+                if (completed) {
+                    return;
+                }
+
+                answers.forEach(item => {
+                    item.classList.remove(
+                        "correct",
+                        "wrong"
+                    );
+                });
+
+                const isCorrect =
+                    this.dataset.correct === "true";
+
+                if (isCorrect) {
+
+                    this.classList.add(
+                        "correct"
+                    );
+
+                    result.style.display =
+                        "block";
+
+                    result.textContent =
+                        "Correct. AI can produce useful results, but its outputs are not automatically guaranteed to be correct.";
+
+                    continueButton.style.display =
+                        "inline-block";
+
+                    completed = true;
+
+                } else {
+
+                    this.classList.add(
+                        "wrong"
+                    );
+
+                    result.style.display =
+                        "block";
+
+                    result.textContent =
+                        "Not quite. Think about how an AI system uses learned patterns to produce results for new inputs.";
+
+                }
+
+            }
+        );
+
+    });
+
+
+    continueButton.addEventListener(
+        "click",
+        async function() {
+
+            const token =
+                localStorage.getItem(
+                    "velmora_token"
+                );
+
+            if (!token) {
+                window.location.replace(
+                    "login.html"
+                );
+                return;
+            }
+
+            continueButton.disabled = true;
+            continueButton.textContent =
+                "Saving progress...";
+
+            try {
+
+                const response =
+                    await fetch(
+                        "http://127.0.0.1:5000/api/learning/progress",
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type":
+                                    "application/json",
+                                "Authorization":
+                                    `Bearer ${token}`
+                            },
+                            body: JSON.stringify({
+                                learningPath:
+                                    "Introduction to AI",
+                                lessonKey:
+                                    "introduction-to-ai-lesson-3",
+                                status:
+                                    "completed"
+                            })
+                        }
+                    );
+
+                const data =
+                    await response.json();
+
+                if (
+                    response.status === 401
+                ) {
+                    localStorage.removeItem(
+                        "velmora_token"
+                    );
+
+                    localStorage.removeItem(
+                        "velmora_user"
+                    );
+
+                    window.location.replace(
+                        "login.html"
+                    );
+
+                    return;
+                }
+
+                if (
+                    !response.ok ||
+                    !data.success
+                ) {
+                    throw new Error(
+                        data.message ||
+                        "Unable to save learning progress."
+                    );
+                }
+
+                localStorage.setItem(
+                    "velmora_lesson_introduction_to_ai_3",
+                    "completed"
+                );
+
+                window.location.replace(
+                    "lesson-introduction-to-ai-4.html"
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "Lesson completion error:",
+                    error
+                );
+
+                continueButton.disabled =
+                    false;
+
+                continueButton.textContent =
+                    "Complete Lesson";
+
+                result.style.display =
+                    "block";
+
+                result.textContent =
+                    error.message ||
+                    "Unable to save your progress. Please try again.";
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>

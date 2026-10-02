@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Log In — VELMORA</title>
+    <meta
+        name="description"
+        content="Log in to your VELMORA account."
+    >
+
+    <style>
+        :root {
+            --vm-green: #168c55;
+            --vm-green-dark: #0e6840;
+            --vm-green-soft: #e8f5ee;
+            --vm-ink: #172019;
+            --vm-muted: #69746d;
+            --vm-line: #e1e7e2;
+            --vm-bg: #f7f9f6;
+            --vm-white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+            background: var(--vm-bg);
+            color: var(--vm-ink);
+        }
+
+        .login-page {
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            background:
+                radial-gradient(
+                    circle at 8% 8%,
+                    rgba(22, 140, 85, 0.08),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 94% 88%,
+                    rgba(22, 140, 85, 0.07),
+                    transparent 30%
+                ),
+                var(--vm-bg);
+        }
+
+        .login-page::before,
+        .login-page::after {
+            content: "";
+            position: absolute;
+            pointer-events: none;
+            border: 1px solid rgba(22, 140, 85, 0.08);
+            border-radius: 50%;
+        }
+
+        .login-page::before {
+            width: 430px;
+            height: 430px;
+            top: -250px;
+            right: -150px;
+        }
+
+        .login-page::after {
+            width: 300px;
+            height: 300px;
+            bottom: -190px;
+            left: -130px;
+        }
+
+        /* Header */
+
+        .login-header {
+            position: relative;
+            z-index: 10;
+            border-bottom: 1px solid rgba(23, 32, 25, 0.07);
+            background: rgba(247, 249, 246, 0.82);
+            backdrop-filter: blur(18px);
+        }
+
+        .login-header-inner {
+            width: min(1180px, calc(100% - 44px));
+            min-height: 78px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .login-brand {
+            color: var(--vm-ink);
+            text-decoration: none;
+            font-size: 1.25rem;
+            font-weight: 850;
+            letter-spacing: 0.18em;
+        }
+
+        .login-brand::after {
+            content: "";
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            margin-left: 7px;
+            margin-bottom: 2px;
+            border-radius: 50%;
+            background: var(--vm-green);
+        }
+
+        .login-back {
+            color: var(--vm-muted);
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .login-back:hover {
+            color: var(--vm-green);
+        }
+
+        /* Main */
+
+        .login-main {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px 70px;
+        }
+
+        .login-layout {
+            width: min(980px, 100%);
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        /* Intro */
+
+        .login-intro {
+            padding: 10px 0;
+        }
+
+        .login-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 24px;
+            color: var(--vm-green);
+            font-size: 0.68rem;
+            font-weight: 850;
+            letter-spacing: 0.17em;
+            text-transform: uppercase;
+        }
+
+        .login-kicker::before {
+            content: "";
+            width: 34px;
+            height: 1px;
+            background: var(--vm-green);
+        }
+
+        .login-intro h1 {
+            max-width: 450px;
+            margin: 0;
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+            font-size: clamp(3rem, 5vw, 4.5rem);
+            line-height: 0.98;
+            letter-spacing: -0.055em;
+            font-weight: 500;
+        }
+
+        .login-intro h1 span {
+            color: var(--vm-green);
+        }
+
+        .login-intro p {
+            max-width: 430px;
+            margin: 25px 0 0;
+            color: var(--vm-muted);
+            font-size: 0.94rem;
+            line-height: 1.85;
+        }
+
+        /* Card */
+
+        .login-card {
+            width: 100%;
+            padding: 40px;
+            border: 1px solid var(--vm-line);
+            border-radius: 26px;
+            background: rgba(255, 255, 255, 0.94);
+            box-shadow:
+                0 25px 70px rgba(23, 32, 25, 0.07),
+                0 2px 8px rgba(23, 32, 25, 0.025);
+        }
+
+        .login-card-header {
+            margin-bottom: 28px;
+        }
+
+        .login-card-header h2 {
+            margin: 0;
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+            font-size: 1.9rem;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            font-weight: 500;
+        }
+
+        .login-card-header p {
+            margin: 9px 0 0;
+            color: #818a84;
+            font-size: 0.78rem;
+            line-height: 1.65;
+        }
+
+        .login-form {
+            display: grid;
+            gap: 17px;
+        }
+
+        .login-field {
+            display: grid;
+            gap: 7px;
+        }
+
+        .login-field label {
+            color: #354139;
+            font-size: 0.72rem;
+            font-weight: 800;
+        }
+
+        .login-field input {
+            width: 100%;
+            height: 51px;
+            padding: 0 14px;
+            border: 1px solid #dfe5e0;
+            border-radius: 11px;
+            outline: none;
+            background: #fafcfa;
+            color: var(--vm-ink);
+            font: inherit;
+            font-size: 0.83rem;
+            transition:
+                border-color 180ms ease,
+                box-shadow 180ms ease,
+                background 180ms ease;
+        }
+
+        .login-field input::placeholder {
+            color: #a2aaa5;
+        }
+
+        .login-field input:focus {
+            border-color: #55aa7b;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(22, 140, 85, 0.075);
+        }
+
+        /* Password */
+
+        .password-wrap {
+            position: relative;
+        }
+
+        .password-wrap input {
+            padding-right: 65px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            padding: 6px 5px;
+            border: 0;
+            background: transparent;
+            color: var(--vm-green);
+            font: inherit;
+            font-size: 0.68rem;
+            font-weight: 850;
+            cursor: pointer;
+        }
+
+        .password-toggle:hover {
+            color: var(--vm-green-dark);
+        }
+
+        /* Forgot */
+
+        .login-options {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: -4px;
+        }
+
+        .forgot-password {
+            color: var(--vm-green);
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 800;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        /* Button */
+
+        .login-submit {
+            width: 100%;
+            height: 53px;
+            margin-top: 3px;
+            border: 0;
+            border-radius: 12px;
+            background: var(--vm-green);
+            color: #ffffff;
+            font: inherit;
+            font-size: 0.82rem;
+            font-weight: 850;
+            cursor: pointer;
+            box-shadow: 0 9px 22px rgba(22, 140, 85, 0.17);
+            transition:
+                transform 180ms ease,
+                background 180ms ease,
+                box-shadow 180ms ease;
+        }
+
+        .login-submit:hover {
+            background: var(--vm-green-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 13px 28px rgba(22, 140, 85, 0.2);
+        }
+
+        .login-submit:active {
+            transform: translateY(0);
+        }
+
+        .login-register {
+            margin: 20px 0 0;
+            text-align: center;
+            color: #8a938d;
+            font-size: 0.72rem;
+        }
+
+        .login-register a {
+            color: var(--vm-green);
+            text-decoration: none;
+            font-weight: 850;
+        }
+
+        .login-register a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+
+        .login-footer {
+            position: relative;
+            z-index: 3;
+            padding: 22px 20px 27px;
+            text-align: center;
+            color: #929a95;
+            font-size: 0.64rem;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 850px) {
+
+            .login-layout {
+                grid-template-columns: 1fr;
+                max-width: 600px;
+                gap: 40px;
+            }
+
+            .login-intro {
+                text-align: center;
+            }
+
+            .login-intro h1,
+            .login-intro p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .login-kicker {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 560px) {
+
+            .login-header-inner {
+                width: calc(100% - 28px);
+                min-height: 68px;
+            }
+
+            .login-brand {
+                font-size: 1.05rem;
+            }
+
+            .login-back {
+                font-size: 0.72rem;
+            }
+
+            .login-main {
+                padding: 38px 14px 48px;
+            }
+
+            .login-intro h1 {
+                font-size: 2.75rem;
+            }
+
+            .login-intro p {
+                font-size: 0.86rem;
+            }
+
+            .login-card {
+                padding: 26px 18px;
+                border-radius: 21px;
+            }
+
+            .login-card-header h2 {
+                font-size: 1.65rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-page">
+
+    <header class="login-header">
+        <div class="login-header-inner">
+
+            <a href="index.html" class="login-brand">
+                VELMORA
+            </a>
+
+            <a href="index.html" class="login-back">
+                ← Back to VELMORA
+            </a>
+
+        </div>
+    </header>
+
+
+    <main class="login-main">
+
+        <div class="login-layout">
+
+            <section class="login-intro">
+
+                <div class="login-kicker">
+                    Welcome back
+                </div>
+
+                <h1>
+                    Continue your
+                    <span>journey.</span>
+                </h1>
+
+                <p>
+                    Return to your VELMORA identity and continue discovering,
+                    learning, building, earning and helping.
+                </p>
+
+            </section>
+
+
+            <section class="login-card">
+
+                <div class="login-card-header">
+
+                    <h2>Log in</h2>
+
+                    <p>
+                        Enter your account details to continue.
+                    </p>
+
+                </div>
+
+
+                <form class="login-form" id="loginForm">
+
+                    <div class="login-field">
+
+                        <label for="loginIdentifier">
+                            Email or phone number
+                        </label>
+
+                        <input
+                            type="text"
+                            id="loginIdentifier"
+                            name="loginIdentifier"
+                            placeholder="you@example.com or phone number"
+                            autocomplete="username"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="login-field">
+
+                        <label for="loginPassword">
+                            Password
+                        </label>
+
+                        <div class="password-wrap">
+
+                            <input
+                                type="password"
+                                id="loginPassword"
+                                name="loginPassword"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                id="passwordToggle"
+                                aria-label="Show password"
+                            >
+                                Show
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="login-options">
+
+                        <a
+                            href="forgot-password.html"
+                            class="forgot-password"
+                        >
+                            Forgot password?
+                        </a>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="login-submit"
+                    >
+                        Log In to VELMORA
+                    </button>
+
+                </form>
+
+
+                <p class="login-register">
+                    Don't have a VELMORA account?
+                    <a href="register.html">Create one</a>
+                </p>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <footer class="login-footer">
+        © 2026 VELMORA GROUP. A world connected by possibility.
+    </footer>
+
+</div>
+
+
+<script>
+    const passwordToggle =
+        document.getElementById("passwordToggle");
+
+    const loginPassword =
+        document.getElementById("loginPassword");
+
+    const loginForm =
+        document.getElementById("loginForm");
+
+    passwordToggle.addEventListener("click", () => {
+
+        if (loginPassword.type === "password") {
+
+            loginPassword.type = "text";
+            passwordToggle.textContent = "Hide";
+            passwordToggle.setAttribute(
+                "aria-label",
+                "Hide password"
+            );
+
+        } else {
+
+            loginPassword.type = "password";
+            passwordToggle.textContent = "Show";
+            passwordToggle.setAttribute(
+                "aria-label",
+                "Show password"
+            );
+        }
+    });
+
+    loginForm.addEventListener("submit", async (event) => {
+
+        event.preventDefault();
+
+        const identifier =
+            document
+                .getElementById("loginIdentifier")
+                .value
+                .trim();
+
+        const password =
+            loginPassword.value;
+
+        const submitButton =
+            loginForm.querySelector(".login-submit");
+
+        const originalText =
+            submitButton.textContent;
+
+        submitButton.disabled = true;
+        submitButton.textContent = "Signing in...";
+
+        try {
+
+            const response = await fetch(
+                "http://127.0.0.1:5000/api/auth/login",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        identifier,
+                        password
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                throw new Error(
+                    data.message || "Login failed."
+                );
+            }
+
+            localStorage.setItem(
+                "velmora_token",
+                data.token
+            );
+
+            localStorage.setItem(
+                "velmora_user",
+                JSON.stringify(data.user)
+            );
+
+            const profileResponse = await fetch(
+                "http://127.0.0.1:5000/api/profile",
+                {
+                    method: "GET",
+                    headers: {
+                        "Authorization":
+                            `Bearer ${data.token}`
+                    }
+                }
+            );
+
+            const profileData =
+                await profileResponse.json();
+
+            console.log(
+                "VELMORA profile check:",
+                profileData
+            );
+
+            if (
+                profileResponse.ok &&
+                profileData.success === true &&
+                profileData.profile !== null
+            ) {
+
+                window.location.replace(
+                    "dashboard.html"
+                );
+
+                return;
+            }
+
+            window.location.replace(
+                "onboarding.html"
+            );
+
+        } catch (error) {
+
+            console.error(
+                "VELMORA login error:",
+                error
+            );
+
+            alert(error.message);
+
+            submitButton.disabled = false;
+            submitButton.textContent = originalText;
+        }
+    });
+</script>
+
+</body>
+</html>

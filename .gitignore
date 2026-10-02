@@ -1,0 +1,19 @@
+# Local development
+.DS_Store
+*.log
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Editor / IDE
+.vscode/
+.idea/
+
+# Temporary backups
+*-backup.html
+*-backup.css
+
+# Genesis backup
+style-homepage-before-genesis.css

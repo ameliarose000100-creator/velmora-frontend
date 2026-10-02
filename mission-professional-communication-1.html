@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Mission — Professional Communication | VELMORA</title>
+
+    <style>
+        :root {
+            --bg: #f5f3ee;
+            --surface: #ffffff;
+            --text: #17201b;
+            --muted: #68716b;
+            --border: #dfe3de;
+            --green: #18834b;
+            --green-dark: #11683b;
+            --soft-green: #e8f4ed;
+            --shadow: 0 20px 60px rgba(20, 35, 27, .08);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family:
+                Inter,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+        }
+
+        .page {
+            width: min(920px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 28px 0 70px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 48px;
+        }
+
+        .brand {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 850;
+            letter-spacing: .08em;
+        }
+
+        .back {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: .85rem;
+            font-weight: 700;
+        }
+
+        .eyebrow {
+            color: var(--green);
+            font-size: .72rem;
+            font-weight: 850;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        h1 {
+            max-width: 760px;
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            line-height: .98;
+            letter-spacing: -.045em;
+        }
+
+        .intro {
+            max-width: 700px;
+            margin: 24px 0 42px;
+            color: var(--muted);
+            font-size: 1.08rem;
+            line-height: 1.8;
+        }
+
+        .mission-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: clamp(24px, 5vw, 48px);
+            box-shadow: var(--shadow);
+        }
+
+        .mission-label {
+            display: inline-flex;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: var(--soft-green);
+            color: var(--green-dark);
+            font-size: .7rem;
+            font-weight: 850;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            margin: 26px 0 12px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(1.7rem, 4vw, 2.5rem);
+        }
+
+        .scenario {
+            margin-top: 28px;
+            padding: 22px;
+            border-left: 4px solid var(--green);
+            background: #fafbf9;
+            border-radius: 0 16px 16px 0;
+        }
+
+        .scenario-label {
+            color: var(--muted);
+            font-size: .7rem;
+            font-weight: 850;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .message {
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        label {
+            display: block;
+            margin: 32px 0 10px;
+            font-weight: 800;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 190px;
+            resize: vertical;
+            padding: 18px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: #fff;
+            color: var(--text);
+            font: inherit;
+            line-height: 1.6;
+            outline: none;
+        }
+
+        textarea:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 4px rgba(24, 131, 75, .08);
+        }
+
+        .hint {
+            margin-top: 10px;
+            color: var(--muted);
+            font-size: .82rem;
+            line-height: 1.6;
+        }
+
+        .button {
+            width: 100%;
+            margin-top: 26px;
+            padding: 16px 20px;
+            border: 0;
+            border-radius: 14px;
+            background: var(--green);
+            color: white;
+            font: inherit;
+            font-weight: 850;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background: var(--green-dark);
+        }
+
+        .button:disabled {
+            opacity: .65;
+            cursor: not-allowed;
+        }
+
+        .status {
+            display: none;
+            margin-top: 18px;
+            padding: 14px 16px;
+            border-radius: 14px;
+            background: var(--soft-green);
+            color: var(--green-dark);
+            line-height: 1.5;
+            font-size: .9rem;
+        }
+
+        .status.show {
+            display: block;
+        }
+
+        .footer-note {
+            margin-top: 26px;
+            color: var(--muted);
+            font-size: .78rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="page">
+
+        <header class="topbar">
+            <a href="learn.html" class="brand">
+                VELMORA
+            </a>
+
+            <a href="dashboard.html" class="back">
+                Back to Dashboard
+            </a>
+        </header>
+
+        <div class="eyebrow">
+            Practice · Mission 1
+        </div>
+
+        <h1>
+            Practice professional communication.
+        </h1>
+
+        <p class="intro">
+            Learning becomes useful when you can apply it.
+            In this mission, practice responding clearly and
+            professionally to a potential customer.
+        </p>
+
+        <section class="mission-card">
+
+            <span class="mission-label">
+                Communication
+            </span>
+
+            <h2>
+                Reply to the customer
+            </h2>
+
+            <p>
+                Imagine that you provide a service and a potential
+                customer has contacted you for the first time.
+            </p>
+
+            <div class="scenario">
+
+                <div class="scenario-label">
+                    Customer message
+                </div>
+
+                <div class="message">
+                    “Hello, I saw your service and I'm interested.
+                    How much does it cost and how long will it take?”
+                </div>
+
+            </div>
+
+            <label for="submission">
+                Write your reply
+            </label>
+
+            <textarea
+                id="submission"
+                placeholder="Write the reply you would send to the customer..."
+                maxlength="3000"
+            ></textarea>
+
+            <div class="hint">
+                Think about being clear, respectful and helpful.
+                Do not make promises you cannot support.
+            </div>
+
+            <button
+                id="submitMission"
+                class="button"
+                type="button"
+            >
+                Submit Practice
+            </button>
+
+            <div
+                id="submissionStatus"
+                class="status"
+            ></div>
+
+        </section>
+
+        <div class="footer-note">
+            Your practice submission will become part of your
+            learning and proof record as the VELMORA practice
+            system develops.
+        </div>
+
+    </main>
+
+    <script>
+        const token =
+            localStorage.getItem("velmora_token");
+
+        const submission =
+            document.getElementById("submission");
+
+        const submitButton =
+            document.getElementById("submitMission");
+
+        const status =
+            document.getElementById("submissionStatus");
+
+
+        submitButton.addEventListener(
+            "click",
+            async function () {
+
+                const answer =
+                    submission.value.trim();
+
+                if (!token) {
+                    window.location.replace(
+                        "login.html"
+                    );
+                    return;
+                }
+
+                if (!answer) {
+                    status.textContent =
+                        "Write your reply before submitting the mission.";
+
+                    status.classList.add("show");
+                    return;
+                }
+
+                submitButton.disabled = true;
+                submitButton.textContent =
+                    "Submitting...";
+
+                try {
+
+                    const response =
+                        await fetch(
+                            "http://127.0.0.1:5000/api/missions/submissions",
+                            {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type":
+                                        "application/json",
+                                    "Authorization":
+                                        `Bearer ${token}`
+                                },
+                                body: JSON.stringify({
+                                    missionKey:
+                                        "professional-communication-1",
+                                    submissionText:
+                                        answer
+                                })
+                            }
+                        );
+
+                    const data =
+                        await response.json();
+
+                    if (
+                        response.status === 401
+                    ) {
+                        localStorage.removeItem(
+                            "velmora_token"
+                        );
+
+                        localStorage.removeItem(
+                            "velmora_user"
+                        );
+
+                        window.location.replace(
+                            "login.html"
+                        );
+
+                        return;
+                    }
+
+                    if (
+                        !response.ok ||
+                        !data.success
+                    ) {
+                        throw new Error(
+                            data.message ||
+                            "Unable to submit practice."
+                        );
+                    }
+
+                    status.textContent =
+                        "Practice submitted successfully. Your response has been saved to your VELMORA account.";
+
+                    status.classList.add("show");
+
+                    submitButton.textContent =
+                        "Practice Submitted";
+
+                } catch (error) {
+
+                    console.error(
+                        "Mission submission error:",
+                        error
+                    );
+
+                    status.textContent =
+                        "Unable to submit this practice right now.";
+
+                    status.classList.add("show");
+
+                    submitButton.disabled = false;
+                    submitButton.textContent =
+                        "Submit Practice";
+                }
+
+            }
+        );
+    </script>
+
+</body>
+</html>

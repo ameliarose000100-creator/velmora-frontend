@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Learn · VELMORA</title>
+
+    <style>
+        :root {
+            --bg: #f7f7f2;
+            --card: #ffffff;
+            --text: #172019;
+            --muted: #68736b;
+            --green: #177245;
+            --green-dark: #105734;
+            --border: #dfe5df;
+            --soft: #eef5ef;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Arial, sans-serif;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .header {
+            min-height: 74px;
+            padding: 18px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            background: rgba(247, 247, 242, .96);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-family: Georgia, serif;
+            font-size: 1.25rem;
+            letter-spacing: .08em;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .back {
+            color: var(--green);
+            font-size: .82rem;
+            font-weight: 700;
+        }
+
+        .logout {
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            font-size: .78rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        main {
+            width: min(1120px, 90%);
+            margin: 0 auto;
+            padding: 70px 0 90px;
+        }
+
+        .hero {
+            max-width: 780px;
+        }
+
+        .eyebrow {
+            color: var(--green);
+            font-size: .72rem;
+            font-weight: 800;
+            letter-spacing: .13em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 15px 0;
+            font-family: Georgia, serif;
+            font-size: clamp(2.8rem, 8vw, 5.8rem);
+            line-height: .94;
+            font-weight: 500;
+            letter-spacing: -.04em;
+        }
+
+        .hero p {
+            max-width: 680px;
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .journey {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 28px;
+        }
+
+        .journey span {
+            padding: 9px 13px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            color: var(--muted);
+            font-size: .72rem;
+        }
+
+        .journey span.active {
+            background: var(--green);
+            border-color: var(--green);
+            color: white;
+        }
+
+        .section {
+            margin-top: 75px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 25px;
+            margin-bottom: 24px;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+            font-family: Georgia, serif;
+            font-size: 2rem;
+            font-weight: 500;
+        }
+
+        .section-heading p {
+            max-width: 460px;
+            margin: 0;
+            color: var(--muted);
+            font-size: .82rem;
+            line-height: 1.6;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+        }
+
+        .category {
+            min-height: 150px;
+            padding: 22px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            transition:
+                transform 180ms ease,
+                border-color 180ms ease;
+        }
+
+        .category:hover {
+            transform: translateY(-3px);
+            border-color: #b8c8bc;
+        }
+
+        .category-number {
+            color: var(--green);
+            font-size: .7rem;
+            font-weight: 800;
+            letter-spacing: .08em;
+        }
+
+        .category h3 {
+            margin: 30px 0 8px;
+            font-family: Georgia, serif;
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+
+        .category p {
+            margin: 0;
+            color: var(--muted);
+            font-size: .76rem;
+            line-height: 1.55;
+        }
+
+        .path-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .path-card {
+            padding: 26px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+        }
+
+        .path-label {
+            display: inline-block;
+            padding: 7px 10px;
+            border-radius: 999px;
+            background: var(--soft);
+            color: var(--green);
+            font-size: .68rem;
+            font-weight: 800;
+        }
+
+        .path-card h3 {
+            margin: 22px 0 9px;
+            font-family: Georgia, serif;
+            font-size: 1.55rem;
+            font-weight: 500;
+        }
+
+        .path-card p {
+            color: var(--muted);
+            font-size: .8rem;
+            line-height: 1.65;
+            min-height: 65px;
+        }
+
+        .path-meta {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: .7rem;
+        }
+
+        .start-button {
+            display: block;
+            margin-top: 20px;
+            padding: 13px 17px;
+            border-radius: 999px;
+            background: var(--green);
+            color: white;
+            text-align: center;
+            font-size: .76rem;
+            font-weight: 800;
+        }
+
+        .start-button:hover {
+            background: var(--green-dark);
+        }
+
+        .mission {
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 18px;
+            padding: 30px;
+            background: var(--text);
+            color: white;
+            border-radius: 26px;
+        }
+
+        .mission-label {
+            color: #8fd1a8;
+            font-size: .7rem;
+            font-weight: 800;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+
+        .mission h2 {
+            max-width: 620px;
+            margin: 13px 0;
+            font-family: Georgia, serif;
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-weight: 500;
+            line-height: 1.05;
+        }
+
+        .mission p {
+            max-width: 600px;
+            color: #c4cdc7;
+            font-size: .82rem;
+            line-height: 1.7;
+        }
+
+        .mission-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 18px;
+        }
+
+        .mission-side strong {
+            font-size: .85rem;
+        }
+
+        .mission-side span {
+            margin-top: 8px;
+            color: #aebbb2;
+            font-size: .75rem;
+            line-height: 1.6;
+        }
+
+        .note {
+            margin-top: 20px;
+            padding: 18px 20px;
+            background: var(--soft);
+            border-radius: 16px;
+            color: var(--muted);
+            font-size: .76rem;
+            line-height: 1.6;
+        }
+
+        footer {
+            padding: 35px 6%;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: .75rem;
+        }
+
+        @media (max-width: 850px) {
+
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .path-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .mission {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            main {
+                padding-top: 50px;
+            }
+
+            .header-right {
+                gap: 12px;
+            }
+
+            .back {
+                display: none;
+            }
+
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-heading {
+                display: block;
+            }
+
+            .section-heading p {
+                margin-top: 10px;
+            }
+
+            .mission {
+                padding: 23px;
+            }
+        }
+    
+        /* Learning path progress */
+
+        .path-progress {
+            margin-top: 20px;
+        }
+
+        .path-progress-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+            color: var(--muted);
+            font-size: .7rem;
+            font-weight: 700;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 6px;
+            background: var(--border);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 0;
+            height: 100%;
+            background: var(--green);
+            border-radius: inherit;
+            transition: width 400ms ease;
+        }
+
+</style>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+
+    <a href="dashboard.html" class="logo">
+        VELMORA
+    </a>
+
+    <div class="header-right">
+
+        <a
+            href="dashboard.html"
+            class="back"
+        >
+            ← Dashboard
+        </a>
+
+        <button
+            id="logoutButton"
+            class="logout"
+            type="button"
+        >
+            Logout
+        </button>
+
+    </div>
+
+</header>
+
+<main>
+
+    <section class="hero">
+
+        <div class="eyebrow">
+            VELMORA Learn
+        </div>
+
+        <h1>
+            Learn something
+            worth becoming.
+        </h1>
+
+        <p>
+            Learning on VELMORA is not just about watching lessons.
+            Choose a direction, build knowledge, practice what you learn,
+            create proof and move closer to real opportunities.
+        </p>
+
+        <div class="journey">
+
+            <span class="active">Learn</span>
+            <span>Practice</span>
+            <span>Prove</span>
+            <span>Connect</span>
+            <span>Earn</span>
+
+        </div>
+
+    </section>
+
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <h2>
+                Explore a direction
+            </h2>
+
+            <p>
+                Start with an area that interests you.
+                Your learning journey can change as your skills grow.
+            </p>
+
+        </div>
+
+        <div class="category-grid">
+
+            <a href="#paths" class="category">
+
+                <div class="category-number">
+                    01
+                </div>
+
+                <h3>
+                    Technology
+                </h3>
+
+                <p>
+                    Programming, software, AI, digital tools and technology skills.
+                </p>
+
+            </a>
+
+            <a href="#paths" class="category">
+
+                <div class="category-number">
+                    02
+                </div>
+
+                <h3>
+                    Business
+                </h3>
+
+                <p>
+                    Entrepreneurship, business operations, strategy and growth.
+                </p>
+
+            </a>
+
+            <a href="#paths" class="category">
+
+                <div class="category-number">
+                    03
+                </div>
+
+                <h3>
+                    Creative
+                </h3>
+
+                <p>
+                    Design, writing, media, video, storytelling and creative work.
+                </p>
+
+            </a>
+
+            <a href="#paths" class="category">
+
+                <div class="category-number">
+                    04
+                </div>
+
+                <h3>
+                    Professional
+                </h3>
+
+                <p>
+                    Communication, customer service, marketing, finance and more.
+                </p>
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <section
+        class="section"
+        id="paths"
+    >
+
+        <div class="section-heading">
+
+            <h2>
+                Start a learning path
+            </h2>
+
+            <p>
+                These are the first foundations of the VELMORA learning system.
+                Each path will eventually contain lessons, practice and proof.
+            </p>
+
+        </div>
+
+        <div class="path-grid">
+
+            <article class="path-card">
+
+                <span class="path-label">
+                    BEGINNER
+                </span>
+
+                <h3>
+                    Digital Foundations
+                </h3>
+
+                <p>
+                    Learn the essential digital skills needed to work,
+                    create and communicate in today's connected world.
+                </p>
+
+                <div class="path-meta">
+                    <span>5 lessons</span>
+                    <span>Practical</span>
+                </div>
+
+                <div
+                    id="digitalFoundationsProgress"
+                    style="
+                        margin-top:18px;
+                        padding:14px;
+                        border:1px solid rgba(20, 100, 70, .14);
+                        border-radius:16px;
+                        background:rgba(20, 100, 70, .04);
+                    "
+                >
+                    <div
+                        style="
+                            display:flex;
+                            justify-content:space-between;
+                            gap:12px;
+                            margin-bottom:9px;
+                            font-size:.82rem;
+                        "
+                    >
+                        <span>Learning progress</span>
+                        <strong id="digitalFoundationsProgressText">
+                            0 of 5 completed
+                        </strong>
+                    </div>
+
+                    <div
+                        style="
+                            width:100%;
+                            height:7px;
+                            border-radius:999px;
+                            background:rgba(0,0,0,.08);
+                            overflow:hidden;
+                        "
+                    >
+                        <div
+                            id="digitalFoundationsProgressBar"
+                            style="
+                                width:0%;
+                                height:100%;
+                                border-radius:999px;
+                                background:#16734a;
+                                transition:width .3s ease;
+                            "
+                        ></div>
+                    </div>
+                </div>
+
+                <a
+                    id="digitalFoundationsContinue"
+                    href="lesson-digital-foundations-1.html"
+                    class="start-button"
+                    data-path="Digital Foundations"
+                >
+                    Start Learning
+                </a>
+
+            </article>
+
+
+            <article class="path-card">
+
+                <span class="path-label">
+                    BEGINNER
+                </span>
+
+                <h3>
+                    Introduction to AI
+                </h3>
+
+                <p>
+                    Understand modern AI, useful AI tools, responsible use
+                    and how AI can support real work.
+                </p>
+
+                <div class="path-meta">
+                    <span>6 lessons</span>
+                    <span>Practical</span>
+                </div>
+
+                <div class="path-progress">
+                    <div class="path-progress-top">
+                        <span>Learning progress</span>
+                        <span id="introductionToAIProgressText">
+                            0 of 6 completed
+                        </span>
+                    </div>
+
+                    <div class="progress-track">
+                        <div
+                            id="introductionToAIProgressBar"
+                            class="progress-fill"
+                            style="width: 0%;"
+                        ></div>
+                    </div>
+                </div>
+
+                <a
+                    id="introductionToAIContinue"
+                    href="lesson-introduction-to-ai-1.html"
+                    class="start-button"
+                    data-path="Introduction to AI"
+                >
+                    Start Learning
+                </a>
+
+            </article>
+
+
+            <article class="path-card">
+
+                <span class="path-label">
+                    BEGINNER
+                </span>
+
+                <h3>
+                    Starting a Business
+                </h3>
+
+                <p>
+                    Explore ideas, customers, value, basic operations,
+                    pricing and the foundations of building something useful.
+                </p>
+
+                <div class="path-meta">
+                    <span>6 lessons</span>
+                    <span>Practical</span>
+                </div>
+
+                <div class="path-progress">
+                    <div class="path-progress-top">
+                        <span>Learning progress</span>
+                        <span id="startingABusinessProgressText">
+                            0 of 6 completed
+                        </span>
+                    </div>
+
+                    <div class="progress-track">
+                        <div
+                            id="startingABusinessProgressBar"
+                            class="progress-fill"
+                            style="width: 0%;"
+                        ></div>
+                    </div>
+                </div>
+
+                <a
+                    id="startingABusinessContinue"
+                    href="lesson-starting-a-business-1.html"
+                    class="start-button"
+                    data-path="Starting a Business"
+                >
+                    Start Learning
+                </a>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <section class="section">
+
+        <div class="mission">
+
+            <div>
+
+                <div class="mission-label">
+                    Learn → Practice
+                </div>
+
+                <h2>
+                    Knowledge becomes valuable when you can use it.
+                </h2>
+
+                <p>
+                    VELMORA learning paths will eventually connect directly
+                    to practical missions. Instead of only completing lessons,
+                    you will have opportunities to apply what you learned.
+                </p>
+
+            </div>
+
+            <div class="mission-side">
+
+                <strong>
+                    Your first learning mission
+                </strong>
+
+                <span>
+                    Choose a learning path above. Your mission system
+                    will appear here as we build the next layer.
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="note">
+        VELMORA does not promise guaranteed income from learning.
+        The purpose of learning is to develop useful knowledge and
+        demonstrable ability that can support future opportunities.
+    </div>
+
+</main>
+
+<footer>
+    © 2026 VELMORA GROUP · A world connected by possibility.
+</footer>
+
+
+<script>
+
+    const token =
+        localStorage.getItem("velmora_token");
+
+    if (!token) {
+        window.location.replace("login.html");
+    }
+
+
+    async function loadLearningProgress() {
+
+        try {
+
+            const response =
+                await fetch(
+                    "http://127.0.0.1:5000/api/learning/progress",
+                    {
+                        method: "GET",
+                        headers: {
+                            "Authorization":
+                                `Bearer ${token}`
+                        }
+                    }
+                );
+
+            const data =
+                await response.json();
+
+            if (response.status === 401) {
+
+                localStorage.removeItem(
+                    "velmora_token"
+                );
+
+                localStorage.removeItem(
+                    "velmora_user"
+                );
+
+                window.location.replace(
+                    "login.html"
+                );
+
+                return;
+            }
+
+            if (!response.ok || !data.success) {
+                throw new Error(
+                    data.message ||
+                    "Unable to load learning progress."
+                );
+            }
+
+            const progress =
+                data.progress || [];
+
+
+            /* =========================
+               DIGITAL FOUNDATIONS
+            ========================= */
+
+            const digitalText =
+                document.getElementById(
+                    "digitalFoundationsProgressText"
+                );
+
+            const digitalBar =
+                document.getElementById(
+                    "digitalFoundationsProgressBar"
+                );
+
+            const digitalButton =
+                document.getElementById(
+                    "digitalFoundationsContinue"
+                );
+
+            if (
+                digitalText &&
+                digitalBar &&
+                digitalButton
+            ) {
+
+                const lessonKeys = [
+                    "digital-foundations-lesson-1",
+                    "digital-foundations-lesson-2",
+                    "digital-foundations-lesson-3",
+                    "digital-foundations-lesson-4",
+                    "digital-foundations-lesson-5"
+                ];
+
+                const lessonLinks = [
+                    "lesson-digital-foundations-1.html",
+                    "lesson-digital-foundations-2.html",
+                    "lesson-digital-foundations-3.html",
+                    "lesson-digital-foundations-4.html",
+                    "lesson-digital-foundations-5.html"
+                ];
+
+                const completedKeys =
+                    new Set(
+                        progress
+                            .filter(
+                                item =>
+                                    item.learning_path ===
+                                        "Digital Foundations" &&
+                                    item.status ===
+                                        "completed"
+                            )
+                            .map(
+                                item =>
+                                    item.lesson_key
+                            )
+                    );
+
+                const completedCount =
+                    lessonKeys.filter(
+                        key =>
+                            completedKeys.has(key)
+                    ).length;
+
+                const totalLessons =
+                    lessonKeys.length;
+
+                const percentage =
+                    Math.min(
+                        100,
+                        Math.round(
+                            (
+                                completedCount /
+                                totalLessons
+                            ) * 100
+                        )
+                    );
+
+                digitalText.textContent =
+                    `${completedCount} of ${totalLessons} completed`;
+
+                digitalBar.style.width =
+                    `${percentage}%`;
+
+                let nextLessonIndex = 0;
+
+                for (
+                    let i = 0;
+                    i < lessonKeys.length;
+                    i++
+                ) {
+
+                    if (
+                        !completedKeys.has(
+                            lessonKeys[i]
+                        )
+                    ) {
+                        nextLessonIndex = i;
+                        break;
+                    }
+
+                    nextLessonIndex = i + 1;
+                }
+
+                if (
+                    nextLessonIndex >=
+                    lessonLinks.length
+                ) {
+
+                    digitalButton.href =
+                        "lesson-digital-foundations-1.html";
+
+                    digitalButton.textContent =
+                        "Review Learning Path";
+
+                } else {
+
+                    digitalButton.href =
+                        lessonLinks[
+                            nextLessonIndex
+                        ];
+
+                    digitalButton.textContent =
+                        completedCount === 0
+                            ? "Start Learning"
+                            : "Continue Learning";
+                }
+
+            }
+
+
+            /* =========================
+               INTRODUCTION TO AI
+            ========================= */
+
+            const aiText =
+                document.getElementById(
+                    "introductionToAIProgressText"
+                );
+
+            const aiBar =
+                document.getElementById(
+                    "introductionToAIProgressBar"
+                );
+
+            const aiButton =
+                document.getElementById(
+                    "introductionToAIContinue"
+                );
+
+            if (
+                aiText &&
+                aiBar &&
+                aiButton
+            ) {
+
+                const lessonKeys = [
+                    "introduction-to-ai-lesson-1",
+                    "introduction-to-ai-lesson-2",
+                    "introduction-to-ai-lesson-3",
+                    "introduction-to-ai-lesson-4",
+                    "introduction-to-ai-lesson-5",
+                    "introduction-to-ai-lesson-6"
+                ];
+
+                const lessonLinks = [
+                    "lesson-introduction-to-ai-1.html",
+                    "lesson-introduction-to-ai-2.html",
+                    "lesson-introduction-to-ai-3.html",
+                    "lesson-introduction-to-ai-4.html",
+                    "lesson-introduction-to-ai-5.html",
+                    "lesson-introduction-to-ai-6.html"
+                ];
+
+                const completedKeys =
+                    new Set(
+                        progress
+                            .filter(
+                                item =>
+                                    item.learning_path ===
+                                        "Introduction to AI" &&
+                                    item.status ===
+                                        "completed"
+                            )
+                            .map(
+                                item =>
+                                    item.lesson_key
+                            )
+                    );
+
+                const completedCount =
+                    lessonKeys.filter(
+                        key =>
+                            completedKeys.has(key)
+                    ).length;
+
+                const totalLessons =
+                    lessonKeys.length;
+
+                const percentage =
+                    Math.min(
+                        100,
+                        Math.round(
+                            (
+                                completedCount /
+                                totalLessons
+                            ) * 100
+                        )
+                    );
+
+                aiText.textContent =
+                    `${completedCount} of ${totalLessons} completed`;
+
+                aiBar.style.width =
+                    `${percentage}%`;
+
+                let nextLessonIndex = 0;
+
+                for (
+                    let i = 0;
+                    i < lessonKeys.length;
+                    i++
+                ) {
+
+                    if (
+                        !completedKeys.has(
+                            lessonKeys[i]
+                        )
+                    ) {
+                        nextLessonIndex = i;
+                        break;
+                    }
+
+                    nextLessonIndex = i + 1;
+                }
+
+                if (
+                    nextLessonIndex >=
+                    lessonLinks.length
+                ) {
+
+                    aiButton.href =
+                        "lesson-introduction-to-ai-1.html";
+
+                    aiButton.textContent =
+                        "Review Learning Path";
+
+                } else {
+
+                    aiButton.href =
+                        lessonLinks[
+                            nextLessonIndex
+                        ];
+
+                    aiButton.textContent =
+                        completedCount === 0
+                            ? "Start Learning"
+                            : "Continue Learning";
+                }
+
+            }
+
+
+            /* =========================
+               STARTING A BUSINESS
+            ========================= */
+
+            const businessText =
+                document.getElementById(
+                    "startingABusinessProgressText"
+                );
+
+            const businessBar =
+                document.getElementById(
+                    "startingABusinessProgressBar"
+                );
+
+            const businessButton =
+                document.getElementById(
+                    "startingABusinessContinue"
+                );
+
+            if (
+                businessText &&
+                businessBar &&
+                businessButton
+            ) {
+
+                const lessonKeys = [
+                    "starting-a-business-lesson-1",
+                    "starting-a-business-lesson-2",
+                    "starting-a-business-lesson-3",
+                    "starting-a-business-lesson-4",
+                    "starting-a-business-lesson-5",
+                    "starting-a-business-lesson-6"
+                ];
+
+                const lessonLinks = [
+                    "lesson-starting-a-business-1.html",
+                    "lesson-starting-a-business-2.html",
+                    "lesson-starting-a-business-3.html",
+                    "lesson-starting-a-business-4.html",
+                    "lesson-starting-a-business-5.html",
+                    "lesson-starting-a-business-6.html"
+                ];
+
+                const completedKeys =
+                    new Set(
+                        progress
+                            .filter(
+                                item =>
+                                    item.learning_path ===
+                                        "Starting a Business" &&
+                                    item.status ===
+                                        "completed"
+                            )
+                            .map(
+                                item =>
+                                    item.lesson_key
+                            )
+                    );
+
+                const completedCount =
+                    lessonKeys.filter(
+                        key =>
+                            completedKeys.has(key)
+                    ).length;
+
+                const totalLessons =
+                    lessonKeys.length;
+
+                const percentage =
+                    Math.min(
+                        100,
+                        Math.round(
+                            (
+                                completedCount /
+                                totalLessons
+                            ) * 100
+                        )
+                    );
+
+                businessText.textContent =
+                    `${completedCount} of ${totalLessons} completed`;
+
+                businessBar.style.width =
+                    `${percentage}%`;
+
+                let nextLessonIndex = 0;
+
+                for (
+                    let i = 0;
+                    i < lessonKeys.length;
+                    i++
+                ) {
+
+                    if (
+                        !completedKeys.has(
+                            lessonKeys[i]
+                        )
+                    ) {
+                        nextLessonIndex = i;
+                        break;
+                    }
+
+                    nextLessonIndex = i + 1;
+                }
+
+                if (
+                    nextLessonIndex >=
+                    lessonLinks.length
+                ) {
+
+                    businessButton.href =
+                        "lesson-starting-a-business-1.html";
+
+                    businessButton.textContent =
+                        "Review Learning Path";
+
+                } else {
+
+                    businessButton.href =
+                        lessonLinks[
+                            nextLessonIndex
+                        ];
+
+                    businessButton.textContent =
+                        completedCount === 0
+                            ? "Start Learning"
+                            : "Continue Learning";
+                }
+
+            }
+
+
+        } catch (error) {
+
+            console.error(
+                "Learning progress load error:",
+                error
+            );
+
+        }
+
+    }
+
+
+    loadLearningProgress();
+
+
+    const logoutButton =
+        document.getElementById("logoutButton");
+
+    if (logoutButton) {
+
+        logoutButton.addEventListener(
+            "click",
+            async function() {
+
+                const currentToken =
+                    localStorage.getItem(
+                        "velmora_token"
+                    );
+
+                if (!currentToken) {
+                    window.location.replace(
+                        "login.html"
+                    );
+                    return;
+                }
+
+                logoutButton.disabled = true;
+                logoutButton.textContent =
+                    "Logging out...";
+
+                try {
+
+                    await fetch(
+                        "http://127.0.0.1:5000/api/auth/logout",
+                        {
+                            method: "POST",
+                            headers: {
+                                "Authorization":
+                                    `Bearer ${currentToken}`
+                            }
+                        }
+                    );
+
+                } catch (error) {
+
+                    console.error(
+                        "Logout error:",
+                        error
+                    );
+
+                } finally {
+
+                    localStorage.removeItem(
+                        "velmora_token"
+                    );
+
+                    localStorage.removeItem(
+                        "velmora_user"
+                    );
+
+                    window.location.replace(
+                        "login.html"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+</script>
+
+<script src="global-nav.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet — VELMORA</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .wallet-detail-page {
+            min-height: 100vh;
+            background: var(--cream);
+            color: var(--ink);
+            padding: 70px 20px 130px;
+        }
+
+        .wallet-detail-wrap {
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .wallet-back {
+            display: inline-flex;
+            margin-bottom: 30px;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: .8rem;
+            font-weight: 750;
+        }
+
+        .wallet-back:hover {
+            color: var(--green);
+        }
+
+        .wallet-detail-hero {
+            padding: 42px;
+            background: linear-gradient(145deg, #ffffff, #eef5f0);
+            border: 1px solid var(--line);
+            border-radius: 28px;
+            box-shadow: 0 20px 55px rgba(13,21,17,.08);
+        }
+
+        .wallet-detail-eyebrow {
+            color: var(--green);
+            font-size: .68rem;
+            font-weight: 850;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+        }
+
+        .wallet-detail-hero h1 {
+            margin: 12px 0 8px;
+            font-family: var(--serif);
+            font-size: clamp(2.5rem, 7vw, 5.5rem);
+            line-height: .95;
+            font-weight: 500;
+            letter-spacing: -.05em;
+        }
+
+        .wallet-detail-balance {
+            margin: 34px 0 30px;
+            font-family: var(--serif);
+            font-size: clamp(3rem, 9vw, 6rem);
+            line-height: .9;
+            letter-spacing: -.055em;
+        }
+
+        .wallet-detail-meta {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            border-top: 1px solid var(--line);
+        }
+
+        .wallet-detail-meta div {
+            padding: 18px 0;
+        }
+
+        .wallet-detail-meta div + div {
+            padding-left: 22px;
+            border-left: 1px solid var(--line);
+        }
+
+        .wallet-detail-meta span {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--muted);
+            font-size: .7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+        }
+
+        .wallet-detail-meta strong {
+            font-size: .9rem;
+        }
+
+        .wallet-transactions {
+            margin-top: 45px;
+        }
+
+        .wallet-transactions-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            margin-bottom: 18px;
+        }
+
+        .wallet-transactions-heading span {
+            color: var(--green);
+            font-size: .68rem;
+            font-weight: 850;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+        }
+
+        .wallet-transactions-heading h2 {
+            margin: 7px 0 0;
+            font-family: var(--serif);
+            font-size: 2.5rem;
+            font-weight: 500;
+            letter-spacing: -.035em;
+        }
+
+        .wallet-transaction-list {
+            overflow: hidden;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 22px;
+        }
+
+        .wallet-transaction {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 20px 22px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .wallet-transaction:last-child {
+            border-bottom: 0;
+        }
+
+        .wallet-transaction-main {
+            min-width: 0;
+        }
+
+        .wallet-transaction-title {
+            font-weight: 750;
+            font-size: .88rem;
+        }
+
+        .wallet-transaction-description {
+            margin-top: 5px;
+            color: var(--muted);
+            font-size: .74rem;
+        }
+
+        .wallet-transaction-date {
+            margin-top: 7px;
+            color: var(--soft-muted);
+            font-size: .68rem;
+        }
+
+        .wallet-transaction-amount {
+            flex-shrink: 0;
+            font-family: var(--serif);
+            font-size: 1.25rem;
+        }
+
+        .wallet-credit {
+            color: var(--green);
+        }
+
+        .wallet-debit {
+            color: #8b3030;
+        }
+
+        .wallet-transaction-empty,
+        .wallet-transaction-error,
+        .wallet-transaction-loading {
+            padding: 45px 25px;
+            text-align: center;
+            color: var(--muted);
+            font-size: .85rem;
+        }
+
+        .wallet-transaction-error {
+            color: #8b3030;
+        }
+
+        @media (max-width: 650px) {
+            .wallet-detail-page {
+                padding: 45px 15px 120px;
+            }
+
+            .wallet-detail-hero {
+                padding: 26px;
+                border-radius: 22px;
+            }
+
+            .wallet-detail-meta {
+                grid-template-columns: 1fr;
+            }
+
+            .wallet-detail-meta div + div {
+                padding-left: 0;
+                border-left: 0;
+                border-top: 1px solid var(--line);
+            }
+
+            .wallet-transaction {
+                padding: 18px;
+            }
+
+            .wallet-transaction-amount {
+                font-size: 1.05rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<main class="wallet-detail-page">
+
+    <div class="wallet-detail-wrap">
+
+        <a href="wallet.html" class="wallet-back">← Back to Wallet</a>
+
+        <section class="wallet-detail-hero">
+
+            <div class="wallet-detail-eyebrow" id="walletCurrency">
+                Wallet
+            </div>
+
+            <h1 id="walletTitle">
+                Loading...
+            </h1>
+
+            <div class="wallet-detail-balance" id="walletBalance">
+                —
+            </div>
+
+            <div class="wallet-detail-meta">
+
+                <div>
+                    <span>Pending</span>
+                    <strong id="walletPending">—</strong>
+                </div>
+
+                <div>
+                    <span>Status</span>
+                    <strong id="walletStatus">—</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="wallet-transactions">
+
+            <div class="wallet-transactions-heading">
+                <div>
+                    <span>Activity</span>
+                    <h2>Transactions</h2>
+                </div>
+            </div>
+
+            <div class="wallet-transaction-list" id="transactionList">
+
+                <div
+                    class="wallet-transaction-loading"
+                    id="transactionLoading"
+                >
+                    Loading transactions...
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+<script src="global-nav.js"></script>
+
+<script>
+
+const API_BASE = "http://127.0.0.1:5000";
+
+const token =
+    localStorage.getItem("velmora_token") ||
+    localStorage.getItem("token") ||
+    localStorage.getItem("accessToken");
+
+const params = new URLSearchParams(window.location.search);
+
+const currency =
+    (params.get("currency") || "USD").toUpperCase();
+
+const walletCurrency =
+    document.getElementById("walletCurrency");
+
+const walletTitle =
+    document.getElementById("walletTitle");
+
+const walletBalance =
+    document.getElementById("walletBalance");
+
+const walletPending =
+    document.getElementById("walletPending");
+
+const walletStatus =
+    document.getElementById("walletStatus");
+
+const transactionList =
+    document.getElementById("transactionList");
+
+
+function formatMoney(amount, currencyCode) {
+
+    return new Intl.NumberFormat(
+        undefined,
+        {
+            style: "currency",
+            currency: currencyCode,
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }
+    ).format(Number(amount || 0));
+
+}
+
+
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+function formatDate(value) {
+
+    if (!value) return "";
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return "";
+    }
+
+    return date.toLocaleString(
+        undefined,
+        {
+            dateStyle: "medium",
+            timeStyle: "short"
+        }
+    );
+
+}
+
+
+async function loadWallet() {
+
+    if (!token) {
+
+        walletTitle.textContent = "Login required";
+        walletBalance.textContent = "—";
+        transactionList.innerHTML = `
+            <div class="wallet-transaction-error">
+                Please log in to view your wallet.
+            </div>
+        `;
+
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `${API_BASE}/api/wallets/${encodeURIComponent(currency)}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(
+                data.message || "Unable to load wallet."
+            );
+        }
+
+        const wallet = data.wallet;
+
+        walletCurrency.textContent = wallet.currency;
+        walletTitle.textContent =
+            `${wallet.currency} Wallet`;
+
+        walletBalance.textContent =
+            formatMoney(
+                wallet.available_balance,
+                wallet.currency
+            );
+
+        walletPending.textContent =
+            formatMoney(
+                wallet.pending_balance,
+                wallet.currency
+            );
+
+        walletStatus.textContent =
+            wallet.status;
+
+    } catch (error) {
+
+        console.error(error);
+
+        walletTitle.textContent =
+            "Unable to load wallet";
+
+        walletBalance.textContent =
+            "—";
+
+        transactionList.innerHTML = `
+            <div class="wallet-transaction-error">
+                ${escapeHtml(error.message)}
+            </div>
+        `;
+
+    }
+
+}
+
+
+async function loadTransactions() {
+
+    if (!token) return;
+
+    try {
+
+        const response = await fetch(
+            `${API_BASE}/api/wallets/${encodeURIComponent(currency)}/transactions`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(
+                data.message ||
+                "Unable to load transactions."
+            );
+        }
+
+        const transactions =
+            data.transactions || [];
+
+        if (transactions.length === 0) {
+
+            transactionList.innerHTML = `
+                <div class="wallet-transaction-empty">
+                    No transactions yet.
+                </div>
+            `;
+
+            return;
+        }
+
+        transactionList.innerHTML =
+            transactions.map(transaction => {
+
+                const isCredit =
+                    transaction.direction === "credit";
+
+                const sign =
+                    isCredit ? "+" : "−";
+
+                const amount =
+                    formatMoney(
+                        transaction.amount,
+                        transaction.currency
+                    );
+
+                return `
+                    <article class="wallet-transaction">
+
+                        <div class="wallet-transaction-main">
+
+                            <div class="wallet-transaction-title">
+                                ${escapeHtml(
+                                    transaction.entry_type
+                                )}
+                            </div>
+
+                            <div class="wallet-transaction-description">
+                                ${escapeHtml(
+                                    transaction.description ||
+                                    "Wallet transaction"
+                                )}
+                            </div>
+
+                            <div class="wallet-transaction-date">
+                                ${escapeHtml(
+                                    formatDate(
+                                        transaction.created_at
+                                    )
+                                )}
+                            </div>
+
+                        </div>
+
+                        <div
+                            class="wallet-transaction-amount ${
+                                isCredit
+                                    ? "wallet-credit"
+                                    : "wallet-debit"
+                            }"
+                        >
+                            ${sign}${escapeHtml(amount)}
+                        </div>
+
+                    </article>
+                `;
+
+            }).join("");
+
+    } catch (error) {
+
+        console.error(error);
+
+        transactionList.innerHTML = `
+            <div class="wallet-transaction-error">
+                ${escapeHtml(error.message)}
+            </div>
+        `;
+
+    }
+
+}
+
+
+loadWallet();
+loadTransactions();
+
+</script>
+
+</body>
+</html>
