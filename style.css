@@ -2510,3 +2510,175 @@ footer {
     }
 }
 
+
+/* VELMORA Genesis Login — mobile scale refinement */
+@media (max-width: 560px) {
+
+    .login-main {
+        padding: 34px 12px 52px;
+    }
+
+    .login-layout {
+        width: 100%;
+        gap: 34px;
+    }
+
+    .login-intro h1 {
+        max-width: 100%;
+        font-size: clamp(3.15rem, 14vw, 4.2rem);
+        line-height: .91;
+    }
+
+    .login-intro p {
+        max-width: 100%;
+        font-size: .94rem;
+        line-height: 1.8;
+    }
+
+    .login-card {
+        width: 100%;
+        padding: 34px 24px 32px;
+        border-radius: 4px;
+    }
+
+    .login-card-header {
+        margin-bottom: 30px;
+    }
+
+    .login-card-header h2 {
+        font-size: 2.15rem;
+    }
+
+    .login-card-header p {
+        font-size: .84rem;
+    }
+
+    .login-form {
+        gap: 20px;
+    }
+
+    .login-field {
+        gap: 9px;
+    }
+
+    .login-field label {
+        font-size: .76rem;
+    }
+
+    .login-field input {
+        height: 58px;
+        padding: 0 16px;
+        font-size: .94rem;
+    }
+
+    .password-wrap input {
+        padding-right: 72px;
+    }
+
+    .password-toggle {
+        right: 12px;
+        font-size: .72rem;
+    }
+
+    .forgot-password {
+        font-size: .75rem;
+    }
+
+    .login-submit {
+        height: 59px;
+        font-size: .9rem;
+    }
+
+    .login-register {
+        margin-top: 25px;
+        font-size: .76rem;
+        line-height: 1.6;
+    }
+}
+
+
+/* VELMORA Genesis Login — mobile scale refinement */
+@media (max-width: 560px) {
+
+    .login-main {
+        padding: 34px 12px 52px;
+    }
+
+    .login-layout {
+        width: 100%;
+        gap: 34px;
+    }
+
+    .login-intro h1 {
+        max-width: 100%;
+        font-size: clamp(3.15rem, 14vw, 4.2rem);
+        line-height: .91;
+    }
+
+    .login-intro p {
+        max-width: 100%;
+        font-size: .94rem;
+        line-height: 1.8;
+    }
+
+    .login-card {
+        width: 100%;
+        padding: 34px 24px 32px;
+        border-radius: 4px;
+    }
+
+    .login-card-header {
+        margin-bottom: 30px;
+    }
+
+    .login-card-header h2 {
+        font-size: 2.15rem;
+    }
+
+    .login-card-header p {
+        font-size: .84rem;
+    }
+
+    .login-form {
+        gap: 20px;
+    }
+
+    .login-field {
+        gap: 9px;
+    }
+
+    .login-field label {
+        font-size: .76rem;
+    }
+
+    .login-field input {
+        height: 58px;
+        padding: 0 16px;
+        font-size: .94rem;
+    }
+
+    .password-wrap input {
+        padding-right: 72px;
+    }
+
+    .password-toggle {
+        right: 12px;
+        font-size: .72rem;
+    }
+
+    .forgot-password {
+        font-size: .75rem;
+    }
+
+    .login-submit {
+        height: 59px;
+        font-size: .9rem;
+    }
+
+    .login-register {
+        margin-top: 25px;
+        font-size: .76rem;
+        line-height: 1.6;
+    }
+}
+

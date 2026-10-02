@@ -447,7 +447,253 @@
                 font-size: 1.65rem;
             }
         }
-    </style>
+    
+        /* VELMORA Genesis Login — master visual layer */
+
+        .login-page {
+            background:
+                radial-gradient(circle at 12% 18%, rgba(22, 131, 79, .08), transparent 28%),
+                radial-gradient(circle at 88% 78%, rgba(22, 131, 79, .055), transparent 30%),
+                linear-gradient(135deg, #f8faf7 0%, #f4f7f3 52%, #f8faf7 100%);
+        }
+
+        .login-page::before {
+            width: 620px;
+            height: 620px;
+            top: -360px;
+            right: -230px;
+            border-color: rgba(22, 131, 79, .10);
+            box-shadow:
+                0 0 0 70px rgba(22, 131, 79, .018),
+                0 0 0 140px rgba(22, 131, 79, .012);
+        }
+
+        .login-page::after {
+            width: 420px;
+            height: 420px;
+            bottom: -285px;
+            left: -210px;
+            border-color: rgba(22, 131, 79, .08);
+        }
+
+        .login-header {
+            border-bottom-color: rgba(11, 21, 16, .09);
+            background: rgba(248, 250, 247, .78);
+        }
+
+        .login-header-inner {
+            width: min(1240px, calc(100% - 48px));
+            min-height: 82px;
+        }
+
+        .login-brand {
+            font-size: 1.08rem;
+            letter-spacing: .22em;
+            font-weight: 900;
+        }
+
+        .login-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 0;
+            transition: color 180ms ease, transform 180ms ease;
+        }
+
+        .login-back:hover {
+            transform: translateX(-2px);
+        }
+
+        .login-main {
+            padding: 76px 24px 88px;
+        }
+
+        .login-layout {
+            width: min(1120px, 100%);
+            grid-template-columns: 1fr .92fr;
+            gap: 105px;
+        }
+
+        .login-intro {
+            position: relative;
+            padding: 18px 0 22px;
+        }
+
+        .login-intro::after {
+            content: "VELMORA";
+            position: absolute;
+            left: -8px;
+            bottom: -48px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(4rem, 10vw, 8.5rem);
+            line-height: 1;
+            letter-spacing: -.07em;
+            color: rgba(22, 131, 79, .035);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .login-kicker {
+            margin-bottom: 27px;
+            letter-spacing: .20em;
+        }
+
+        .login-kicker::before {
+            width: 42px;
+        }
+
+        .login-intro h1 {
+            max-width: 560px;
+            font-size: clamp(3.4rem, 6vw, 5.7rem);
+            line-height: .94;
+            letter-spacing: -.065em;
+        }
+
+        .login-intro h1 span {
+            display: block;
+            margin-top: 4px;
+        }
+
+        .login-intro p {
+            max-width: 490px;
+            margin-top: 29px;
+            font-size: .96rem;
+            line-height: 1.9;
+        }
+
+        .login-card {
+            position: relative;
+            padding: 44px;
+            border: 1px solid rgba(11, 21, 16, .11);
+            border-radius: 4px;
+            background: rgba(255, 255, 255, .92);
+            box-shadow:
+                0 32px 80px rgba(11, 21, 16, .075),
+                0 2px 5px rgba(11, 21, 16, .025);
+        }
+
+        .login-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 64px;
+            height: 3px;
+            background: var(--vm-green);
+        }
+
+        .login-card-header {
+            margin-bottom: 31px;
+        }
+
+        .login-card-header h2 {
+            font-size: 2.05rem;
+            letter-spacing: -.045em;
+        }
+
+        .login-card-header p {
+            color: #707b74;
+        }
+
+        .login-form {
+            gap: 18px;
+        }
+
+        .login-field label {
+            letter-spacing: .01em;
+        }
+
+        .login-field input {
+            height: 54px;
+            border-radius: 3px;
+            border-color: #d8e0da;
+            background: #f8faf8;
+        }
+
+        .login-field input:focus {
+            border-color: #16834f;
+            box-shadow: 0 0 0 4px rgba(22, 131, 79, .07);
+        }
+
+        .password-toggle {
+            color: var(--vm-green-dark);
+        }
+
+        .login-options {
+            margin-top: -1px;
+        }
+
+        .forgot-password {
+            letter-spacing: .01em;
+        }
+
+        .login-submit {
+            height: 55px;
+            margin-top: 5px;
+            border-radius: 3px;
+            background: #16834f;
+            box-shadow: 0 10px 24px rgba(22, 131, 79, .16);
+            letter-spacing: .01em;
+        }
+
+        .login-submit:hover {
+            background: #0c6039;
+            box-shadow: 0 14px 30px rgba(22, 131, 79, .19);
+        }
+
+        .login-register {
+            margin-top: 23px;
+        }
+
+        .login-footer {
+            padding-bottom: 30px;
+            letter-spacing: .01em;
+        }
+
+        @media (max-width: 850px) {
+            .login-layout {
+                gap: 55px;
+            }
+
+            .login-intro::after {
+                display: none;
+            }
+
+            .login-intro {
+                padding-bottom: 0;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .login-header-inner {
+                width: calc(100% - 30px);
+                min-height: 70px;
+            }
+
+            .login-main {
+                padding: 48px 14px 55px;
+            }
+
+            .login-intro h1 {
+                font-size: 3rem;
+            }
+
+            .login-card {
+                padding: 31px 20px;
+                border-radius: 3px;
+            }
+
+            .login-card::before {
+                width: 48px;
+            }
+
+            .login-footer {
+                padding-left: 14px;
+                padding-right: 14px;
+            }
+        }
+
+</style>
 </head>
 
 <body>
