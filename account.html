@@ -226,6 +226,467 @@
             }
         }
     </style>
+
+<style id="velmora-account-professional">
+
+:root {
+    --va-ink: #0b1510;
+    --va-ink-soft: #15231b;
+    --va-green: #16834f;
+    --va-green-dark: #0c6039;
+    --va-green-light: #35a66f;
+    --va-pale: #eaf4ee;
+    --va-cream: #f6f8f5;
+    --va-white: #ffffff;
+    --va-muted: #66736c;
+    --va-soft: #98a39d;
+    --va-line: #dce4df;
+}
+
+html {
+    background: var(--va-cream);
+}
+
+body {
+    color: var(--va-ink);
+    background:
+        radial-gradient(circle at 5% 4%, rgba(22,131,79,.09), transparent 27%),
+        radial-gradient(circle at 96% 82%, rgba(22,131,79,.07), transparent 30%),
+        linear-gradient(180deg, #f8faf7 0%, #f3f6f2 100%);
+    font-family: Inter, Arial, Helvetica, sans-serif;
+}
+
+.site-header {
+    position: relative;
+    width: min(1280px, 90%);
+    margin: 0 auto;
+    padding: 26px 0;
+    border-bottom: 1px solid rgba(11,21,16,.08);
+}
+
+.site-header .logo {
+    color: var(--va-ink);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: .16em;
+    text-decoration: none;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.back-link {
+    color: var(--va-muted);
+    text-decoration: none;
+    font-size: .76rem;
+    font-weight: 750;
+    letter-spacing: .05em;
+    transition: color 180ms ease;
+}
+
+.back-link:hover {
+    color: var(--va-green);
+}
+
+.account-page {
+    width: min(1000px, 90%);
+    max-width: none;
+    margin: 0 auto;
+    padding: 82px 0 120px;
+}
+
+.account-header {
+    margin-bottom: 52px;
+}
+
+.account-header .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--va-green);
+    font-size: .67rem;
+    font-weight: 800;
+    letter-spacing: .20em;
+    text-transform: uppercase;
+}
+
+.account-header .eyebrow::before {
+    content: "";
+    width: 34px;
+    height: 1px;
+    background: var(--va-green);
+}
+
+.account-header h1 {
+    margin: 20px 0 22px;
+    color: var(--va-ink);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(3.7rem, 8vw, 6.8rem);
+    line-height: .91;
+    font-weight: 500;
+    letter-spacing: -.065em;
+}
+
+.account-header p,
+.account-header .description {
+    max-width: 650px;
+    margin: 0;
+    color: var(--va-muted);
+    font-size: .98rem;
+    line-height: 1.85;
+}
+
+.velmora-id-card {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 22px;
+    padding: 31px 32px;
+    border: 1px solid #29362f;
+    border-radius: 4px;
+    background:
+        radial-gradient(circle at 90% 15%, rgba(53,166,111,.18), transparent 35%),
+        linear-gradient(135deg, #0b1510, #15231b);
+    box-shadow: 0 22px 50px rgba(11,21,16,.12);
+}
+
+.velmora-id-card::after {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    right: -75px;
+    bottom: -100px;
+    border: 1px solid rgba(53,166,111,.18);
+    border-radius: 50%;
+}
+
+.velmora-id-label {
+    margin-bottom: 10px;
+    color: #91a198;
+    font-size: .63rem;
+    letter-spacing: .20em;
+}
+
+#velmoraPublicId {
+    color: #ffffff;
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    letter-spacing: .15em;
+}
+
+.velmora-id-card p {
+    margin: 11px 0 0;
+    color: #aebbb4;
+    font-size: .74rem;
+    line-height: 1.65;
+}
+
+.copy-velmora-id {
+    position: relative;
+    z-index: 1;
+    border: 1px solid rgba(53,166,111,.55);
+    border-radius: 3px;
+    padding: 12px 20px;
+    background: var(--va-green);
+    color: #ffffff;
+    font-size: .73rem;
+    font-weight: 800;
+    letter-spacing: .05em;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.copy-velmora-id:hover {
+    background: var(--va-green-dark);
+    transform: translateY(-2px);
+}
+
+.account-card {
+    margin-top: 22px;
+    padding: 31px;
+    border: 1px solid var(--va-line);
+    border-radius: 4px;
+    background: rgba(255,255,255,.82);
+    box-shadow: 0 12px 36px rgba(11,21,16,.035);
+}
+
+.account-section-title {
+    margin: 0 0 8px;
+    color: var(--va-ink);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.75rem;
+    font-weight: 500;
+    letter-spacing: -.025em;
+}
+
+.section-description {
+    margin: 0 0 25px;
+    color: var(--va-muted);
+    font-size: .82rem;
+    line-height: 1.7;
+}
+
+.form-grid {
+    gap: 18px;
+}
+
+.field {
+    gap: 8px;
+}
+
+.field label {
+    color: #34443b;
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .03em;
+}
+
+.field input,
+.field select {
+    min-height: 50px;
+    padding: 13px 15px;
+    border: 1px solid var(--va-line);
+    border-radius: 3px;
+    color: var(--va-ink);
+    background: #ffffff;
+    font-size: .86rem;
+    transition:
+        border-color 180ms ease,
+        box-shadow 180ms ease,
+        background 180ms ease;
+}
+
+.field input:hover,
+.field select:hover {
+    border-color: #b7cec0;
+}
+
+.field input:focus,
+.field select:focus {
+    border-color: var(--va-green);
+    box-shadow: 0 0 0 3px rgba(22,131,79,.08);
+}
+
+.field input[readonly] {
+    color: #77847d;
+    background: #f1f5f2;
+}
+
+.field-note {
+    margin: 0;
+    color: var(--va-soft);
+    font-size: .7rem;
+    line-height: 1.6;
+}
+
+.password-field {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+}
+
+.password-field input {
+    padding-right: 76px;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 11px;
+    transform: translateY(-50%);
+    border: 0;
+    background: transparent;
+    color: var(--va-green-dark);
+    font-size: .68rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.password-toggle:hover {
+    color: var(--va-green);
+}
+
+.actions {
+    margin-top: 27px;
+    gap: 13px;
+}
+
+.save-button {
+    border: 0;
+    border-radius: 3px;
+    padding: 14px 23px;
+    background: linear-gradient(135deg, var(--va-green-dark), var(--va-green));
+    color: #ffffff;
+    font-size: .75rem;
+    font-weight: 800;
+    letter-spacing: .06em;
+    cursor: pointer;
+    box-shadow: 0 12px 26px rgba(12,96,57,.13);
+    transition: .2s ease;
+}
+
+.save-button:hover:not(:disabled) {
+    background: var(--va-green-dark);
+    transform: translateY(-2px);
+}
+
+.save-button:disabled {
+    opacity: .48;
+}
+
+.cancel-link {
+    color: var(--va-green-dark);
+    font-size: .76rem;
+    font-weight: 800;
+}
+
+.status {
+    min-height: 20px;
+    margin-top: 16px;
+    font-size: .73rem;
+    line-height: 1.5;
+}
+
+.status.success {
+    color: var(--va-green-dark);
+}
+
+.status.error {
+    color: #a33a3a;
+}
+
+.security-card {
+    background: rgba(250,252,250,.78);
+}
+
+.sessions-list {
+    display: grid;
+    gap: 10px;
+    margin-top: 21px;
+}
+
+.session-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 18px 19px;
+    border: 1px solid var(--va-line);
+    border-radius: 3px;
+    background: var(--va-white);
+}
+
+.session-title {
+    margin-bottom: 7px;
+    color: var(--va-ink);
+    font-size: .79rem;
+    font-weight: 800;
+}
+
+.session-detail {
+    margin-top: 3px;
+    color: var(--va-soft);
+    font-size: .68rem;
+    line-height: 1.5;
+}
+
+.session-badge {
+    flex-shrink: 0;
+    padding: 7px 10px;
+    border: 1px solid #b9d9c5;
+    border-radius: 999px;
+    background: var(--va-pale);
+    color: var(--va-green-dark);
+    font-size: .62rem;
+    font-weight: 800;
+    letter-spacing: .04em;
+}
+
+@media (max-width: 700px) {
+    .site-header {
+        width: 90%;
+        padding: 21px 0;
+    }
+
+    .account-page {
+        width: 90%;
+        padding: 58px 0 100px;
+    }
+
+    .account-header {
+        margin-bottom: 40px;
+    }
+
+    .account-header h1 {
+        font-size: clamp(3.1rem, 14vw, 5rem);
+    }
+
+    .velmora-id-card {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 25px 22px;
+    }
+
+    .copy-velmora-id {
+        width: 100%;
+    }
+
+    .account-card {
+        padding: 23px 20px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .field.full {
+        grid-column: auto;
+    }
+
+    .session-item {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 430px) {
+    .site-header .logo {
+        font-size: .92rem;
+    }
+
+    .back-link {
+        font-size: .68rem;
+    }
+
+    .account-header .eyebrow {
+        font-size: .61rem;
+    }
+
+    .account-header p {
+        font-size: .9rem;
+    }
+
+    .actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .save-button {
+        width: 100%;
+    }
+
+    .cancel-link {
+        text-align: center;
+        padding: 5px;
+    }
+}
+
+</style>
+
 </head>
 
 <body>
