@@ -340,6 +340,297 @@
         }
     </style>
     <link rel="stylesheet" href="style.css">
+
+<style id="velmora-profile-professional">
+:root {
+    --vp-ink: #0b1510;
+    --vp-ink-soft: #15231b;
+    --vp-green: #16834f;
+    --vp-green-dark: #0c6039;
+    --vp-green-light: #35a66f;
+    --vp-pale: #eaf4ee;
+    --vp-cream: #f6f8f5;
+    --vp-white: #ffffff;
+    --vp-muted: #66736c;
+    --vp-soft: #98a39d;
+    --vp-line: #dce4df;
+}
+
+html {
+    background: var(--vp-cream);
+}
+
+body {
+    color: var(--vp-ink);
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(circle at 7% 3%, rgba(22,131,79,.10), transparent 28%),
+        radial-gradient(circle at 94% 82%, rgba(22,131,79,.07), transparent 30%),
+        linear-gradient(180deg, #f8faf7 0%, #f3f6f2 100%);
+}
+
+.page {
+    width: min(1280px, 90%);
+}
+
+header {
+    padding: 26px 0;
+    border-bottom: 1px solid rgba(11,21,16,.09);
+}
+
+.brand {
+    color: var(--vp-ink);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.12rem;
+    font-weight: 600;
+    letter-spacing: .16em;
+}
+
+.progress {
+    gap: 12px;
+}
+
+.progress-label {
+    color: var(--vp-muted);
+    font-size: .68rem;
+    letter-spacing: .16em;
+}
+
+.progress-line {
+    width: 120px;
+    height: 5px;
+    background: #dfe7e2;
+}
+
+.progress-line span {
+    background: linear-gradient(90deg, var(--vp-green-dark), var(--vp-green-light));
+}
+
+main {
+    padding: 82px 0 105px;
+}
+
+.content {
+    width: min(980px, 100%);
+}
+
+.eyebrow {
+    margin-bottom: 22px;
+    color: var(--vp-green);
+    font-size: .68rem;
+    letter-spacing: .20em;
+}
+
+.eyebrow::before {
+    width: 34px;
+    background: var(--vp-green);
+}
+
+h1 {
+    max-width: 900px;
+    color: var(--vp-ink);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(3.7rem, 8vw, 7.2rem);
+    line-height: .91;
+    font-weight: 500;
+    letter-spacing: -.065em;
+}
+
+.intro {
+    max-width: 680px;
+    margin: 29px 0 64px;
+    color: var(--vp-muted);
+    font-size: 1rem;
+    line-height: 1.85;
+}
+
+.section {
+    margin-top: 58px;
+}
+
+.section-title {
+    margin-bottom: 9px;
+    color: var(--vp-ink);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.9rem;
+    font-weight: 500;
+}
+
+.section-note {
+    margin: 0 0 22px;
+    color: var(--vp-soft);
+    font-size: .78rem;
+    line-height: 1.6;
+}
+
+.choices {
+    gap: 13px;
+}
+
+.choice {
+    min-height: 72px;
+    padding: 17px 19px;
+    border: 1px solid var(--vp-line);
+    border-radius: 3px;
+    background: rgba(255,255,255,.78);
+    box-shadow: 0 8px 28px rgba(11,21,16,.025);
+    transition:
+        transform 180ms ease,
+        border-color 180ms ease,
+        background 180ms ease,
+        box-shadow 180ms ease;
+}
+
+.choice:hover {
+    transform: translateY(-3px);
+    border-color: #9cc8ad;
+    background: var(--vp-white);
+    box-shadow: 0 15px 35px rgba(11,21,16,.06);
+}
+
+.choice.selected {
+    border-color: var(--vp-green);
+    background: var(--vp-pale);
+    box-shadow:
+        0 0 0 1px rgba(22,131,79,.10),
+        0 15px 35px rgba(22,131,79,.07);
+}
+
+.choice-check {
+    width: 22px;
+    height: 22px;
+    flex-basis: 22px;
+    border-radius: 4px;
+    border-color: #cbd8d0;
+}
+
+.choice.selected .choice-check {
+    background: var(--vp-green);
+    border-color: var(--vp-green);
+}
+
+.choice-text {
+    color: #304039;
+    font-size: .86rem;
+    line-height: 1.5;
+}
+
+.action {
+    margin-top: 64px;
+    padding-top: 30px;
+    border-top: 1px solid var(--vp-line);
+}
+
+.continue {
+    width: min(420px, 100%);
+    padding: 18px 28px;
+    border-radius: 3px;
+    background: linear-gradient(135deg, var(--vp-green-dark), var(--vp-green));
+    box-shadow: 0 18px 35px rgba(12,96,57,.16);
+    font-size: .8rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.continue:hover:not(:disabled) {
+    background: linear-gradient(135deg, #084d2d, var(--vp-green-dark));
+    transform: translateY(-3px);
+}
+
+.note {
+    margin-top: 16px;
+    color: var(--vp-soft);
+    font-size: .7rem;
+}
+
+footer {
+    padding: 27px 0 32px;
+    color: #89958e;
+    border-top: 1px solid rgba(11,21,16,.08);
+    font-size: .68rem;
+    letter-spacing: .04em;
+}
+
+@media (max-width: 800px) {
+    main {
+        padding: 65px 0 90px;
+    }
+
+    h1 {
+        font-size: clamp(3.4rem, 12vw, 5.8rem);
+    }
+
+    .choices {
+        gap: 11px;
+    }
+}
+
+@media (max-width: 600px) {
+    .page {
+        width: 90%;
+    }
+
+    header {
+        padding: 21px 0;
+    }
+
+    main {
+        padding: 53px 0 75px;
+    }
+
+    .content {
+        width: 100%;
+    }
+
+    .eyebrow {
+        margin-bottom: 18px;
+        font-size: .63rem;
+    }
+
+    h1 {
+        font-size: clamp(3rem, 15vw, 5rem);
+        line-height: .94;
+    }
+
+    .intro {
+        margin: 23px 0 46px;
+        font-size: .92rem;
+        line-height: 1.75;
+    }
+
+    .section {
+        margin-top: 43px;
+    }
+
+    .section-title {
+        font-size: 1.55rem;
+    }
+
+    .choice {
+        min-height: 64px;
+        padding: 15px 16px;
+    }
+
+    .action {
+        margin-top: 50px;
+    }
+}
+
+@media (max-width: 430px) {
+    .brand {
+        font-size: .9rem;
+    }
+
+    .progress-label {
+        font-size: .6rem;
+    }
+
+    .progress-line {
+        display: none;
+    }
+}
+</style>
+
 </head>
 
 <body>
