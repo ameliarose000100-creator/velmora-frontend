@@ -218,6 +218,294 @@
             }
         }
     </style>
+
+<style id="velmora-wallet-detail-professional">
+
+/* =========================================================
+   VELMORA GENESIS — WALLET DETAIL
+   Visual layer only. Existing wallet logic preserved.
+   ========================================================= */
+
+.wallet-detail-page {
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    padding: 92px 28px 150px;
+    background:
+        radial-gradient(circle at 82% 4%, rgba(22,131,79,.075), transparent 27%),
+        linear-gradient(180deg, #f8faf7 0%, #f2f6f3 100%);
+}
+
+.wallet-detail-page::before {
+    content: "";
+    position: absolute;
+    width: 560px;
+    height: 560px;
+    top: -300px;
+    right: -230px;
+    border: 1px solid rgba(22,131,79,.08);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.wallet-detail-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 1180px;
+}
+
+.wallet-back {
+    margin-bottom: 34px;
+    padding: 10px 0;
+    color: var(--muted);
+    font-size: .68rem;
+    font-weight: 850;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    transition: color .18s ease;
+}
+
+.wallet-back:hover {
+    color: var(--green);
+}
+
+.wallet-detail-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 52px;
+    border-radius: 4px;
+    border: 1px solid #d8e1db;
+    background:
+        linear-gradient(145deg, #ffffff 0%, #edf5f0 100%);
+    box-shadow:
+        0 28px 70px rgba(13,21,17,.075),
+        0 1px 0 rgba(255,255,255,.9) inset;
+}
+
+.wallet-detail-hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(
+        90deg,
+        var(--green),
+        var(--green-light),
+        transparent
+    );
+}
+
+.wallet-detail-hero::after {
+    content: "";
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    right: -150px;
+    bottom: -170px;
+    border-radius: 50%;
+    background:
+        radial-gradient(
+            circle,
+            rgba(22,131,79,.12),
+            transparent 68%
+        );
+    pointer-events: none;
+}
+
+.wallet-detail-eyebrow {
+    position: relative;
+    z-index: 1;
+    font-size: .66rem;
+    letter-spacing: .2em;
+}
+
+.wallet-detail-hero h1 {
+    position: relative;
+    z-index: 1;
+    margin: 16px 0 8px;
+    font-size: clamp(3rem, 7vw, 6.8rem);
+    line-height: .88;
+    letter-spacing: -.06em;
+}
+
+.wallet-detail-balance {
+    position: relative;
+    z-index: 1;
+    margin: 52px 0 36px;
+    font-size: clamp(3.4rem, 9vw, 7.5rem);
+    line-height: .86;
+    letter-spacing: -.07em;
+}
+
+.wallet-detail-meta {
+    position: relative;
+    z-index: 1;
+    border-top-color: rgba(41,54,47,.15);
+}
+
+.wallet-detail-meta div {
+    padding: 20px 0;
+}
+
+.wallet-detail-meta span {
+    margin-bottom: 8px;
+    font-size: .64rem;
+    letter-spacing: .16em;
+}
+
+.wallet-detail-meta strong {
+    font-size: .88rem;
+}
+
+.wallet-transactions {
+    margin-top: 76px;
+}
+
+.wallet-transactions-heading {
+    margin-bottom: 24px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+}
+
+.wallet-transactions-heading span {
+    font-size: .64rem;
+    letter-spacing: .2em;
+}
+
+.wallet-transactions-heading h2 {
+    margin-top: 9px;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    line-height: .95;
+    letter-spacing: -.045em;
+}
+
+.wallet-transaction-list {
+    border-radius: 4px;
+    border: 1px solid #d8e1db;
+    box-shadow: 0 20px 55px rgba(13,21,17,.055);
+}
+
+.wallet-transaction {
+    position: relative;
+    min-height: 86px;
+    padding: 21px 26px;
+    background: rgba(255,255,255,.88);
+    transition:
+        background .18s ease,
+        padding-left .18s ease;
+}
+
+.wallet-transaction:hover {
+    background: #f7faf8;
+    padding-left: 30px;
+}
+
+.wallet-transaction-main {
+    padding-right: 15px;
+}
+
+.wallet-transaction-title {
+    font-size: .84rem;
+    font-weight: 850;
+}
+
+.wallet-transaction-description {
+    max-width: 620px;
+    line-height: 1.55;
+}
+
+.wallet-transaction-date {
+    letter-spacing: .02em;
+}
+
+.wallet-transaction-amount {
+    font-size: 1.35rem;
+    letter-spacing: -.025em;
+}
+
+.wallet-credit,
+.wallet-debit {
+    font-weight: 650;
+}
+
+.wallet-credit {
+    color: var(--green-dark);
+}
+
+.wallet-debit {
+    color: #8b3030;
+}
+
+.wallet-transaction-empty,
+.wallet-transaction-error,
+.wallet-transaction-loading {
+    padding: 70px 25px;
+    line-height: 1.7;
+}
+
+.wallet-transaction-error {
+    background: #fff8f8;
+}
+
+@media (max-width: 800px) {
+    .wallet-detail-page {
+        padding-top: 70px;
+    }
+
+    .wallet-detail-hero {
+        padding: 40px;
+    }
+
+    .wallet-detail-balance {
+        margin-top: 44px;
+    }
+}
+
+@media (max-width: 650px) {
+    .wallet-detail-page {
+        padding: 54px 20px 130px;
+    }
+
+    .wallet-back {
+        margin-bottom: 25px;
+    }
+
+    .wallet-detail-hero {
+        padding: 30px 24px;
+        border-radius: 4px;
+    }
+
+    .wallet-detail-hero h1 {
+        font-size: clamp(2.8rem, 14vw, 4.8rem);
+    }
+
+    .wallet-detail-balance {
+        margin: 40px 0 30px;
+        font-size: clamp(3rem, 16vw, 5rem);
+    }
+
+    .wallet-transactions {
+        margin-top: 55px;
+    }
+
+    .wallet-transaction {
+        align-items: flex-start;
+        padding: 19px 18px;
+    }
+
+    .wallet-transaction:hover {
+        padding-left: 20px;
+    }
+
+    .wallet-transaction-amount {
+        font-size: 1.05rem;
+    }
+}
+
+</style>
+
 </head>
 
 <body>
