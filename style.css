@@ -1977,3 +1977,198 @@ footer {
     }
 }
 
+
+/* =========================================================
+   VELMORA GENESIS — HOMEPAGE MASTER POLISH
+   Scoped exclusively to index.html
+========================================================= */
+
+.genesis-homepage {
+    --home-shadow-soft: 0 18px 55px rgba(11,21,16,.08);
+    --home-shadow-hover: 0 24px 70px rgba(11,21,16,.12);
+}
+
+.genesis-homepage .site-header {
+    background: rgba(255,255,255,.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.genesis-homepage .brand-mark {
+    transition:
+        background .25s ease,
+        color .25s ease,
+        border-color .25s ease,
+        transform .25s ease;
+}
+
+.genesis-homepage .brand:hover .brand-mark {
+    transform: translateY(-1px);
+}
+
+.genesis-homepage .hero {
+    position: relative;
+}
+
+.genesis-homepage .hero-content {
+    position: relative;
+    z-index: 4;
+}
+
+.genesis-homepage .hero h1 {
+    text-wrap: balance;
+}
+
+.genesis-homepage .hero-description {
+    line-height: 1.7;
+}
+
+.genesis-homepage .primary-button,
+.genesis-homepage .text-button {
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        color .25s ease,
+        border-color .25s ease;
+}
+
+.genesis-homepage .primary-button:hover {
+    transform: translateY(-2px);
+}
+
+.genesis-homepage .hero-visual {
+    filter: saturate(.96);
+}
+
+.genesis-homepage .visual-center {
+    transition:
+        transform .35s ease,
+        box-shadow .35s ease;
+}
+
+.genesis-homepage .hero-visual:hover .visual-center {
+    transform: translate(-50%, -50%) scale(1.035);
+    box-shadow:
+        0 0 0 18px rgba(22,131,79,.06),
+        0 0 0 44px rgba(22,131,79,.028);
+}
+
+.genesis-homepage .visual-orbit {
+    transition:
+        border-color .3s ease,
+        transform .5s ease;
+}
+
+.genesis-homepage .hero-visual:hover .orbit-one {
+    transform: translate(-50%, -50%) rotate(7deg);
+}
+
+.genesis-homepage .hero-visual:hover .orbit-two {
+    transform: translate(-50%, -50%) rotate(-5deg);
+}
+
+.genesis-homepage .hero-visual:hover .orbit-three {
+    transform: translate(-50%, -50%) rotate(3deg);
+}
+
+.genesis-homepage .path {
+    transition:
+        background .3s ease,
+        box-shadow .3s ease,
+        transform .3s ease;
+}
+
+.genesis-homepage .path:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--home-shadow-soft);
+}
+
+.genesis-homepage .person-row {
+    transition:
+        padding .25s ease,
+        background .25s ease;
+}
+
+.genesis-homepage .journey-step {
+    transition:
+        background .25s ease,
+        transform .25s ease;
+}
+
+.genesis-homepage .journey-step:hover {
+    transform: translateY(-2px);
+}
+
+.genesis-homepage .global-world {
+    transition: transform .5s ease;
+}
+
+.genesis-homepage .global-world:hover {
+    transform: scale(1.018);
+}
+
+.genesis-homepage .global-core {
+    transition:
+        transform .35s ease,
+        box-shadow .35s ease;
+}
+
+.genesis-homepage .global-world:hover .global-core {
+    transform: translate(-50%, -50%) scale(1.04);
+}
+
+.genesis-homepage .final .primary-button {
+    box-shadow: var(--home-shadow-soft);
+}
+
+.genesis-homepage footer {
+    background: var(--ink);
+}
+
+@media (max-width: 760px) {
+
+    .genesis-homepage .hero {
+        padding-bottom: 72px;
+    }
+
+    .genesis-homepage .hero-visual:hover .orbit-one,
+    .genesis-homepage .hero-visual:hover .orbit-two,
+    .genesis-homepage .hero-visual:hover .orbit-three {
+        transform: translate(-50%, -50%);
+    }
+
+    .genesis-homepage .path:hover,
+    .genesis-homepage .journey-step:hover {
+        transform: none;
+        box-shadow: none;
+    }
+}
+
+@media (max-width: 520px) {
+
+    .genesis-homepage .hero h1 {
+        text-wrap: initial;
+        letter-spacing: -.065em;
+    }
+
+    .genesis-homepage .hero-description {
+        line-height: 1.65;
+    }
+
+    .genesis-homepage .visual-tag {
+        box-shadow: 0 9px 24px rgba(13,21,17,.07);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .genesis-homepage *,
+    .genesis-homepage *::before,
+    .genesis-homepage *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
+
