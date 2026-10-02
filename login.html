@@ -704,6 +704,22 @@
                 profileData
             );
 
+            const params = new URLSearchParams(
+                window.location.search
+            );
+
+            const requestedNext =
+                params.get("next");
+
+            const safeNext =
+                requestedNext &&
+                !requestedNext.startsWith("http://") &&
+                !requestedNext.startsWith("https://") &&
+                !requestedNext.startsWith("//") &&
+                !requestedNext.includes("\\")
+                    ? requestedNext
+                    : "dashboard.html";
+
             if (
                 profileResponse.ok &&
                 profileData.success === true &&
@@ -711,14 +727,15 @@
             ) {
 
                 window.location.replace(
-                    "dashboard.html"
+                    safeNext
                 );
 
                 return;
             }
 
             window.location.replace(
-                "onboarding.html"
+                "onboarding.html?next=" +
+                encodeURIComponent(safeNext)
             );
 
         } catch (error) {

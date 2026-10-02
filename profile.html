@@ -1106,7 +1106,25 @@ footer {
                 JSON.stringify(profile)
             );
 
-            window.location.href = "profile-goal.html";
+            const params = new URLSearchParams(
+                window.location.search
+            );
+
+            const requestedNext =
+                params.get("next");
+
+            const safeNext =
+                requestedNext &&
+                !requestedNext.startsWith("http://") &&
+                !requestedNext.startsWith("https://") &&
+                !requestedNext.startsWith("//") &&
+                !requestedNext.includes("\\")
+                    ? requestedNext
+                    : "dashboard.html";
+
+            window.location.href =
+                "profile-goal.html?next=" +
+                encodeURIComponent(safeNext);
 
         } catch (error) {
 

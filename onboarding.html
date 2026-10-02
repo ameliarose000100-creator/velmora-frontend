@@ -676,8 +676,25 @@
                 JSON.stringify(selected)
             );
 
+            const params = new URLSearchParams(
+                window.location.search
+            );
+
+            const requestedNext =
+                params.get("next");
+
+            const safeNext =
+                requestedNext &&
+                !requestedNext.startsWith("http://") &&
+                !requestedNext.startsWith("https://") &&
+                !requestedNext.startsWith("//") &&
+                !requestedNext.includes("\\")
+                    ? requestedNext
+                    : "dashboard.html";
+
             window.location.href =
-                "profile.html";
+                "profile.html?next=" +
+                encodeURIComponent(safeNext);
 
         } catch (error) {
 
