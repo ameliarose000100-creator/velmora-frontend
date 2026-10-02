@@ -175,6 +175,469 @@
         }
     </style>
     <link rel="stylesheet" href="style.css">
+<style id="velmora-skills-passport-professional">
+:root {
+    --sp-ink: #0b1510;
+    --sp-ink-soft: #15231b;
+    --sp-green: #16834f;
+    --sp-green-dark: #0c6039;
+    --sp-green-light: #35a66f;
+    --sp-pale: #eaf4ee;
+    --sp-cream: #f6f8f5;
+    --sp-white: #ffffff;
+    --sp-muted: #66736c;
+    --sp-soft-muted: #98a39d;
+    --sp-line: #dce4df;
+    --sp-line-dark: #29362f;
+    --sp-serif: Georgia, "Times New Roman", serif;
+    --sp-sans: Inter, Arial, Helvetica, sans-serif;
+    --sp-max: 1280px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background:
+        radial-gradient(
+            circle at 80% 0%,
+            rgba(22,131,79,.07),
+            transparent 30%
+        ),
+        var(--sp-cream);
+    color: var(--sp-ink);
+    font-family: var(--sp-sans);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    min-height: 76px;
+    padding: 18px max(5%, calc((100vw - var(--sp-max)) / 2));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    background: rgba(246,248,245,.91);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(220,228,223,.9);
+}
+
+.logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    font-family: var(--sp-serif);
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: .12em;
+}
+
+.logo::before {
+    content: "V";
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--sp-ink);
+    color: var(--sp-white);
+    font-family: var(--sp-serif);
+    font-size: .95rem;
+    letter-spacing: 0;
+}
+
+.back {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--sp-green-dark);
+    font-size: .76rem;
+    font-weight: 800;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.back:hover {
+    color: var(--sp-green);
+}
+
+main {
+    width: min(var(--sp-max), 90%);
+    margin: 0 auto;
+    padding: 82px 0 120px;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--sp-green-dark);
+    font-size: .68rem;
+    font-weight: 850;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+}
+
+.eyebrow::before {
+    content: "";
+    width: 28px;
+    height: 1px;
+    background: var(--sp-green);
+}
+
+h1 {
+    max-width: 850px;
+    margin: 18px 0 20px;
+    font-family: var(--sp-serif);
+    font-size: clamp(3.2rem, 7.2vw, 7rem);
+    line-height: .9;
+    letter-spacing: -.045em;
+    font-weight: 500;
+}
+
+.intro {
+    max-width: 720px;
+    margin: 0;
+    color: var(--sp-muted);
+    font-size: clamp(1rem, 1.4vw, 1.16rem);
+    line-height: 1.8;
+}
+
+.passport-card {
+    position: relative;
+    overflow: hidden;
+    margin-top: 65px;
+    padding: clamp(26px, 4vw, 48px);
+    background: var(--sp-white);
+    border: 1px solid var(--sp-line);
+    border-radius: 28px;
+    box-shadow: 0 22px 60px rgba(11,21,16,.055);
+}
+
+.passport-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: linear-gradient(
+        90deg,
+        var(--sp-green-dark),
+        var(--sp-green-light),
+        transparent
+    );
+}
+
+.passport-card > h2:first-child {
+    margin: 0;
+    font-family: var(--sp-serif);
+    font-size: clamp(1.9rem, 4vw, 3rem);
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: -.025em;
+}
+
+.passport-card > p {
+    max-width: 760px;
+    margin: 14px 0 0;
+    color: var(--sp-muted);
+    line-height: 1.75;
+}
+
+.passport-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 34px;
+}
+
+.passport-item {
+    min-height: 155px;
+    padding: 23px 20px;
+    border: 1px solid var(--sp-line);
+    border-radius: 18px;
+    background: linear-gradient(
+        145deg,
+        #fff,
+        #fafcf9
+    );
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+.passport-item:hover {
+    transform: translateY(-3px);
+    border-color: rgba(22,131,79,.35);
+    box-shadow: 0 14px 30px rgba(11,21,16,.055);
+}
+
+.passport-item strong {
+    display: block;
+    margin-bottom: 12px;
+    font-family: var(--sp-serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+.passport-item span {
+    display: block;
+    color: var(--sp-muted);
+    font-size: .82rem;
+    line-height: 1.65;
+}
+
+.status {
+    margin-top: 28px;
+    padding: 18px 20px;
+    border: 1px solid #dce9e1;
+    border-radius: 16px;
+    background: var(--sp-pale);
+    color: var(--sp-muted);
+    font-size: .82rem;
+    line-height: 1.7;
+}
+
+#skillsEvidenceSection,
+#verifiedProofSection {
+    margin-top: 55px !important;
+    padding-top: 42px;
+    border-top: 1px solid var(--sp-line);
+}
+
+#skillsEvidenceSection h2,
+#verifiedProofSection h2 {
+    margin: 0 0 10px;
+    font-family: var(--sp-serif);
+    font-size: clamp(1.75rem, 3vw, 2.45rem);
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: -.02em;
+}
+
+#skillsEvidenceSection > p,
+#verifiedProofSection > p {
+    margin: 0;
+    color: var(--sp-muted);
+    line-height: 1.7;
+}
+
+#skillsEvidenceList,
+#proofList {
+    margin-top: 22px;
+}
+
+#skillsEvidenceList article,
+#proofList article {
+    margin-top: 14px !important;
+    padding: 25px !important;
+    border: 1px solid var(--sp-line) !important;
+    border-radius: 20px !important;
+    background: #fff !important;
+    box-shadow: 0 12px 30px rgba(11,21,16,.035);
+}
+
+#skillsEvidenceList article:first-child,
+#proofList article:first-child {
+    margin-top: 0 !important;
+}
+
+#skillsEvidenceList article > div:first-child,
+#proofList article > div:first-child {
+    color: var(--sp-green-dark) !important;
+    font-size: .64rem !important;
+    font-weight: 850 !important;
+    letter-spacing: .15em !important;
+}
+
+#skillsEvidenceList article strong,
+#proofList article strong {
+    color: var(--sp-ink);
+}
+
+#skillsEvidenceList article > strong {
+    font-family: var(--sp-serif) !important;
+    font-size: 1.65rem !important;
+    font-weight: 500 !important;
+}
+
+#skillsEvidenceList article > div:not(:first-child) {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px !important;
+}
+
+#skillsEvidenceList article > div:not(:first-child) > div {
+    padding: 17px;
+    border-radius: 14px;
+    background: var(--sp-cream);
+}
+
+#skillsEvidenceList article > div:not(:first-child) > div strong {
+    font-size: .75rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+#skillsEvidenceList article span {
+    color: var(--sp-muted) !important;
+    line-height: 1.65;
+}
+
+#skillsEvidenceList article span[style*="color:var(--green)"] {
+    color: var(--sp-green) !important;
+}
+
+#proofList article strong {
+    display: block;
+    margin-bottom: 10px !important;
+    font-family: var(--sp-serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+#proofList article p {
+    color: var(--sp-muted);
+    line-height: 1.7;
+}
+
+#proofList article span {
+    color: var(--sp-soft-muted) !important;
+}
+
+#skillsEvidenceEmpty,
+#proofEmpty,
+#proofError {
+    margin-top: 20px !important;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 35px;
+    padding: 14px 21px;
+    border-radius: 999px;
+    background: var(--sp-green-dark);
+    color: var(--sp-white);
+    font-size: .76rem;
+    font-weight: 800;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    box-shadow: 0 10px 22px rgba(12,96,57,.15);
+    transition:
+        transform .2s ease,
+        background .2s ease;
+}
+
+.button::after {
+    content: "↗";
+    font-size: .9rem;
+}
+
+.button:hover {
+    transform: translateY(-2px);
+    background: var(--sp-green);
+}
+
+footer {
+    padding: 34px max(5%, calc((100vw - var(--sp-max)) / 2));
+    border-top: 1px solid var(--sp-line);
+    color: var(--sp-muted);
+    font-size: .72rem;
+    letter-spacing: .01em;
+}
+
+@media (max-width: 950px) {
+    .passport-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    #skillsEvidenceList article > div:not(:first-child) {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 650px) {
+    .header {
+        min-height: 68px;
+        padding: 16px 5%;
+    }
+
+    .logo {
+        font-size: 1rem;
+    }
+
+    .logo::before {
+        width: 28px;
+        height: 28px;
+    }
+
+    .back {
+        font-size: .68rem;
+    }
+
+    main {
+        width: 90%;
+        padding: 58px 0 105px;
+    }
+
+    h1 {
+        font-size: clamp(3rem, 16vw, 5rem);
+        line-height: .9;
+    }
+
+    .intro {
+        font-size: .95rem;
+    }
+
+    .passport-card {
+        margin-top: 45px;
+        padding: 24px 19px;
+        border-radius: 22px;
+    }
+
+    .passport-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .passport-item {
+        min-height: auto;
+    }
+
+    #skillsEvidenceSection,
+    #verifiedProofSection {
+        margin-top: 40px !important;
+        padding-top: 32px;
+    }
+
+    #skillsEvidenceList article,
+    #proofList article {
+        padding: 20px !important;
+    }
+
+    footer {
+        padding: 30px 5% 100px;
+        line-height: 1.6;
+    }
+}
+</style>
+
 </head>
 
 <body>
