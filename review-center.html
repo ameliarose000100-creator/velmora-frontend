@@ -141,6 +141,59 @@
             font-size: 12px;
         }
 
+        .feedback-label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .feedback {
+            width: 100%;
+            min-height: 110px;
+            resize: vertical;
+            border: 1px solid #dce5e0;
+            border-radius: 12px;
+            padding: 13px;
+            font: inherit;
+            line-height: 1.5;
+            outline: none;
+        }
+
+        .feedback:focus {
+            border-color: #087443;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .action-button {
+            border: 0;
+            border-radius: 10px;
+            padding: 11px 16px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .approve {
+            background: #087443;
+            color: #ffffff;
+        }
+
+        .revision {
+            background: #fff1df;
+            color: #8a5700;
+        }
+
+        .action-button:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
         .empty {
             background: #ffffff;
             border: 1px solid #e1e7e4;
@@ -338,9 +391,61 @@ async function loadSubmissions() {
                             )}
                         </div>
 
+                        <label
+                            class="feedback-label"
+                            for="feedback-${submission.id}"
+                        >
+                            Feedback
+                        </label>
+
+                        <textarea
+                            id="feedback-${submission.id}"
+                            class="feedback"
+                            placeholder="Write clear feedback for the learner..."
+                        ></textarea>
+
+                        <div class="actions">
+
+                            <button
+                                type="button"
+                                class="action-button approve"
+                                data-id="${submission.id}"
+                                data-decision="approved"
+                            >
+                                Approve
+                            </button>
+
+                            <button
+                                type="button"
+                                class="action-button revision"
+                                data-id="${submission.id}"
+                                data-decision="rejected"
+                            >
+                                Needs Revision
+                            </button>
+
+                        </div>
+
                     </article>
                 `
             ).join("");
+
+        document
+            .querySelectorAll(".action-button")
+            .forEach(button => {
+
+                button.addEventListener(
+                    "click",
+                    function () {
+                        reviewSubmission(
+                            Number(this.dataset.id),
+                            this.dataset.decision,
+                            this
+                        );
+                    }
+                );
+
+            });
 
     } catch (error) {
 
@@ -352,6 +457,140 @@ async function loadSubmissions() {
         showStatus(
             "Unable to load reviewer submissions right now."
         );
+    }
+}
+
+
+async function reviewSubmission(
+    submissionId,
+    decision,
+    clickedButton
+) {
+
+    const feedbackElement =
+        document.getElementById(
+            `feedback-${submissionId}`
+        );
+
+    const feedback =
+        feedbackElement
+            ? feedbackElement.value.trim()
+            : "";
+
+    if (!feedback) {
+        showStatus(
+            "Please add feedback before completing the review."
+        );
+        return;
+    }
+
+    const card =
+        clickedButton.closest(
+            ".submission"
+        );
+
+    const buttons =
+        card.querySelectorAll(
+            ".action-button"
+        );
+
+    buttons.forEach(button => {
+        button.disabled = true;
+    });
+
+    clickedButton.textContent =
+        decision === "approved"
+            ? "Approving..."
+            : "Sending Back...";
+
+    try {
+
+        const response =
+            await fetch(
+                `http://127.0.0.1:5000/api/reviewer/submissions/${submissionId}/review`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type":
+                            "application/json",
+                        "Authorization":
+                            `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        decision,
+                        feedback
+                    })
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if (response.status === 401) {
+
+            localStorage.removeItem(
+                "velmora_token"
+            );
+
+            localStorage.removeItem(
+                "velmora_user"
+            );
+
+            window.location.replace(
+                "login.html"
+            );
+
+            return;
+        }
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+            throw new Error(
+                data.message ||
+                "Unable to complete the review."
+            );
+        }
+
+        showStatus(
+            decision === "approved"
+                ? "Submission approved and verified proof created."
+                : "Submission marked as needing revision."
+        );
+
+        card.remove();
+
+        if (
+            submissionsContainer.children.length === 0
+        ) {
+            submissionsContainer.innerHTML = `
+                <div class="empty">
+                    No pending submissions right now.
+                </div>
+            `;
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Review action error:",
+            error
+        );
+
+        showStatus(
+            error.message ||
+            "Unable to complete the review."
+        );
+
+        buttons.forEach(button => {
+            button.disabled = false;
+        });
+
+        clickedButton.textContent =
+            decision === "approved"
+                ? "Approve"
+                : "Needs Revision";
     }
 }
 
